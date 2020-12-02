@@ -8,17 +8,21 @@ public class AgentMovement : MonoBehaviour
     protected CharacterController characterController;
     protected Vector3 moveDirection = Vector3.zero;
     protected float desiredRotationAngle = 0;
+    protected HumanoidAnimations agentAnimations;
 
-    [SerializeField] private float _movementSpeed;
     [SerializeField] private float _gravity;
+    [SerializeField] private float _movementSpeed;
     [SerializeField] private float _rotationSpeed;
-    [SerializeField] private float _angleRotationThreshold;
+    [SerializeField] private float _jumpSpeed;
+    [SerializeField] private int _angleRotationThreshold;
     private int inputVerticalDirection = 0;
+    private bool isJumping = false;
 
 
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
+        agentAnimations = GetComponent<HumanoidAnimations>();
     }
 
     public void HandleMovement(Vector2 input)
@@ -39,6 +43,7 @@ public class AgentMovement : MonoBehaviour
             }
             else
             {
+                agentAnimations.SetMovementFloat(0);
                 moveDirection = Vector3.zero;
             }
         }
@@ -50,10 +55,18 @@ public class AgentMovement : MonoBehaviour
         {
             if(moveDirection.magnitude > 0)
             {
+                var animationSpeedMulitplier = agentAnimations.SetCorrectAnimation(desiredRotationAngle, _angleRotationThreshold, inputVerticalDirection);
                 RotateAgent();
+                moveDirection *= animationSpeedMulitplier;
             }
         }
         moveDirection.y -= _gravity;
+        if(isJumping)
+        {
+            isJumping = false;
+            moveDirection.y = _jumpSpeed;
+            agentAnimations.SetMovementFloat(0);
+        }
         characterController.Move(moveDirection * Time.deltaTime);
     }
 
@@ -72,6 +85,14 @@ public class AgentMovement : MonoBehaviour
         if(crossProduct < 0)
         {
             desiredRotationAngle *= -1;
+        }
+    }
+
+    public void HandleJump()
+    {
+        if(characterController.isGrounded)
+        {
+            isJumping = true;
         }
     }
 }

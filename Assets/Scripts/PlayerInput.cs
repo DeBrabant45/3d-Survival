@@ -7,18 +7,29 @@ public class PlayerInput : MonoBehaviour
 {
     public Vector2 MovementInputVector { get; private set; }
     public Vector3 MovementDirectionVector { get; private set; }
+    public Action OnJump { get; set; }
 
     private Camera _mainCamera;
 
     private void Start()
     {
         _mainCamera = Camera.main;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
     {
         GetMovementInput();
         GetMovementDirection();
+        GetJumpInput();
+    }
+
+    private void GetJumpInput()
+    {
+        if(Input.GetAxisRaw("Jump") > 0)
+        {
+            OnJump?.Invoke();
+        }
     }
 
     private void GetMovementDirection()
