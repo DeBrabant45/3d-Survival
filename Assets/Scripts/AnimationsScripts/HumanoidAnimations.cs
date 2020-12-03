@@ -11,6 +11,21 @@ public class HumanoidAnimations : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
+    public void TriggerLandingAnimation()
+    {
+        _animator.SetTrigger("land");
+    }
+
+    public void TriggerJumpAnimation()
+    {
+        _animator.SetTrigger("jump");
+    }
+
+    public void TriggerFallAnimation()
+    {
+        _animator.SetTrigger("fall");
+    }
+
     public void SetMovementFloat(float value)
     {
         _animator.SetFloat("move", value);

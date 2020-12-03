@@ -15,8 +15,9 @@ public class AgentMovement : MonoBehaviour
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _jumpSpeed;
     [SerializeField] private int _angleRotationThreshold;
-    private int inputVerticalDirection = 0;
-    private bool isJumping = false;
+    private int _inputVerticalDirection = 0;
+    private bool _isJumping = false;
+    private bool _isJumpingCompleted = true;
 
 
     private void Start()
@@ -33,11 +34,11 @@ public class AgentMovement : MonoBehaviour
             {
                 if(input.y > 0)
                 {
-                    inputVerticalDirection = Mathf.CeilToInt(input.y);
+                    _inputVerticalDirection = Mathf.CeilToInt(input.y);
                 }
                 else
                 {
-                    inputVerticalDirection = Mathf.FloorToInt(input.y);
+                    _inputVerticalDirection = Mathf.FloorToInt(input.y);
                 }
                 moveDirection = input.y * transform.forward * _movementSpeed;
             }
@@ -55,17 +56,20 @@ public class AgentMovement : MonoBehaviour
         {
             if(moveDirection.magnitude > 0)
             {
-                var animationSpeedMulitplier = agentAnimations.SetCorrectAnimation(desiredRotationAngle, _angleRotationThreshold, inputVerticalDirection);
+                var animationSpeedMulitplier = agentAnimations.SetCorrectAnimation(desiredRotationAngle, _angleRotationThreshold, _inputVerticalDirection);
                 RotateAgent();
                 moveDirection *= animationSpeedMulitplier;
             }
         }
         moveDirection.y -= _gravity;
-        if(isJumping)
+        if(_isJumping == true)
         {
-            isJumping = false;
+            Debug.Log("I ran here");
+            _isJumping = false;
+            _isJumpingCompleted = false;
             moveDirection.y = _jumpSpeed;
             agentAnimations.SetMovementFloat(0);
+            agentAnimations.TriggerJumpAnimation();
         }
         characterController.Move(moveDirection * Time.deltaTime);
     }
@@ -92,7 +96,32 @@ public class AgentMovement : MonoBehaviour
     {
         if(characterController.isGrounded)
         {
-            isJumping = true;
+            _isJumping = true;
         }
+    }
+
+    public void StopMovementImmediatelly()
+    {
+        moveDirection = Vector3.zero;
+    }
+
+    public void StartLandingAnimation()
+    {
+        agentAnimations.TriggerLandingAnimation();
+    }
+
+    public bool HasCompletedJumping()
+    {
+        return _isJumpingCompleted;
+    }
+
+    public void SetCompletedJumping()
+    {
+        _isJumpingCompleted = true;
+    }
+
+    public bool IsGrounded()
+    {
+        return characterController.isGrounded;
     }
 }
