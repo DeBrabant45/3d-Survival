@@ -28,7 +28,7 @@ public class AgentMovement : MonoBehaviour
 
     public void HandleMovement(Vector2 input)
     {
-        if(characterController.isGrounded)
+        if(CharacterIsGrounded())
         {
             if(input.y != 0)
             {
@@ -52,9 +52,9 @@ public class AgentMovement : MonoBehaviour
 
     private void Update()
     {
-        if(characterController.isGrounded)
+        if (CharacterIsGrounded())
         {
-            if(moveDirection.magnitude > 0)
+            if (moveDirection.magnitude > 0)
             {
                 var animationSpeedMulitplier = agentAnimations.SetCorrectAnimation(desiredRotationAngle, _angleRotationThreshold, _inputVerticalDirection);
                 RotateAgent();
@@ -62,16 +62,20 @@ public class AgentMovement : MonoBehaviour
             }
         }
         moveDirection.y -= _gravity;
-        if(_isJumping == true)
+        AgentIsJumping();
+        characterController.Move(moveDirection * Time.deltaTime);
+    }
+
+    private void AgentIsJumping()
+    {
+        if (_isJumping == true)
         {
-            Debug.Log("I ran here");
             _isJumping = false;
             _isJumpingCompleted = false;
             moveDirection.y = _jumpSpeed;
             agentAnimations.SetMovementFloat(0);
             agentAnimations.TriggerJumpAnimation();
         }
-        characterController.Move(moveDirection * Time.deltaTime);
     }
 
     private void RotateAgent()
@@ -94,7 +98,7 @@ public class AgentMovement : MonoBehaviour
 
     public void HandleJump()
     {
-        if(characterController.isGrounded)
+        if(CharacterIsGrounded())
         {
             _isJumping = true;
         }
@@ -103,11 +107,6 @@ public class AgentMovement : MonoBehaviour
     public void StopMovementImmediatelly()
     {
         moveDirection = Vector3.zero;
-    }
-
-    public void StartLandingAnimation()
-    {
-        agentAnimations.TriggerLandingAnimation();
     }
 
     public bool HasCompletedJumping()
@@ -120,7 +119,7 @@ public class AgentMovement : MonoBehaviour
         _isJumpingCompleted = true;
     }
 
-    public bool IsGrounded()
+    public bool CharacterIsGrounded()
     {
         return characterController.isGrounded;
     }

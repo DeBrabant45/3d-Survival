@@ -7,17 +7,21 @@ public class AgentController : MonoBehaviour
 {
     [SerializeField] AgentMovement _movement;
     [SerializeField] PlayerInput _input;
+    [SerializeField] HumanoidAnimations _agentAnimations;
     private BaseState currentState;
 
     public readonly BaseState movementState = new MovementState();
     public readonly BaseState jumpState = new JumpState();
+    public readonly BaseState fallingState = new FallingState();
     public PlayerInput Input { get => _input; }
     public AgentMovement Movement { get => _movement; }
+    public HumanoidAnimations AgentAnimations { get => _agentAnimations; }
 
     private void OnEnable()
     {
         _movement = GetComponent<AgentMovement>();
         _input = GetComponent<PlayerInput>();
+        _agentAnimations = GetComponent<HumanoidAnimations>();
         currentState = movementState;
         currentState.EnterState(this);
         AssignMovementInputListeners();

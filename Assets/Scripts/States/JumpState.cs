@@ -23,12 +23,12 @@ public class JumpState : BaseState
             _delay -= Time.deltaTime;
             return;
         }
-        if(controllerReference.Movement.IsGrounded())
+        if(controllerReference.Movement.CharacterIsGrounded())
         {
             if(_landingTrigger == false)
             {
                 _landingTrigger = true;
-                controllerReference.Movement.StartLandingAnimation();
+                controllerReference.AgentAnimations.TriggerLandingAnimation();
             }
             if(controllerReference.Movement.HasCompletedJumping())
             {
