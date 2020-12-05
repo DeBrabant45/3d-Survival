@@ -16,6 +16,11 @@ public class HumanoidAnimations : MonoBehaviour
         _animator.SetTrigger("land");
     }
 
+    public void ResetTriggerLandingAnimation()
+    {
+        _animator.ResetTrigger("land");
+    }
+
     public void TriggerJumpAnimation()
     {
         _animator.SetTrigger("jump");

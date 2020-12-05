@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class MovementState : BaseState
 {
+    private float _defaultFallingDelay = 0.2f;
     private float _fallingDelay = 0;
 
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        _fallingDelay = 0.2f;
+        _fallingDelay = _defaultFallingDelay;
     }
 
     public override void HandleCameraDirection(Vector3 input)
@@ -42,6 +43,10 @@ public class MovementState : BaseState
                 return;
             }
             controllerReference.TransitionToState(controllerReference.fallingState);
+        }
+        else
+        {
+            _fallingDelay = _defaultFallingDelay;
         }
     }
 }
