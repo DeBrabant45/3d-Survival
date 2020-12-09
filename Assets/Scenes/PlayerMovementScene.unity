@@ -958,7 +958,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 32
   m_Viewport: {fileID: 1360040841}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1913725978}
@@ -1081,6 +1081,7 @@ GameObject:
   - component: {fileID: 412570856}
   - component: {fileID: 412570855}
   - component: {fileID: 412570854}
+  - component: {fileID: 412570857}
   m_Layer: 5
   m_Name: ButtonPanel
   m_TagString: Untagged
@@ -1171,6 +1172,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412570852}
   m_CullTransparentMesh: 0
+--- !u!114 &412570857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412570852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811b1780ffec26f4cb1540a3138f940e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _useBtn: {fileID: 1462196670}
+  _dropBtn: {fileID: 212232873}
 --- !u!224 &473372752 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2185358272204569927, guid: 4954342a734e2534d81842f125a6ae9f,
@@ -1615,7 +1630,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756745841}
-  m_LocalRotation: {x: 0.3639354, y: 0.00000001149799, z: -0.0000000044926085, w: 0.9314242}
+  m_LocalRotation: {x: 0.36393538, y: 0.000000027758606, z: -0.00000001084612, w: 0.9314242}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3146,7 +3161,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513737856}
-  m_LocalRotation: {x: 0.4012623, y: -1e-45, z: 1e-45, w: 0.9159632}
+  m_LocalRotation: {x: 0.4012623, y: -1e-45, z: -0, w: 0.9159632}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
