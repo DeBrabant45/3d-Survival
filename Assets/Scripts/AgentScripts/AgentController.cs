@@ -8,6 +8,7 @@ public class AgentController : MonoBehaviour
     [SerializeField] AgentMovement _movement;
     [SerializeField] PlayerInput _input;
     [SerializeField] HumanoidAnimations _agentAnimations;
+    [SerializeField] InventorySystem _inventorySystem;
     private BaseState currentState;
 
     public readonly BaseState movementState = new MovementState();
@@ -17,6 +18,7 @@ public class AgentController : MonoBehaviour
     public PlayerInput InputFromPlayer { get => _input; }
     public AgentMovement Movement { get => _movement; }
     public HumanoidAnimations AgentAnimations { get => _agentAnimations; }
+    public InventorySystem InventorySystem { get => _inventorySystem; }
 
     private void OnEnable()
     {
