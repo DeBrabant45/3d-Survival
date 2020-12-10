@@ -30,11 +30,16 @@ public class MovementState : BaseState
         controllerReference.TransitionToState(controllerReference.jumpState);
     }
 
+    public override void HandleInventoryInput()
+    {
+        controllerReference.TransitionToState(controllerReference.inventoryState);
+    }
+
     public override void Update()
     {
         base.Update();
-        HandleMovement(controllerReference.Input.MovementInputVector);
-        HandleCameraDirection(controllerReference.Input.MovementDirectionVector);
+        HandleMovement(controllerReference.InputFromPlayer.MovementInputVector);
+        HandleCameraDirection(controllerReference.InputFromPlayer.MovementDirectionVector);
         if(controllerReference.Movement.CharacterIsGrounded() == false)
         {
             if(_fallingDelay > 0)

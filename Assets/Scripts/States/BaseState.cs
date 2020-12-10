@@ -12,11 +12,13 @@ public abstract class BaseState
     }
 
     public virtual void HandleMovement(Vector2 input) { }
-
     public virtual void HandleCameraDirection(Vector3 input) { }
-
     public virtual void HandleJumpInput() { }
-
+    public virtual void HandleInventoryInput() { }
+    public virtual void HandleHotBarInput(int hotbarKey) 
+    {
+        Debug.Log(hotbarKey);
+    }
     public virtual void Update() { }
 
 }

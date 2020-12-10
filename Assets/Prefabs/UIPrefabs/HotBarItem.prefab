@@ -215,6 +215,9 @@ MonoBehaviour:
   _countText: {fileID: 2185358272085972320}
   _outline: {fileID: 0}
   _backGroundSprite: {fileID: 21300000, guid: 8d2b0b3047c5bf0488406e2ec3716d2d, type: 3}
+  _itemName: 
+  _itemCount: 
+  _isHotBarItem: 1
 --- !u!1 &2185358272500183575
 GameObject:
   m_ObjectHideFlags: 0

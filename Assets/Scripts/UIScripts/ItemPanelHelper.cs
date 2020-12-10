@@ -14,8 +14,8 @@ public class ItemPanelHelper : MonoBehaviour
     [SerializeField] private Sprite _backGroundSprite;
     [SerializeField] private string _itemName;
     [SerializeField] private string _itemCount;
+    [SerializeField] bool _isHotBarItem = false;
     private bool _isEmpty = true;
-    private bool _isHotBarItem = false;
 
     private void Start()
     {

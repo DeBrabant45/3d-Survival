@@ -8,13 +8,15 @@ public class PlayerInput : MonoBehaviour
     public Vector2 MovementInputVector { get; private set; }
     public Vector3 MovementDirectionVector { get; private set; }
     public Action OnJump { get; set; }
+    public Action OnToggleInventory { get; set; }
+    public Action<int> OnHotBarKey { get; set; }
 
     private Camera _mainCamera;
 
     private void Start()
     {
         _mainCamera = Camera.main;
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -22,6 +24,30 @@ public class PlayerInput : MonoBehaviour
         GetMovementInput();
         GetMovementDirection();
         GetJumpInput();
+        GetInventoryInput();
+        GetHotBarInput();
+    }
+
+    private void GetHotBarInput()
+    {
+        char hotbar0 = '0';
+        for (int i = 0; i < 9; i++)
+        {
+            KeyCode keyCode = (KeyCode)((int)hotbar0 + i);
+            if(Input.GetKeyDown(keyCode))
+            {
+                OnHotBarKey?.Invoke(i);
+                return;
+            }
+        }
+    }
+
+    private void GetInventoryInput()
+    {
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            OnToggleInventory?.Invoke();
+        }
     }
 
     private void GetJumpInput()
