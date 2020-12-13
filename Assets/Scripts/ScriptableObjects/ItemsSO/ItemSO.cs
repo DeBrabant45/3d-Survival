@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,14 +13,33 @@ public abstract class ItemSO : ScriptableObject, ISerializationCallbackReceiver
     [SerializeField] [Range(1, 100)] private int _stackLimit = 100;
     [SerializeField] private ItemType _itemType;
 
-    public void OnAfterDeserialize()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnAfterDeserialize() {}
 
     public void OnBeforeSerialize()
     {
-        throw new System.NotImplementedException();
+        if(string.IsNullOrEmpty(this._iD))
+        {
+            this._iD = Guid.NewGuid().ToString("N");
+        }
+        if(string.IsNullOrEmpty(_itemName) && _model != null)
+        {
+            _itemName = _model.name;
+        }
+    }
+
+    public Sprite GetImage()
+    {
+        return _imageSprite;
+    }
+
+    public ItemType GetItemType()
+    {
+        return _itemType;
+    }
+
+    public virtual bool IsUsable()
+    {
+        return false;
     }
 }
 

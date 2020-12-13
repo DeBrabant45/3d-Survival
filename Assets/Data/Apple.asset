@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c74b09163718c14eba749257cea4638, type: 3}
+  m_Name: Apple
+  m_EditorClassIdentifier: 
+  _iD: 21780ff88a3d4166bc265904c53e402c
+  _itemName: Green_Apple
+  _imageSprite: {fileID: 8544509268340458607, guid: 0e3986646a6245a4eacbf7e97abd98b7,
+    type: 3}
+  _model: {fileID: -927199367670048503, guid: 8b6bc512f2df43a4bb44e9b6c56b4af7, type: 3}
+  _isStackable: 1
+  _stackLimit: 100
+  _itemType: 1
+  _staminaBonus: 0
+  _hungerBonus: 5
+  _energyBonus: 0
