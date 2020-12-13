@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ItemPanelHelper : MonoBehaviour
 {
-    [SerializeField] private Action<int, bool> _onClickEvent;
     [SerializeField] private Image _itemImage;
     [SerializeField] private Text _nameText;
     [SerializeField] private Text _countText;
@@ -16,6 +15,8 @@ public class ItemPanelHelper : MonoBehaviour
     [SerializeField] private string _itemCount;
     [SerializeField] bool _isHotBarItem = false;
     private bool _isEmpty = true;
+
+    public Action<int, bool> OnClickEvent;
 
     private void Start()
     {
@@ -71,5 +72,10 @@ public class ItemPanelHelper : MonoBehaviour
     private void ResetImage()
     {
         _itemImage.sprite = _backGroundSprite;
+    }
+
+    public bool SetUIHotBarItemToTrue()
+    {
+        return _isHotBarItem = true;
     }
 }

@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class UIStorageButtonsHelper : MonoBehaviour
 {
-    [SerializeField] private Action _onUseBtnClick;
-    [SerializeField] private Action _onDropBtnClick;
     [SerializeField] private Button _useBtn;
     [SerializeField] private Button _dropBtn;
+    private Action _onUseBtnClick;
+    private Action _onDropBtnClick;
 
     private void Start()
     {
