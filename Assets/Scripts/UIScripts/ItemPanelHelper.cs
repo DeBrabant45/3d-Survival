@@ -33,7 +33,9 @@ public class ItemPanelHelper : MonoBehaviour
         _itemName = name;
         _itemCount = count + "";
         if (_isHotBarItem == false)
+        {
             _nameText.text = _itemName;
+        }
         _countText.text = _itemCount;
         _isEmpty = false;
         SetImageSprite(image);

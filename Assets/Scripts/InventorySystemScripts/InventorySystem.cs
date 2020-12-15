@@ -28,17 +28,54 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    private void UseHotBarItemHandler(int arg1, bool arg2)
+    private void UseHotBarItemHandler(int ui_id, bool isEmpty)
     {
-
+        if(isEmpty)
+        {
+            return;
+        }
+        Debug.Log("Using hbar item");
     }
 
     public void ToggleInventory()
     {
         if(_uIInventory.IsInventoryVisable == false)
         {
-            //populate inventory
+            _inventoryData.ResetSelectedItem();
+            _inventoryData.ClearInventoryUIElements();
+            PrepareUI();
+            PutDataInUI();
         }
         _uIInventory.ToggleUI();
+    }
+
+    private void PutDataInUI()
+    {
+        return;
+    }
+
+    private void PrepareUI()
+    {
+        _uIInventory.PrepareInventoryItems(_inventoryData.PlayerStorageLimit);
+        AddEventHandlersToInventoryUIElements();
+    }
+
+    private void AddEventHandlersToInventoryUIElements()
+    {
+        foreach(var uIItemElement in _uIInventory.GetUIElementsForInventory())
+        {
+            uIItemElement.OnClickEvent += UIElementSelectedHandler;
+        }
+    }
+
+    private void UIElementSelectedHandler(int ui_id, bool isEmpty)
+    {
+        if (isEmpty == false)
+        {
+            _inventoryData.ResetSelectedItem();
+            _inventoryData.SetSelectedItem(ui_id);
+            Debug.Log("Selecting invt item");
+        }
+        return;
     }
 }

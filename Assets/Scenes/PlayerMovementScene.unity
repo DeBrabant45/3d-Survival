@@ -1630,7 +1630,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756745841}
-  m_LocalRotation: {x: 0.3639354, y: 0.00000001149799, z: -0.0000000044926085, w: 0.9314242}
+  m_LocalRotation: {x: 0.3639354, y: -2.653315e-15, z: 1.6310939e-15, w: 0.9314242}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3652,6 +3652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1387c2df08096439a79594bcbecf14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerStorageSize: 20
 --- !u!114 &1866412677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3665,6 +3666,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventoryGeneralPanel: {fileID: 1082971719}
+  _hotbarPanel: {fileID: 1635150025}
+  _storagePanel: {fileID: 1122407710}
+  _storagePrefab: {fileID: 4803137102792491195, guid: 6ee20d00cf0e6ea4eba526827eda69b3,
+    type: 3}
 --- !u!1001 &1875400494
 PrefabInstance:
   m_ObjectHideFlags: 0
