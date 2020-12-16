@@ -30,11 +30,11 @@ public class InventorySystem : MonoBehaviour
 
     private void UseHotBarItemHandler(int ui_id, bool isEmpty)
     {
-        if(isEmpty)
+        Debug.Log("Using hbar item");
+        if (isEmpty)
         {
             return;
         }
-        Debug.Log("Using hbar item");
     }
 
     public void ToggleInventory()
@@ -70,11 +70,11 @@ public class InventorySystem : MonoBehaviour
 
     private void UIElementSelectedHandler(int ui_id, bool isEmpty)
     {
+        Debug.Log("Selecting invt item");
         if (isEmpty == false)
         {
             _inventoryData.ResetSelectedItem();
             _inventoryData.SetSelectedItem(ui_id);
-            Debug.Log("Selecting invt item");
         }
         return;
     }

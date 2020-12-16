@@ -13,6 +13,11 @@ public abstract class ItemSO : ScriptableObject, ISerializationCallbackReceiver
     [SerializeField] [Range(1, 100)] private int _stackLimit = 100;
     [SerializeField] private ItemType _itemType;
 
+    public string ID { get => _iD; }
+    public string ItemName { get => _itemName; }
+    public Sprite ImageSprite { get => _imageSprite; }
+    public GameObject Model { get => _model; }
+
     public void OnAfterDeserialize() {}
 
     public void OnBeforeSerialize()
