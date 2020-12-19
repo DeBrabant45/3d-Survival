@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Inventory;
 using System;
+using SVS.InventorySystem;
 
 public class InventorySystem : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class InventorySystem : MonoBehaviour
     private void Start()
     {
         _inventoryData = new InventorySystemData(_playerStorageSize, _uIInventory.HotbarElementsCount);
+        ItemData artificialItem = new ItemData(0, 10, "21780ff88a3d4166bc265904c53e402c", true, 100);
+        AddToStorage(artificialItem);
         var hotbarUIElements = _uIInventory.GetUIElementsForHotbar();
         for (int i = 0; i < hotbarUIElements.Count; i++)
         {
@@ -51,7 +54,20 @@ public class InventorySystem : MonoBehaviour
 
     private void PutDataInUI()
     {
-        return;
+        var uIElements = _uIInventory.GetUIElementsForInventory();
+        var inventoryItems = _inventoryData.GetItemsDataForInventory();
+        for (int i = 0; i < uIElements.Count; i++)
+        {
+            var uIItemElement = uIElements[i];
+            var itemData = inventoryItems[i];
+            if(itemData.IsNull == false)
+            {
+                var itemName = ItemDataManager.Instance.GetItemName(itemData.ID);
+                var itemSprite = ItemDataManager.Instance.GetItemSprite(itemData.ID);
+                uIItemElement.SetInventoryUIElement(itemName, itemData.Count, itemSprite);
+            }
+            _inventoryData.AddInventoryUIElement(uIItemElement.GetInstanceID());
+        }
     }
 
     private void PrepareUI()
@@ -77,5 +93,11 @@ public class InventorySystem : MonoBehaviour
             _inventoryData.SetSelectedItem(ui_id);
         }
         return;
+    }
+
+    public int AddToStorage(IInventoryItem item)
+    {
+        int value = _inventoryData.AddToStorage(item);
+        return value;
     }
 }

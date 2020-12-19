@@ -49,5 +49,34 @@ namespace Inventory
             _inventoryUIElementIDList.Clear();
         }
 
+        public int AddToStorage(IInventoryItem item)
+        {
+            int countLeft = item.Count;
+            if(_hotbarStorage.CheckIfStorageContains(item.ID))
+            {
+                countLeft = _hotbarStorage.AddItem(item);
+                if(countLeft == 0)
+                {
+                    _updateHotbarCallback.Invoke();
+                    return countLeft;
+                }
+            }
+            countLeft = _playerStorage.AddItem(item.ID, countLeft, item.IsStackable, item.StackLimit);
+            if(countLeft > 0)
+            {
+                countLeft = _playerStorage.AddItem(item.ID, countLeft, item.IsStackable, item.StackLimit);
+                if (countLeft == 0)
+                {
+                    _updateHotbarCallback.Invoke();
+                    return countLeft;
+                }
+            }
+            return countLeft;
+        }
+
+        public List<ItemData> GetItemsDataForInventory()
+        {
+            return _playerStorage.GetItemsData();
+        }
     }
 }
