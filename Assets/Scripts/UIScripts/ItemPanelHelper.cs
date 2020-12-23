@@ -13,7 +13,7 @@ public class ItemPanelHelper : MonoBehaviour, IPointerClickHandler, IDragHandler
     [SerializeField] private Outline _outline;
     [SerializeField] private Sprite _backGroundSprite;
     [SerializeField] private string _itemName;
-    [SerializeField] private string _itemCount;
+    [SerializeField] private int _itemCount;
     [SerializeField] bool _isHotBarItem = false;
     private bool _isEmpty = true;
 
@@ -23,6 +23,9 @@ public class ItemPanelHelper : MonoBehaviour, IPointerClickHandler, IDragHandler
     public Action<PointerEventData, int> DragStartCallBack;
     public Action<PointerEventData, int> DropCallBack;
     public Image ItemImage { get => _itemImage; }
+    public string ItemName { get => _itemName; }
+    public int ItemCount { get => _itemCount; }
+    public bool IsEmpty { get => _isEmpty; }
 
     private void Start()
     {
@@ -37,12 +40,12 @@ public class ItemPanelHelper : MonoBehaviour, IPointerClickHandler, IDragHandler
     public void SetInventoryUIElement(string name, int count, Sprite image)
     {
         _itemName = name;
-        _itemCount = count + "";
+        _itemCount = count;
         if (_isHotBarItem == false)
         {
             _nameText.text = _itemName;
         }
-        _countText.text = _itemCount;
+        _countText.text = (count < 0) ? "" : _itemCount + "";
         _isEmpty = false;
         SetImageSprite(image);
     }
@@ -61,8 +64,8 @@ public class ItemPanelHelper : MonoBehaviour, IPointerClickHandler, IDragHandler
     private void ClearItem()
     {
         _itemName = "";
-        _itemCount = "";
-        _countText.text = _itemCount;
+        _itemCount = -1;
+        _countText.text = "";
         if(_isHotBarItem == false)
         {
             _nameText.text = _itemName;

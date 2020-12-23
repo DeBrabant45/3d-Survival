@@ -21,6 +21,8 @@ public class UIInventory : MonoBehaviour
 
     public bool IsInventoryVisable { get => _inventoryGeneralPanel.activeSelf; }
     public int HotbarElementsCount { get => _hotbarUIItems.Count; }
+    public RectTransform DraggableItem { get => _draggableItem; }
+    public ItemPanelHelper DraggableItemPanel { get => _draggableItemPanel; }
 
     private void Awake()
     {
@@ -46,6 +48,7 @@ public class UIInventory : MonoBehaviour
         else
         {
             _inventoryGeneralPanel.SetActive(false);
+            DestroyDraggedObject();
         }
     }
 
@@ -118,13 +121,71 @@ public class UIInventory : MonoBehaviour
 
     }
 
-    private bool CheckItemInInventory(int ui_id)
+    public bool CheckItemInInventory(int draggedItemID)
     {
-        return _inventoryUIItems.ContainsKey(ui_id);
+        return _inventoryUIItems.ContainsKey(draggedItemID);
     }
 
-    internal void MoveDraggableItem(PointerEventData eventData)
+    public void MoveDraggableItem(PointerEventData eventData)
     {
-        //throw new NotImplementedException();
+        var valueToAdd = eventData.delta / _canvas.scaleFactor;
+        _draggableItem.anchoredPosition += valueToAdd;
+    }
+
+    public void SwapUIHotbarItemToHotBarSlot(int droppedItemID, int draggedItemID)
+    {
+        var tempName = _hotbarUIItems[draggedItemID].ItemName;
+        var tempCount = _hotbarUIItems[draggedItemID].ItemCount;
+        var tempSprite = _hotbarUIItems[draggedItemID].ItemImage.sprite;
+        var tempIsEmpty = _hotbarUIItems[draggedItemID].IsEmpty;
+
+        var droppedItemData = _hotbarUIItems[droppedItemID];
+        //dragged Item
+        _hotbarUIItems[draggedItemID].SwapWithData(droppedItemData.ItemName, droppedItemData.ItemCount, droppedItemData.ItemImage.sprite, droppedItemData.IsEmpty);
+        //dropped item
+        _hotbarUIItems[droppedItemID].SwapWithData(tempName, tempCount, tempSprite, tempIsEmpty);
+        DestroyDraggedObject();
+    }
+
+    public void SwapUIHotbarItemToInventorySlot(int droppedItemID, int draggedItemID)
+    {
+        var tempName = _hotbarUIItems[draggedItemID].ItemName;
+        var tempCount = _hotbarUIItems[draggedItemID].ItemCount;
+        var tempSprite = _hotbarUIItems[draggedItemID].ItemImage.sprite;
+        var tempIsEmpty = _hotbarUIItems[draggedItemID].IsEmpty;
+
+        var droppedItemData = _inventoryUIItems[droppedItemID];
+
+        _hotbarUIItems[draggedItemID].SwapWithData(droppedItemData.ItemName, droppedItemData.ItemCount, droppedItemData.ItemImage.sprite, droppedItemData.IsEmpty);
+        _inventoryUIItems[droppedItemID].SwapWithData(tempName, tempCount, tempSprite, tempIsEmpty);
+        DestroyDraggedObject();
+    }
+
+    public void SwapUIInventoryItemToInventorySlot(int droppedItemID, int draggedItemID)
+    {
+        var tempName = _inventoryUIItems[draggedItemID].ItemName;
+        var tempCount = _inventoryUIItems[draggedItemID].ItemCount;
+        var tempSprite = _inventoryUIItems[draggedItemID].ItemImage.sprite;
+        var tempIsEmpty = _inventoryUIItems[draggedItemID].IsEmpty;
+
+        var droppedItemData = _inventoryUIItems[droppedItemID];
+        //dragged Item
+        _inventoryUIItems[draggedItemID].SwapWithData(droppedItemData.ItemName, droppedItemData.ItemCount, droppedItemData.ItemImage.sprite, droppedItemData.IsEmpty);
+        //dropped item
+        _inventoryUIItems[droppedItemID].SwapWithData(tempName, tempCount, tempSprite, tempIsEmpty);
+        DestroyDraggedObject();
+    }
+
+    public void SwapUIInventoryItemToHotBarSlot(int droppedItemID, int draggedItemID)
+    {
+        var tempName = _inventoryUIItems[draggedItemID].ItemName;
+        var tempCount = _inventoryUIItems[draggedItemID].ItemCount;
+        var tempSprite = _inventoryUIItems[draggedItemID].ItemImage.sprite;
+        var tempIsEmpty = _inventoryUIItems[draggedItemID].IsEmpty;
+        var droppedItemData = _hotbarUIItems[droppedItemID];
+
+        _inventoryUIItems[draggedItemID].SwapWithData(droppedItemData.ItemName, droppedItemData.ItemCount, droppedItemData.ItemImage.sprite, droppedItemData.IsEmpty);
+        _hotbarUIItems[droppedItemID].SwapWithData(tempName, tempCount, tempSprite, tempIsEmpty);
+        DestroyDraggedObject();
     }
 }
