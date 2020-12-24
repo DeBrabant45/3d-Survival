@@ -16,6 +16,7 @@ public class AgentController : MonoBehaviour
     public readonly BaseState jumpState = new JumpState();
     public readonly BaseState fallingState = new FallingState();
     public readonly BaseState inventoryState = new InventoryState();
+    public readonly BaseState interactState = new InteractState();
     public PlayerInput InputFromPlayer { get => _input; }
     public AgentMovement Movement { get => _movement; }
     public HumanoidAnimations AgentAnimations { get => _agentAnimations; }
@@ -38,6 +39,18 @@ public class AgentController : MonoBehaviour
         _input.OnJump += HandleJump;
         _input.OnHotBarKey += HandleHotBarInput;
         _input.OnToggleInventory += HandleInventoryInput;
+        _input.OnPrimaryAction += HandlePrimaryInput;
+        _input.OnSecondaryAction += HandleSecondaryInput;
+    }
+
+    private void HandleSecondaryInput()
+    {
+        currentState.HandleSecondaryInput();
+    }
+
+    private void HandlePrimaryInput()
+    {
+        currentState.HandlePrimaryInput();
     }
 
     private void HandleJump()

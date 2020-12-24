@@ -5,13 +5,17 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    private Camera _mainCamera;
+    private float _previousPrimaryActionInput = 0;
+    private float _previousSecondaryActionInput = 0;
+
     public Vector2 MovementInputVector { get; private set; }
     public Vector3 MovementDirectionVector { get; private set; }
     public Action OnJump { get; set; }
     public Action OnToggleInventory { get; set; }
     public Action<int> OnHotBarKey { get; set; }
-
-    private Camera _mainCamera;
+    public Action OnPrimaryAction { get; set; }
+    public Action OnSecondaryAction { get; set; }
 
     private void Start()
     {
@@ -26,6 +30,34 @@ public class PlayerInput : MonoBehaviour
         GetJumpInput();
         GetInventoryInput();
         GetHotBarInput();
+        GetPrimaryAction();
+        GetSecondaryAction();
+    }
+
+    private void GetSecondaryAction()
+    {
+        var inputValue = Input.GetAxisRaw("Fire2");
+        if (_previousSecondaryActionInput == 0)
+        {
+            if (inputValue >= 1)
+            {
+                OnSecondaryAction?.Invoke();
+            }
+        }
+        _previousSecondaryActionInput = inputValue;
+    }
+
+    private void GetPrimaryAction()
+    {
+        var inputValue = Input.GetAxisRaw("Fire1");
+        if(_previousPrimaryActionInput == 0)
+        {
+            if(inputValue >= 1)
+            {
+                OnPrimaryAction?.Invoke();
+            }
+        }
+        _previousPrimaryActionInput = inputValue;
     }
 
     private void GetHotBarInput()
