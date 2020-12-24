@@ -9,6 +9,7 @@ public class AgentController : MonoBehaviour
     [SerializeField] PlayerInput _input;
     [SerializeField] HumanoidAnimations _agentAnimations;
     [SerializeField] InventorySystem _inventorySystem;
+    [SerializeField] DetectionSystem _detectionSystem;
     private BaseState currentState;
 
     public readonly BaseState movementState = new MovementState();
@@ -19,6 +20,7 @@ public class AgentController : MonoBehaviour
     public AgentMovement Movement { get => _movement; }
     public HumanoidAnimations AgentAnimations { get => _agentAnimations; }
     public InventorySystem InventorySystem { get => _inventorySystem; }
+    public DetectionSystem DetectionSystem { get => _detectionSystem; }
 
     private void OnEnable()
     {
@@ -28,6 +30,7 @@ public class AgentController : MonoBehaviour
         currentState = movementState;
         currentState.EnterState(this);
         AssignInputListeners();
+        _detectionSystem = GetComponent<DetectionSystem>();
     }
 
     private void AssignInputListeners()
@@ -55,6 +58,15 @@ public class AgentController : MonoBehaviour
     private void Update()
     {
         currentState.Update();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if(Application.isPlaying)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position + _input.MovementDirectionVector, _detectionSystem.DetectionRadius);
+        }
     }
 
     private void OnDisable()

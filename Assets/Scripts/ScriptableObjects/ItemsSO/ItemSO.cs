@@ -17,6 +17,8 @@ public abstract class ItemSO : ScriptableObject, ISerializationCallbackReceiver
     public string ItemName { get => _itemName; }
     public Sprite ImageSprite { get => _imageSprite; }
     public GameObject Model { get => _model; }
+    public bool IsStackable { get => _isStackable; }
+    public int StackLimit { get => _stackLimit; }
 
     public void OnAfterDeserialize() {}
 

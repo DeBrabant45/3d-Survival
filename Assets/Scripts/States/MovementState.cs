@@ -38,6 +38,7 @@ public class MovementState : BaseState
     public override void Update()
     {
         base.Update();
+        controllerReference.DetectionSystem.PreformDetection(controllerReference.InputFromPlayer.MovementDirectionVector);
         HandleMovement(controllerReference.InputFromPlayer.MovementInputVector);
         HandleCameraDirection(controllerReference.InputFromPlayer.MovementDirectionVector);
         if(controllerReference.Movement.CharacterIsGrounded() == false)
