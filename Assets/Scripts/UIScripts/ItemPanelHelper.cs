@@ -61,7 +61,7 @@ public class ItemPanelHelper : MonoBehaviour, IPointerClickHandler, IDragHandler
         _itemImage.sprite = image;
     }
 
-    private void ClearItem()
+    public void ClearItem()
     {
         _itemName = "";
         _itemCount = -1;

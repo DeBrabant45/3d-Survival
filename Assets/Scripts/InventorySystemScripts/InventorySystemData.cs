@@ -40,6 +40,11 @@ namespace Inventory
             _hotbarUIElementIDList.Add(ui_id);
         }
 
+        public List<ItemData> GetItemDataForHotbar()
+        {
+            return _hotbarStorage.GetItemsData();
+        }
+
         public void AddInventoryUIElement(int ui_id)
         {
             _inventoryUIElementIDList.Add(ui_id);
@@ -56,19 +61,19 @@ namespace Inventory
             if(_hotbarStorage.CheckIfStorageContains(item.ID))
             {
                 countLeft = _hotbarStorage.AddItem(item);
-                if(countLeft == 0)
+                UpdateHotbarCallback.Invoke();
+                if (countLeft == 0)
                 {
-                    UpdateHotbarCallback.Invoke();
                     return countLeft;
                 }
             }
             countLeft = _playerStorage.AddItem(item.ID, countLeft, item.IsStackable, item.StackLimit);
-            if(countLeft > 0)
+            if (countLeft > 0)
             {
                 countLeft = _playerStorage.AddItem(item.ID, countLeft, item.IsStackable, item.StackLimit);
+                UpdateHotbarCallback.Invoke();
                 if (countLeft == 0)
                 {
-                    UpdateHotbarCallback.Invoke();
                     return countLeft;
                 }
             }

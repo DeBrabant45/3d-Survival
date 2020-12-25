@@ -8,6 +8,17 @@ public class InteractState : BaseState
     {
         base.EnterState(controller);
         Debug.Log("Interaction State");
+        var resultCollider = controllerReference.DetectionSystem.CurrentCollider;
+        if(resultCollider != null)
+        {
+            var ipickable = resultCollider.GetComponent<IPickable>();
+            var remainder = controllerReference.InventorySystem.AddToStorage(ipickable.PickUp());
+            ipickable.SetCount(remainder);
+            if(remainder > 0)
+            {
+                Debug.Log("Can't pick it up");
+            }
+        }
     }
 
     public override void HandlePrimaryInput()

@@ -32,7 +32,20 @@ public class InventorySystem : MonoBehaviour
 
     private void UpdateHotBarHandler()
     {
-        Debug.Log("Updating hotbar");
+        var uIElements = _uIInventory.GetUIElementsForHotbar();
+        var hotbarItemList = _inventoryData.GetItemDataForHotbar();
+        for (int i = 0; i < uIElements.Count; i++)
+        {
+            var uIItemElement = uIElements[i];
+            uIItemElement.ClearItem();
+            var itemData = hotbarItemList[i];
+            if (itemData.IsNull == false)
+            {
+                var itemName = ItemDataManager.Instance.GetItemName(itemData.ID);
+                var itemSprite = ItemDataManager.Instance.GetItemSprite(itemData.ID);
+                uIItemElement.SetInventoryUIElement(itemName, itemData.Count, itemSprite);
+            }
+        }
     }
 
     private void AddEventHandlersToHotbarUIElements()
