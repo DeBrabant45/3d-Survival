@@ -32,4 +32,14 @@ public class UIStorageButtonsHelper : MonoBehaviour
     {
         _dropBtn.interactable = value;
     }
+
+    public void AssignUseButtonAction(Action handler)
+    {
+        _onUseBtnClick += handler;
+    }    
+    
+    public void AssignDropButtonAction(Action handler)
+    {
+        _onDropBtnClick += handler;
+    }
 }

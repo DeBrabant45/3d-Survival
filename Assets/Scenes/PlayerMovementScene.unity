@@ -696,7 +696,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242719668}
-  m_LocalRotation: {x: 0.3826835, y: -0, z: -0, w: 0.92387956}
+  m_LocalRotation: {x: 0.3826835, y: -0, z: -0, w: 0.9238795}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1489,7 +1489,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 634993294}
-  m_LocalRotation: {x: 0.3826835, y: 0, z: 0, w: 0.9238795}
+  m_LocalRotation: {x: 0.38268346, y: 0, z: 0, w: 0.9238795}
   m_LocalPosition: {x: 0, y: 9.280001, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3693,6 +3693,7 @@ MonoBehaviour:
   _storagePanel: {fileID: 1122407710}
   _storagePrefab: {fileID: 4803137102792491195, guid: 6ee20d00cf0e6ea4eba526827eda69b3,
     type: 3}
+  _uIStorageButtonsHelper: {fileID: 412570857}
   _canvas: {fileID: 402705710}
 --- !u!1001 &1875400494
 PrefabInstance:

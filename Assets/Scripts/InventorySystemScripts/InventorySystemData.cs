@@ -14,10 +14,10 @@ namespace Inventory
         private List<int> _inventoryUIElementIDList = new List<int>();
         private List<int> _hotbarUIElementIDList = new List<int>();
 
-
         public Action UpdateHotbarCallback;
         public int PlayerStorageLimit { get => _playerStorage.StorageLimit; }
         public int HotbarStorageLimit { get => _hotbarStorage.StorageLimit; }
+        public int SelectedItemUIID { get => _selectedItemUIID; }
 
         public InventorySystemData(int playerStorageSize, int hotbarStorageSize)
         {
@@ -43,6 +43,23 @@ namespace Inventory
         public List<ItemData> GetItemDataForHotbar()
         {
             return _hotbarStorage.GetItemsData();
+        }
+
+        public void RemoveItemFromInventory(int ui_id)
+        {
+            if(_hotbarUIElementIDList.Contains(ui_id))
+            {
+                _hotbarStorage.RemoveItemOfIndex(_hotbarUIElementIDList.IndexOf(ui_id));
+            }
+            else if(_inventoryUIElementIDList.Contains(ui_id))
+            {
+                _playerStorage.RemoveItemOfIndex(_inventoryUIElementIDList.IndexOf(ui_id));
+            }
+            else
+            {
+                throw new Exception("No Item with id " + ui_id);
+            }
+            ResetSelectedItem();
         }
 
         public void AddInventoryUIElement(int ui_id)
@@ -183,6 +200,19 @@ namespace Inventory
                 _hotbarStorage.SwapItemWithIndexFor(storage_Id_DroppedItem, storageData_Id_DraggedItem);
                 _playerStorage.RemoveItemOfIndex(storage_Id_DraggedItem);
             }
+        }
+
+        public string GetItemIDFor(int ui_id)
+        {
+            if(IsItemForUIInventoryStorageNotEmpty(ui_id))
+            {
+                return _playerStorage.GetIdOfItemWithIndex(_inventoryUIElementIDList.IndexOf(ui_id));
+            }
+            else if(IsItemForUIHotBarNotEmpty(ui_id))
+            {
+                return _hotbarStorage.GetIdOfItemWithIndex(_hotbarUIElementIDList.IndexOf(ui_id));
+            }
+            return null;
         }
     }
 }

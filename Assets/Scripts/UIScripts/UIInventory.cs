@@ -12,6 +12,7 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private GameObject _hotbarPanel;
     [SerializeField] private GameObject _storagePanel;
     [SerializeField] private GameObject _storagePrefab;
+    [SerializeField] private UIStorageButtonsHelper _uIStorageButtonsHelper;
     [SerializeField] private Canvas _canvas;
     private Dictionary<int, ItemPanelHelper> _inventoryUIItems = new Dictionary<int, ItemPanelHelper>();
     private Dictionary<int, ItemPanelHelper> _hotbarUIItems = new Dictionary<int, ItemPanelHelper>();
@@ -39,6 +40,27 @@ public class UIInventory : MonoBehaviour
         _hotbarItemElementsID = _hotbarUIItems.Keys.ToList();
     }
 
+    public void ClearItemElement(int ui_id)
+    {
+        GeItemFromCorrectDicitionary(ui_id).ClearItem();
+    }
+
+    private ItemPanelHelper GeItemFromCorrectDicitionary(int ui_id)
+    {
+        if (_inventoryUIItems.ContainsKey(ui_id))
+        {
+            Debug.Log("Item removed from the Inventory");
+            return _inventoryUIItems[ui_id];
+        }
+        else if(_hotbarUIItems.ContainsKey(ui_id))
+        {
+            Debug.Log("Item removed from the Hotbar");
+            return _hotbarUIItems[ui_id];
+        }
+        Debug.Log("The Item your trying to remove isn't in the Inventory or hotbar");
+        return null;
+    }
+
     public void ToggleUI()
     {
         if(_inventoryGeneralPanel.activeSelf == false)
@@ -50,6 +72,23 @@ public class UIInventory : MonoBehaviour
             _inventoryGeneralPanel.SetActive(false);
             DestroyDraggedObject();
         }
+        _uIStorageButtonsHelper.HideAllButtons();
+    }
+
+    public void AssignUseButtonHandler(Action handler)
+    {
+        _uIStorageButtonsHelper.AssignUseButtonAction(handler);
+    }    
+    
+    public void AssignDropButtonHandler(Action handler)
+    {
+        _uIStorageButtonsHelper.AssignDropButtonAction(handler);
+    }
+
+    public void ToggleItemButtons(bool useBtn, bool dropBtn)
+    {
+        _uIStorageButtonsHelper.ToggleDropButton(dropBtn);
+        _uIStorageButtonsHelper.ToggleUseButton(useBtn);
     }
 
     public void PrepareInventoryItems(int playerStorageLimit)
@@ -187,5 +226,23 @@ public class UIInventory : MonoBehaviour
         _inventoryUIItems[draggedItemID].SwapWithData(droppedItemData.ItemName, droppedItemData.ItemCount, droppedItemData.ItemImage.sprite, droppedItemData.IsEmpty);
         _hotbarUIItems[droppedItemID].SwapWithData(tempName, tempCount, tempSprite, tempIsEmpty);
         DestroyDraggedObject();
+    }
+
+    public void HighLightSelectedItem(int ui_id)
+    {
+        if(_hotbarUIItems.ContainsKey(ui_id))
+        {
+            return;
+        }
+        _inventoryUIItems[ui_id].ToggleHighLight(true);
+    }    
+    
+    public void DeHighLightSelectedItem(int ui_id)
+    {
+        if(_hotbarUIItems.ContainsKey(ui_id))
+        {
+            return;
+        }
+        _inventoryUIItems[ui_id].ToggleHighLight(false);
     }
 }

@@ -120,4 +120,9 @@ public class ItemPanelHelper : MonoBehaviour, IPointerClickHandler, IDragHandler
     {
         DropCallBack.Invoke(eventData, GetInstanceID());
     }
+
+    public void ToggleHighLight(bool value)
+    {
+        _outline.enabled = value;
+    }
 }
