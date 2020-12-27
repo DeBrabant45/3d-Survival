@@ -42,10 +42,10 @@ public class UIInventory : MonoBehaviour
 
     public void ClearItemElement(int ui_id)
     {
-        GeItemFromCorrectDicitionary(ui_id).ClearItem();
+        GetItemFromCorrectDicitionary(ui_id).ClearItem();
     }
 
-    private ItemPanelHelper GeItemFromCorrectDicitionary(int ui_id)
+    private ItemPanelHelper GetItemFromCorrectDicitionary(int ui_id)
     {
         if (_inventoryUIItems.ContainsKey(ui_id))
         {
@@ -73,6 +73,11 @@ public class UIInventory : MonoBehaviour
             DestroyDraggedObject();
         }
         _uIStorageButtonsHelper.HideAllButtons();
+    }
+
+    public void UpdateItemInfo(int ui_id, int count)
+    {
+        GetItemFromCorrectDicitionary(ui_id).UpdateCount(count);
     }
 
     public void AssignUseButtonHandler(Action handler)

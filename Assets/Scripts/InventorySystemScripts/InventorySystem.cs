@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class InventorySystem : MonoBehaviour
 {
     [SerializeField] private int _playerStorageSize = 20;
+    [SerializeField] InteractionManager _interactionManager;
     private UIInventory _uIInventory;
     private InventorySystemData _inventoryData;
 
@@ -34,13 +35,39 @@ public class InventorySystem : MonoBehaviour
 
     private void UseInventoryItemHandler()
     {
-        Debug.Log("Using Item");
+        var selectedID = _inventoryData.SelectedItemUIID;
+        var itemData = ItemDataManager.Instance.GetItemData(_inventoryData.GetItemIDFor(selectedID));
+        UseItem(itemData, selectedID);
     }
 
     private void DropHandler()
     {
-        ClearUIElement(_inventoryData.SelectedItemUIID);
-        _inventoryData.RemoveItemFromInventory(_inventoryData.SelectedItemUIID);
+        var selectedID = _inventoryData.SelectedItemUIID;
+        ItemSpawnManager.Instance.CreateItemAtPlayersFeet(_inventoryData.GetItemIDFor(selectedID), _inventoryData.GetItemCountFor(selectedID));
+        ClearUIElement(selectedID);
+        _inventoryData.RemoveItemFromInventory(selectedID);
+    }
+
+    private void UseItem(ItemSO itemData, int ui_id)
+    {
+        if(_interactionManager.UseItem(itemData))
+        {
+            _inventoryData.TakeOneFromItem(ui_id);
+            if (_inventoryData.IsSelectedItemEmpty(ui_id))
+            {
+                ClearUIElement(ui_id);
+                _inventoryData.RemoveItemFromInventory(ui_id);
+            }
+            else
+            {
+                UpdateUI(ui_id, _inventoryData.GetItemCountFor(ui_id));
+            }
+        }
+    }
+
+    private void UpdateUI(int ui_id, int count)
+    {
+        _uIInventory.UpdateItemInfo(ui_id, count);
     }
 
     private void ClearUIElement(int ui_id)

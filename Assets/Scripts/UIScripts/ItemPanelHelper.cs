@@ -102,6 +102,12 @@ public class ItemPanelHelper : MonoBehaviour, IPointerClickHandler, IDragHandler
         DragStartCallBack.Invoke(eventData, GetInstanceID());
     }
 
+    public void UpdateCount(int count)
+    {
+        _itemCount = count;
+        _countText.text = _itemCount + "";
+    }
+
     public void OnDrag(PointerEventData eventData)
     {
         if (_isEmpty)

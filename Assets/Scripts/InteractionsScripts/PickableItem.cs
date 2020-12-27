@@ -39,4 +39,9 @@ public class PickableItem : MonoBehaviour, IPickable, IInventoryItem
             Destroy(gameObject);
         }
     }
+
+    public void SetDataSource(ItemSO data)
+    {
+        _dataSource = data;
+    }
 }

@@ -124,12 +124,6 @@ namespace Inventory
             }
         }
 
-        private bool IsItemForUIInventoryStorageNotEmpty(int ui_id)
-        {
-            return _inventoryUIElementIDList.Contains(ui_id) && _playerStorage.CheckIfItemIsEmpty
-                (_inventoryUIElementIDList.IndexOf(ui_id)) == false;
-        }
-
         public void SwapStorageItemsInsideHotbar(int droppedItemID, int draggedItemID)
         {
             var storage_Id_DraggedItem = _hotbarUIElementIDList.IndexOf(draggedItemID);
@@ -174,11 +168,6 @@ namespace Inventory
             }
         }
 
-        private bool IsItemForUIHotBarNotEmpty(int ui_id)
-        {
-            return _hotbarStorage.CheckIfItemIsEmpty(_hotbarUIElementIDList.IndexOf(ui_id)) == false;
-        }
-
         public void SwapStorageItemFromInventoryToHotbar(int droppedItemID, int draggedItemID)
         {
             var storage_Id_DraggedItem = _inventoryUIElementIDList.IndexOf(draggedItemID);
@@ -202,6 +191,33 @@ namespace Inventory
             }
         }
 
+        private bool IsItemForUIInventoryStorageNotEmpty(int ui_id)
+        {
+            return _inventoryUIElementIDList.Contains(ui_id) && _playerStorage.CheckIfItemIsEmpty
+                (_inventoryUIElementIDList.IndexOf(ui_id)) == false;
+        }
+
+        private bool IsItemForUIHotBarNotEmpty(int ui_id)
+        {
+            return _hotbarUIElementIDList.Contains(ui_id) && _hotbarStorage.CheckIfItemIsEmpty(_hotbarUIElementIDList.IndexOf(ui_id)) == false;
+        }
+
+        public bool IsSelectedItemEmpty(int ui_id)
+        {
+            if (IsItemForUIInventoryStorageNotEmpty(ui_id))
+            {
+                return _playerStorage.CheckIfItemIsEmpty(_inventoryUIElementIDList.IndexOf(ui_id));
+            }
+            else if (IsItemForUIHotBarNotEmpty(ui_id))
+            {
+                return _hotbarStorage.CheckIfItemIsEmpty(_hotbarUIElementIDList.IndexOf(ui_id));
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public string GetItemIDFor(int ui_id)
         {
             if(IsItemForUIInventoryStorageNotEmpty(ui_id))
@@ -213,6 +229,35 @@ namespace Inventory
                 return _hotbarStorage.GetIdOfItemWithIndex(_hotbarUIElementIDList.IndexOf(ui_id));
             }
             return null;
+        }
+
+        public int GetItemCountFor(int ui_id)
+        {
+            if (IsItemForUIInventoryStorageNotEmpty(ui_id))
+            {
+                return _playerStorage.GetCountOfItemWithIndex(_inventoryUIElementIDList.IndexOf(ui_id));
+            }
+            else if (IsItemForUIHotBarNotEmpty(ui_id))
+            {
+                return _hotbarStorage.GetCountOfItemWithIndex(_hotbarUIElementIDList.IndexOf(ui_id));
+            }
+            return -1;
+        }
+
+        public void TakeOneFromItem(int ui_id)
+        {
+            if (IsItemForUIInventoryStorageNotEmpty(ui_id))
+            {
+                _playerStorage.TakeFromItemWith(_inventoryUIElementIDList.IndexOf(ui_id), 1);
+            }
+            else if (IsItemForUIHotBarNotEmpty(ui_id))
+            {
+               _hotbarStorage.TakeFromItemWith(_hotbarUIElementIDList.IndexOf(ui_id), 1);
+            }
+            else
+            {
+                throw new Exception("No item with ui id " + ui_id);
+            }
         }
     }
 }

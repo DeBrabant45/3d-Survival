@@ -39,7 +39,7 @@ public class ItemDataManager : MonoBehaviour
         return _itemsDictionary[id].ImageSprite;
     }
 
-    public ItemSO GetItemSO (string id)
+    public ItemSO GetItemData (string id)
     {
         IDNotFoundException(id);
         return _itemsDictionary[id];
