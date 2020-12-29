@@ -72,12 +72,7 @@ public class ItemPanelHelper : MonoBehaviour, IPointerClickHandler, IDragHandler
         }
         ResetImage();
         _isEmpty = true;
-        ToggleHighlight(false);
-    }
-
-    private void ToggleHighlight(bool value)
-    {
-        _outline.enabled = value;
+        ToggleHighLight(false);
     }
 
     private void ResetImage()

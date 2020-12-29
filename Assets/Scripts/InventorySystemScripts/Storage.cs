@@ -230,6 +230,31 @@ namespace SVS.InventorySystem
         }
 
         /// <summary>
+        /// Check if storage contains AmountToAdd of item with Index
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="amountToAdd"></param>
+        /// <returns>True if storage contains enough item</returns>
+        public bool CheckIfStorageHasEnoughOfItemCountToAdd(string index, int amountToAdd)
+        {
+            int quantity = 0;
+            foreach (var item in storageItems)
+            {
+                if (item == null)
+                    continue;
+                if (item.ID == index)
+                {
+                    quantity += item.Count;
+                    if ((quantity + amountToAdd) < item.StackLimit)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Increases the storage size;
         /// </summary>
         /// <param name="capacity"></param>

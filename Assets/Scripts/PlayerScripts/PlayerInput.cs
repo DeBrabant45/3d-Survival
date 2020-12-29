@@ -20,7 +20,7 @@ public class PlayerInput : MonoBehaviour
     private void Start()
     {
         _mainCamera = Camera.main;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -63,7 +63,7 @@ public class PlayerInput : MonoBehaviour
     private void GetHotBarInput()
     {
         char hotbar0 = '0';
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < 10; i++)
         {
             KeyCode keyCode = (KeyCode)((int)hotbar0 + i);
             if(Input.GetKeyDown(keyCode))

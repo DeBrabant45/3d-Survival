@@ -75,7 +75,8 @@ namespace Inventory
         public int AddToStorage(IInventoryItem item)
         {
             int countLeft = item.Count;
-            if(_hotbarStorage.CheckIfStorageContains(item.ID))
+            //Adds item to hotbar as long as the hotbar contains item and the max count isn't exceeded.
+            if (_hotbarStorage.CheckIfStorageContains(item.ID) && _hotbarStorage.CheckIfStorageHasEnoughOfItemCountToAdd(item.ID, countLeft) == true)
             {
                 countLeft = _hotbarStorage.AddItem(item);
                 UpdateHotbarCallback.Invoke();
@@ -84,6 +85,7 @@ namespace Inventory
                     return countLeft;
                 }
             }
+            //Adds item to the inventory 
             countLeft = _playerStorage.AddItem(item.ID, countLeft, item.IsStackable, item.StackLimit);
             if (countLeft > 0)
             {

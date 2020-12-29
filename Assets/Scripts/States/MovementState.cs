@@ -47,6 +47,12 @@ public class MovementState : BaseState
         controllerReference.TransitionToState(controllerReference.interactState);
     }
 
+    public override void HandleHotBarInput(int hotbarKey)
+    {
+        base.HandleHotBarInput(hotbarKey);
+        controllerReference.InventorySystem.HotbarShortKeyHandler(hotbarKey);
+    }
+
     public override void Update()
     {
         base.Update();

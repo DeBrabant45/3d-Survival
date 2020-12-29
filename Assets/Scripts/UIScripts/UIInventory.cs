@@ -40,6 +40,15 @@ public class UIInventory : MonoBehaviour
         _hotbarItemElementsID = _hotbarUIItems.Keys.ToList();
     }
 
+    public int GetHotBarElementUIIDWithIndex(int ui_index)
+    {
+        if (_hotbarItemElementsID.Count <= ui_index)
+        {
+            return -1;
+        }
+        return _hotbarItemElementsID[ui_index];
+    }
+
     public void ClearItemElement(int ui_id)
     {
         GetItemFromCorrectDicitionary(ui_id).ClearItem();
@@ -249,5 +258,19 @@ public class UIInventory : MonoBehaviour
             return;
         }
         _inventoryUIItems[ui_id].ToggleHighLight(false);
+    }
+
+    public void DeHighLightAllNonSelectedItems(int ui_id)
+    {
+        if(_inventoryUIItems.ContainsKey(ui_id))
+        {
+            foreach (var item in _inventoryUIItems.Keys)
+            {
+                if(item != ui_id)
+                {
+                    _inventoryUIItems[item].ToggleHighLight(false);
+                }
+            }
+        }
     }
 }

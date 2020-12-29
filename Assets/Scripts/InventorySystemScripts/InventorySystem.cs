@@ -40,6 +40,17 @@ public class InventorySystem : MonoBehaviour
         UseItem(itemData, selectedID);
     }
 
+    public void HotbarShortKeyHandler(int hotbarKey)
+    {
+        var ui_index = hotbarKey == 0 ? 9 : hotbarKey - 1;
+        var uIElementID = _uIInventory.GetHotBarElementUIIDWithIndex(ui_index);
+        if (uIElementID == -1) return;
+        var id = _inventoryData.GetItemIDFor(uIElementID);
+        if (id == null) return;
+        var itemData = ItemDataManager.Instance.GetItemData(id);
+        UseItem(itemData, uIElementID);
+    }
+
     private void DropHandler()
     {
         var selectedID = _inventoryData.SelectedItemUIID;
@@ -111,11 +122,10 @@ public class InventorySystem : MonoBehaviour
 
     private void UseHotBarItemHandler(int ui_id, bool isEmpty)
     {
-        Debug.Log("Using hbar item");
-        if (isEmpty)
-        {
-            return;
-        }
+        if (isEmpty) return;
+        DeselectCurrentItem();
+        var itemData = ItemDataManager.Instance.GetItemData(_inventoryData.GetItemIDFor(ui_id));
+        UseItem(itemData, ui_id);
     }
 
     public void ToggleInventory()
@@ -257,7 +267,6 @@ public class InventorySystem : MonoBehaviour
 
     private void UIElementSelectedHandler(int ui_id, bool isEmpty)
     {
-        Debug.Log("Selecting invt item");
         if (isEmpty == false)
         {
             DeselectCurrentItem();
@@ -270,6 +279,11 @@ public class InventorySystem : MonoBehaviour
 
     private void DeselectCurrentItem()
     {
+        if(_inventoryData.SelectedItemUIID != -1)
+        {
+            _uIInventory.DeHighLightSelectedItem(_inventoryData.SelectedItemUIID);
+            _uIInventory.ToggleItemButtons(false, false);
+        }
         _inventoryData.ResetSelectedItem();
     }
 
