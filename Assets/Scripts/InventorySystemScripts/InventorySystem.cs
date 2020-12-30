@@ -6,7 +6,7 @@ using System;
 using SVS.InventorySystem;
 using UnityEngine.EventSystems;
 
-public class InventorySystem : MonoBehaviour
+public class InventorySystem : MonoBehaviour, ISaveable
 {
     [SerializeField] private int _playerStorageSize = 20;
     [SerializeField] InteractionManager _interactionManager;
@@ -291,5 +291,16 @@ public class InventorySystem : MonoBehaviour
     {
         int value = _inventoryData.AddToStorage(item);
         return value;
+    }
+
+    public string GetJsonDataToSave()
+    {
+        return JsonUtility.ToJson(_inventoryData.GetDataToSave());
+    }
+
+    public void LoadJsonData(string jsonData)
+    {
+        SavedItemSystemData dataToLoad = JsonUtility.FromJson<SavedItemSystemData>(jsonData);
+        _inventoryData.LoadData(dataToLoad);
     }
 }

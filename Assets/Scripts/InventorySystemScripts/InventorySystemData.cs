@@ -261,5 +261,38 @@ namespace Inventory
                 throw new Exception("No item with ui id " + ui_id);
             }
         }
+
+        public SavedItemSystemData GetDataToSave()
+        {
+            return new SavedItemSystemData
+            {
+                PlayerStorageItems = _playerStorage.GetDataToSave(),
+                HotbarStorageItems = _hotbarStorage.GetDataToSave(),
+                PlayerStorageSize = _playerStorage.StorageLimit
+            };
+        }
+
+        public void LoadData(SavedItemSystemData dataToLoad)
+        {
+            _playerStorage = new Storage(dataToLoad.PlayerStorageSize);
+            //Clear potential old hotbar data before loading saved data into hotbar
+            _hotbarStorage.ClearStorage();
+            //Loads from the user's inventory
+            LoadDataFromItemStorageList(dataToLoad.PlayerStorageItems, _playerStorage);
+            //Loads from the user's hotbar
+            LoadDataFromItemStorageList(dataToLoad.HotbarStorageItems, _hotbarStorage);
+            UpdateHotbarCallback.Invoke();
+        }
+
+        private void LoadDataFromItemStorageList(List<ItemData> dataToLoad, Storage storage)
+        {
+            foreach (var item in dataToLoad)
+            {
+                if (item.IsNull == false)
+                {
+                    storage.SwapItemWithIndexFor(item.StorageIndex, item);
+                }
+            }
+        }
     }
 }
