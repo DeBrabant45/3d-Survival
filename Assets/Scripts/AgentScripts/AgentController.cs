@@ -10,26 +10,31 @@ public class AgentController : MonoBehaviour
     [SerializeField] HumanoidAnimations _agentAnimations;
     [SerializeField] InventorySystem _inventorySystem;
     [SerializeField] DetectionSystem _detectionSystem;
-    private BaseState currentState;
+    [SerializeField] GameManager _gameManager;
+    private BaseState _previousState;
+    private BaseState _currentState;
 
     public readonly BaseState movementState = new MovementState();
     public readonly BaseState jumpState = new JumpState();
     public readonly BaseState fallingState = new FallingState();
     public readonly BaseState inventoryState = new InventoryState();
     public readonly BaseState interactState = new InteractState();
+    public readonly BaseState menuState = new MenuState();
     public PlayerInput InputFromPlayer { get => _input; }
     public AgentMovement Movement { get => _movement; }
     public HumanoidAnimations AgentAnimations { get => _agentAnimations; }
     public InventorySystem InventorySystem { get => _inventorySystem; }
     public DetectionSystem DetectionSystem { get => _detectionSystem; }
+    public GameManager GameManager { get => _gameManager; }
+    public BaseState PreviousState { get => _previousState; }
 
     private void OnEnable()
     {
         _movement = GetComponent<AgentMovement>();
         _input = GetComponent<PlayerInput>();
         _agentAnimations = GetComponent<HumanoidAnimations>();
-        currentState = movementState;
-        currentState.EnterState(this);
+        _currentState = movementState;
+        _currentState.EnterState(this);
         AssignInputListeners();
         _detectionSystem = GetComponent<DetectionSystem>();
     }
@@ -41,36 +46,42 @@ public class AgentController : MonoBehaviour
         _input.OnToggleInventory += HandleInventoryInput;
         _input.OnPrimaryAction += HandlePrimaryInput;
         _input.OnSecondaryAction += HandleSecondaryInput;
+        _input.OnMenuToggledKey += HandleMenuInput;
+    }
+
+    private void HandleMenuInput()
+    {
+        _currentState.HandleMenuInput();
     }
 
     private void HandleSecondaryInput()
     {
-        currentState.HandleSecondaryInput();
+        _currentState.HandleSecondaryInput();
     }
 
     private void HandlePrimaryInput()
     {
-        currentState.HandlePrimaryInput();
+        _currentState.HandlePrimaryInput();
     }
 
     private void HandleJump()
     {
-        currentState.HandleJumpInput();
+        _currentState.HandleJumpInput();
     }
 
     private void HandleInventoryInput()
     {
-        currentState.HandleInventoryInput();
+        _currentState.HandleInventoryInput();
     }
 
     private void HandleHotBarInput(int hotBarKey)
     {
-        currentState.HandleHotBarInput(hotBarKey);
+        _currentState.HandleHotBarInput(hotBarKey);
     }
 
     private void Update()
     {
-        currentState.Update();
+        _currentState.Update();
     }
 
     private void OnDrawGizmos()
@@ -84,12 +95,15 @@ public class AgentController : MonoBehaviour
 
     private void OnDisable()
     {
-        _input.OnJump -= currentState.HandleJumpInput;
+        _input.OnJump -= _currentState.HandleJumpInput;
     }
 
     public void TransitionToState(BaseState state)
     {
-        currentState = state;
-        currentState.EnterState(this);
+        _previousState = _currentState;
+        //Debug.Log(_previousState + " old State");
+        _currentState = state;
+        _currentState.EnterState(this);
+        //Debug.Log(_currentState + " new State");
     }
 }

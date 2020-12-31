@@ -19,4 +19,5 @@ public abstract class BaseState
     public virtual void Update() { }
     public virtual void HandleSecondaryInput() { }
     public virtual void HandlePrimaryInput() { }
+    public virtual void HandleMenuInput() { }
 }

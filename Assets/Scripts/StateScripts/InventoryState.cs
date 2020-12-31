@@ -22,4 +22,14 @@ public class InventoryState : BaseState
         controllerReference.InventorySystem.ToggleInventory();
         controllerReference.TransitionToState(controllerReference.movementState);
     }
+
+    public override void HandleMenuInput()
+    {
+        base.HandleMenuInput();
+        Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        controllerReference.InventorySystem.ToggleInventory();
+        controllerReference.TransitionToState(controllerReference.menuState);
+    }
 }

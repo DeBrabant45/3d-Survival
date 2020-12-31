@@ -16,15 +16,17 @@ public class PlayerInput : MonoBehaviour
     public Action<int> OnHotBarKey { get; set; }
     public Action OnPrimaryAction { get; set; }
     public Action OnSecondaryAction { get; set; }
+    public Action OnMenuToggledKey { get; set; }
 
     private void Start()
     {
         _mainCamera = Camera.main;
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
     {
+        CheckMenuButton();
         GetMovementInput();
         GetMovementDirection();
         GetJumpInput();
@@ -32,6 +34,14 @@ public class PlayerInput : MonoBehaviour
         GetHotBarInput();
         GetPrimaryAction();
         GetSecondaryAction();
+    }
+
+    private void CheckMenuButton()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnMenuToggledKey?.Invoke();
+        }
     }
 
     private void GetSecondaryAction()

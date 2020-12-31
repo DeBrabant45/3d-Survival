@@ -15,5 +15,4 @@ public class FallingState : JumpState
     {
         base.Update();
     }
-
 }

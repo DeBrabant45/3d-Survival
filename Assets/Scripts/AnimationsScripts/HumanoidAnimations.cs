@@ -29,6 +29,11 @@ public class HumanoidAnimations : MonoBehaviour
     public void TriggerFallAnimation()
     {
         _animator.SetTrigger("fall");
+    }    
+    
+    public void ResetTriggerFallAnimation()
+    {
+        _animator.ResetTrigger("fall");
     }
 
     public void SetMovementFloat(float value)
