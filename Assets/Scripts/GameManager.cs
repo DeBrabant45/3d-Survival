@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SaveSystem _saveSystem;
     [SerializeField] private string _mainMenuSceneName;
     [SerializeField] private UIInGameMenu _uIInGameMenu;
+    [SerializeField] private AudioManager _audioManager;
+
+    public AudioManager AudioManager { get => _audioManager; }
 
     // Start is called before the first frame update
     void Start()

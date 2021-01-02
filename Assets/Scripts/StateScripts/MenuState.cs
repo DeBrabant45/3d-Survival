@@ -8,6 +8,7 @@ public class MenuState : BaseState
     {
         base.EnterState(controller);
         controllerReference.GameManager.ToggleGameMenu();
+        controllerReference.GameManager.AudioManager.PauseAllMapSounds();
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         Time.timeScale = 0;
@@ -20,6 +21,7 @@ public class MenuState : BaseState
         Cursor.visible = false;
         Time.timeScale = 1;
         controllerReference.GameManager.ToggleGameMenu();
+        controllerReference.GameManager.AudioManager.StartAllMapSounds();
         controllerReference.TransitionToState(controllerReference.PreviousState);
     }
 }

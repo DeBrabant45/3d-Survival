@@ -20,10 +20,4 @@ public class UIMainMenu : MonoBehaviour
             _resumeBtn.interactable = true;
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
