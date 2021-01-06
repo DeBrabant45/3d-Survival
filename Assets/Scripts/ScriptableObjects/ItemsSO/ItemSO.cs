@@ -19,6 +19,7 @@ public abstract class ItemSO : ScriptableObject, ISerializationCallbackReceiver
     public GameObject Model { get => _model; }
     public bool IsStackable { get => _isStackable; }
     public int StackLimit { get => _stackLimit; }
+    public ItemType ItemTypeSO { get => _itemType; set => _itemType = value; }
 
     public void OnAfterDeserialize() {}
 
@@ -54,5 +55,7 @@ public enum ItemType
 {
     None,
     Food,
-    Weapon
+    Weapon,
+    Material,
+    Structure
 }
