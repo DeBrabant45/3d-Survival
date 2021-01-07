@@ -23,7 +23,6 @@ public class RecipeSO : ScriptableObject, IInventoryItem
         {
             ingredients.Add(ingredient.Ingredients.ID, ingredient.Count);
         }
-
         return ingredients;
     }
 

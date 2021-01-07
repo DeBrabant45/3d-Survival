@@ -26,10 +26,6 @@ public class InventorySystem : MonoBehaviour, ISaveable
         _inventoryData.UpdateHotbarCallback += UpdateHotBarHandler;
         _uIInventory.AssignDropButtonHandler(DropHandler);
         _uIInventory.AssignUseButtonHandler(UseInventoryItemHandler);
-        //ItemData artificialItem = new ItemData(0, 11, "21780ff88a3d4166bc265904c53e402c", true, 100);
-        //ItemData artificialItem1 = new ItemData(0, 90, "21780ff88a3d4166bc265904c53e402c", true, 100);
-        //AddToStorage(artificialItem);
-        //AddToStorage(artificialItem1);
         AddEventHandlersToHotbarUIElements();
     }
 
@@ -101,7 +97,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
             {
                 var itemName = ItemDataManager.Instance.GetItemName(itemData.ID);
                 var itemSprite = ItemDataManager.Instance.GetItemSprite(itemData.ID);
-                uIItemElement.SetInventoryUIElement(itemName, itemData.Count, itemSprite);
+                uIItemElement.SetItemUIElement(itemName, itemData.Count, itemSprite);
             }
         }
     }
@@ -152,7 +148,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
             {
                 var itemName = ItemDataManager.Instance.GetItemName(itemData.ID);
                 var itemSprite = ItemDataManager.Instance.GetItemSprite(itemData.ID);
-                uIItemElement.SetInventoryUIElement(itemName, itemData.Count, itemSprite);
+                uIItemElement.SetItemUIElement(itemName, itemData.Count, itemSprite);
             }
             _inventoryData.AddInventoryUIElement(uIItemElement.GetInstanceID());
         }
