@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIStorageButtonsHelper : MonoBehaviour
+public class UIStorageButtons : MonoBehaviour
 {
     [SerializeField] private Button _useBtn;
     [SerializeField] private Button _dropBtn;

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemPanelHelper : MonoBehaviour
+public class ItemPanel : MonoBehaviour
 {
     [SerializeField] private Image _itemImage;
     [SerializeField] private Text _nameText;

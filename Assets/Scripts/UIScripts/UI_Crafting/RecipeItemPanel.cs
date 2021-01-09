@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class RecipeItemHelper : ItemPanelHelper, IPointerClickHandler
+public class RecipeItemPanel : ItemPanel, IPointerClickHandler
 {
     private Action<int> _onClickEvent;
 

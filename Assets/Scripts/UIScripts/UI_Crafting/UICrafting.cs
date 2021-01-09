@@ -14,7 +14,7 @@ public class UICrafting : MonoBehaviour
     [SerializeField] GameObject _recipePrefab;
     [SerializeField] GameObject _ingredientPrefab;
     [SerializeField] Button _craftButton;
-    private Dictionary<int, RecipeItemHelper> _recipeUIElements = new Dictionary<int, RecipeItemHelper>();
+    private Dictionary<int, RecipeItemPanel> _recipeUIElements = new Dictionary<int, RecipeItemPanel>();
     private Action _onCraftButtonClicked;
     private Action<int> _onRecipeButtonClicked;
 
@@ -92,7 +92,7 @@ public class UICrafting : MonoBehaviour
     public void AddIngredient(string ingredientName, Sprite ingredientSprite, int ingredientCount, bool isMax)
     {
         var element = Instantiate(_ingredientPrefab, Vector3.zero, Quaternion.identity, _ingredientElementsPanel.transform);
-        var ingredientHelper = element.GetComponent<IngredientPanelHelper>();
+        var ingredientHelper = element.GetComponent<IngredientItemPanel>();
         ingredientHelper.SetItemUIElement(ingredientName, ingredientSprite, ingredientCount, isMax);
     }
 
@@ -104,7 +104,7 @@ public class UICrafting : MonoBehaviour
         foreach (var item in Recipes)
         {
             var element = Instantiate(_recipePrefab, Vector3.zero, Quaternion.identity, _recipeItemsPanel.transform);
-            var recipeHelper = element.GetComponent<RecipeItemHelper>();
+            var recipeHelper = element.GetComponent<RecipeItemPanel>();
             recipeHelper.OnClickEvent += OnRecipeClicked;
             _recipeUIElements.Add(element.GetInstanceID(), recipeHelper);
             recipeHelper.SetItemUIElement(item.RecipeName, item.GetOutComeSprite());

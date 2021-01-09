@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryItemPanelHelper : ItemPanelHelper, IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler, IDropHandler
+public class InventoryItemPanel : ItemPanel, IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler, IDropHandler
 {
     [SerializeField] private Text _countText;
     [SerializeField] private int _itemCount;

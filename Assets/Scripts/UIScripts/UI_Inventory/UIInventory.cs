@@ -12,25 +12,25 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private GameObject _hotbarPanel;
     [SerializeField] private GameObject _storagePanel;
     [SerializeField] private GameObject _storagePrefab;
-    [SerializeField] private UIStorageButtonsHelper _uIStorageButtonsHelper;
+    [SerializeField] private UIStorageButtons _uIStorageButtons;
     [SerializeField] private Canvas _canvas;
-    private Dictionary<int, InventoryItemPanelHelper> _inventoryUIItems = new Dictionary<int, InventoryItemPanelHelper>();
-    private Dictionary<int, InventoryItemPanelHelper> _hotbarUIItems = new Dictionary<int, InventoryItemPanelHelper>();
+    private Dictionary<int, InventoryItemPanel> _inventoryUIItems = new Dictionary<int, InventoryItemPanel>();
+    private Dictionary<int, InventoryItemPanel> _hotbarUIItems = new Dictionary<int, InventoryItemPanel>();
     private List<int> _hotbarItemElementsID = new List<int>();
     private RectTransform _draggableItem;
-    private InventoryItemPanelHelper _draggableItemPanel;
+    private InventoryItemPanel _draggableItemPanel;
 
     public bool IsInventoryVisable { get => _inventoryGeneralPanel.activeSelf; }
     public int HotbarElementsCount { get => _hotbarUIItems.Count; }
     public RectTransform DraggableItem { get => _draggableItem; }
-    public InventoryItemPanelHelper DraggableItemPanel { get => _draggableItemPanel; }
+    public InventoryItemPanel DraggableItemPanel { get => _draggableItemPanel; }
 
     private void Awake()
     {
         _inventoryGeneralPanel.SetActive(false);
         foreach(Transform child in _hotbarPanel.transform)
         {
-            InventoryItemPanelHelper helper = child.GetComponent<InventoryItemPanelHelper>();
+            InventoryItemPanel helper = child.GetComponent<InventoryItemPanel>();
             if(helper != null)
             {
                 _hotbarUIItems.Add(helper.GetInstanceID(), helper);
@@ -54,7 +54,7 @@ public class UIInventory : MonoBehaviour
         GetItemFromCorrectDicitionary(ui_id).ClearItem();
     }
 
-    private InventoryItemPanelHelper GetItemFromCorrectDicitionary(int ui_id)
+    private InventoryItemPanel GetItemFromCorrectDicitionary(int ui_id)
     {
         if (_inventoryUIItems.ContainsKey(ui_id))
         {
@@ -81,7 +81,7 @@ public class UIInventory : MonoBehaviour
             _inventoryGeneralPanel.SetActive(false);
             DestroyDraggedObject();
         }
-        _uIStorageButtonsHelper.HideAllButtons();
+        _uIStorageButtons.HideAllButtons();
     }
 
     public void UpdateItemInfo(int ui_id, int count)
@@ -91,18 +91,18 @@ public class UIInventory : MonoBehaviour
 
     public void AssignUseButtonHandler(Action handler)
     {
-        _uIStorageButtonsHelper.AssignUseButtonAction(handler);
+        _uIStorageButtons.AssignUseButtonAction(handler);
     }    
     
     public void AssignDropButtonHandler(Action handler)
     {
-        _uIStorageButtonsHelper.AssignDropButtonAction(handler);
+        _uIStorageButtons.AssignDropButtonAction(handler);
     }
 
     public void ToggleItemButtons(bool useBtn, bool dropBtn)
     {
-        _uIStorageButtonsHelper.ToggleDropButton(dropBtn);
-        _uIStorageButtonsHelper.ToggleUseButton(useBtn);
+        _uIStorageButtons.ToggleDropButton(dropBtn);
+        _uIStorageButtons.ToggleUseButton(useBtn);
     }
 
     public void PrepareInventoryItems(int playerStorageLimit)
@@ -116,7 +116,7 @@ public class UIInventory : MonoBehaviour
         for (int i = 0; i < playerStorageLimit; i++)
         {
             var element = Instantiate(_storagePrefab, Vector3.zero, Quaternion.identity, _storagePanel.transform);
-            var itemHelper = element.GetComponent<InventoryItemPanelHelper>();
+            var itemHelper = element.GetComponent<InventoryItemPanel>();
             _inventoryUIItems.Add(itemHelper.GetInstanceID(), itemHelper);
         }
     }
@@ -133,12 +133,12 @@ public class UIInventory : MonoBehaviour
         _inventoryUIItems.Clear();
     }
 
-    public List<InventoryItemPanelHelper> GetUIElementsForInventory()
+    public List<InventoryItemPanel> GetUIElementsForInventory()
     {
         return _inventoryUIItems.Values.ToList();
     }
 
-    public List<InventoryItemPanelHelper> GetUIElementsForHotbar()
+    public List<InventoryItemPanel> GetUIElementsForHotbar()
     {
         return _hotbarUIItems.Values.ToList();
     }

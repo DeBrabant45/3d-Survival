@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class IngredientPanelHelper : ItemPanelHelper
+public class IngredientItemPanel : ItemPanel
 {
     [SerializeField] private Image _panelImage;
     [SerializeField] private Text _count;
