@@ -126,6 +126,19 @@ namespace SVS.InventorySystem
             return itemCount;
         }
 
+        public int GetItemCount(string id)
+        {
+            int qty = 0;
+            foreach (var item in storageItems)
+            {
+                if (item == null)
+                    continue;
+                if (item.ID == id)
+                    qty += item.Count;
+            }
+            return qty;
+        }
+
         /// <summary>
         /// Returns true if storage contains item with DataID
         /// </summary>

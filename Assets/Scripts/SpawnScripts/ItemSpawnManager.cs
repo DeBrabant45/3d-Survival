@@ -64,7 +64,7 @@ public class ItemSpawnManager : MonoBehaviour
                     for (int i = 0; i < spawner.Count; i++)
                     {
                         spawnPosition = itemSpawner.position + randomPosition;
-                        CreateItemInPlace(spawnPosition, spawner.ItemToSpawn, spawner.Count);
+                        CreateItemInPlace(spawnPosition, spawner.ItemToSpawn, 1);
                         randomPosition = GenerateRandomPosition(spawner.Radius);
                     }
                 }

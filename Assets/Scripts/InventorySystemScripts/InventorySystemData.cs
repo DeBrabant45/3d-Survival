@@ -99,6 +99,56 @@ namespace Inventory
             return countLeft;
         }
 
+        public int TakeOneFromItem(string id, int count)
+        {
+            int tempCount = 0;
+            tempCount += TakeFromStorage(_hotbarStorage, id, count);
+            if(tempCount == count)
+            {
+                return count;
+            }
+            else
+            {
+                tempCount += TakeFromStorage(_playerStorage, id, count - tempCount);
+            }
+            return tempCount;
+        }
+
+        private int TakeFromStorage(Storage storage, string id, int count)
+        {
+            var tempQty = storage.GetItemCount(id);
+            if(tempQty > 0)
+            {
+                if(tempQty >= count)
+                {
+                    storage.TakeItemFromStorageIfContaintEnough(id, count);
+                    return count;
+                }
+                else
+                {
+                    storage.TakeItemFromStorageIfContaintEnough(id, tempQty);
+                    return tempQty;
+                }
+            }
+            return 0;
+        }
+
+        public bool IsItemInStorage(string id, int count)
+        {
+            int qty = _playerStorage.GetItemCount(id);
+            qty += _hotbarStorage.GetItemCount(id);
+            if(qty >= count)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsInventoryFull()
+        {
+            return _hotbarStorage.CheckIfStorageIsFull() && _playerStorage.CheckIfStorageIsFull();
+        }
+
         public List<ItemData> GetItemsDataForInventory()
         {
             return _playerStorage.GetItemsData();

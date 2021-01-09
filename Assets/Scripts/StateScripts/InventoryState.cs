@@ -9,6 +9,7 @@ public class InventoryState : BaseState
         base.EnterState(controller);
         controllerReference.InventorySystem.ToggleInventory();
         controllerReference.GameManager.AudioManager.PauseAllMapSounds();
+        controllerReference.CraftingSystem.ToggleCraftingUI();
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
@@ -21,6 +22,7 @@ public class InventoryState : BaseState
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         controllerReference.InventorySystem.ToggleInventory();
+        controllerReference.CraftingSystem.ToggleCraftingUI();
         controllerReference.GameManager.AudioManager.StartAllMapSounds();
         controllerReference.TransitionToState(controllerReference.movementState);
     }
@@ -32,6 +34,7 @@ public class InventoryState : BaseState
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         controllerReference.InventorySystem.ToggleInventory();
+        controllerReference.CraftingSystem.ToggleCraftingUI(true);
         controllerReference.TransitionToState(controllerReference.menuState);
     }
 }

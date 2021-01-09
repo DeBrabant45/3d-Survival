@@ -11,6 +11,7 @@ public class AgentController : MonoBehaviour
     [SerializeField] InventorySystem _inventorySystem;
     [SerializeField] DetectionSystem _detectionSystem;
     [SerializeField] GameManager _gameManager;
+    [SerializeField] CraftingSystem _craftingSystem;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -27,6 +28,7 @@ public class AgentController : MonoBehaviour
     public DetectionSystem DetectionSystem { get => _detectionSystem; }
     public GameManager GameManager { get => _gameManager; }
     public BaseState PreviousState { get => _previousState; }
+    public CraftingSystem CraftingSystem { get => _craftingSystem; }
 
     private void OnEnable()
     {
@@ -37,6 +39,14 @@ public class AgentController : MonoBehaviour
         _currentState.EnterState(this);
         AssignInputListeners();
         _detectionSystem = GetComponent<DetectionSystem>();
+    }
+
+    private void Start()
+    {
+        _craftingSystem.OnCheckResourceAvailability += _inventorySystem.CheckResourceAvailability;
+        _craftingSystem.OnCheckInventoryIsFull += _inventorySystem.CheckInventoryIsFull;
+        _craftingSystem.OnCraftItemRequest += _inventorySystem.CraftAnItem;
+        _inventorySystem.OnInventoryStateChanged += _craftingSystem.RecheckIngredients;
     }
 
     private void AssignInputListeners()

@@ -16,6 +16,7 @@ public class RecipeSO : ScriptableObject, IInventoryItem
     public bool IsStackable => _outCome.IsStackable;
     public int StackLimit => _outCome.StackLimit;
     public string RecipeName { get => _recipeName; }
+    public List<RecipeIngredients> IngredientsRequired { get => _ingredientsRequired; set => _ingredientsRequired = value; }
 
     public Dictionary<string, int> GetIngredients()
     {

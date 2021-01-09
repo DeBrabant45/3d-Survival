@@ -12,8 +12,10 @@ public class InventorySystem : MonoBehaviour, ISaveable
     [SerializeField] InteractionManager _interactionManager;
     private UIInventory _uIInventory;
     private InventorySystemData _inventoryData;
+    private Action _onInventoryStateChanged;
 
     public int PlayerStorageSize { get => _playerStorageSize; }
+    public Action OnInventoryStateChanged { get => _onInventoryStateChanged; set => _onInventoryStateChanged = value; }
 
     private void Awake()
     {
@@ -53,6 +55,35 @@ public class InventorySystem : MonoBehaviour, ISaveable
         ItemSpawnManager.Instance.CreateItemAtPlayersFeet(_inventoryData.GetItemIDFor(selectedID), _inventoryData.GetItemCountFor(selectedID));
         ClearUIElement(selectedID);
         _inventoryData.RemoveItemFromInventory(selectedID);
+        OnInventoryStateChanged.Invoke();
+    }
+
+    public bool CheckInventoryIsFull()
+    {
+        return _inventoryData.IsInventoryFull();
+    }
+
+    public void CraftAnItem(RecipeSO recipe)
+    {
+        foreach (var recipeIngredient in recipe.IngredientsRequired)
+        {
+            _inventoryData.TakeOneFromItem(recipeIngredient.Ingredients.ID, recipeIngredient.Count);
+        }
+        _inventoryData.AddToStorage(recipe);
+        UpdateInventoryItems();
+        UpdateHotBarHandler();
+        OnInventoryStateChanged.Invoke();
+    }
+
+    private void UpdateInventoryItems()
+    {
+        ToggleInventory();
+        ToggleInventory();
+    }
+
+    public bool CheckResourceAvailability(string id, int count)
+    {
+        return _inventoryData.IsItemInStorage(id, count);
     }
 
     private void UseItem(ItemSO itemData, int ui_id)
@@ -70,6 +101,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
                 UpdateUI(ui_id, _inventoryData.GetItemCountFor(ui_id));
             }
         }
+        OnInventoryStateChanged.Invoke();
     }
 
     private void UpdateUI(int ui_id, int count)
@@ -286,6 +318,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
     public int AddToStorage(IInventoryItem item)
     {
         int value = _inventoryData.AddToStorage(item);
+        OnInventoryStateChanged.Invoke();
         return value;
     }
 

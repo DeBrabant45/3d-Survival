@@ -19,8 +19,8 @@ public class UICrafting : MonoBehaviour
     private Action<int> _onRecipeButtonClicked;
 
     public bool IsVisible { get => _craftingPanel.activeSelf; }
-    public Action OnCraftButtonClicked { get => _onCraftButtonClicked; protected set => _onCraftButtonClicked = value; }
-    public Action<int> OnRecipeButtonClicked { get => _onRecipeButtonClicked; protected set => _onRecipeButtonClicked = value; }
+    public Action OnCraftButtonClicked { get => _onCraftButtonClicked; set => _onCraftButtonClicked = value; }
+    public Action<int> OnRecipeButtonClicked { get => _onRecipeButtonClicked; set => _onRecipeButtonClicked = value; }
 
     private void Start()
     {
