@@ -6,7 +6,9 @@ using UnityEngine;
 public class CraftingSystem : MonoBehaviour
 {
     [SerializeField] private List<RecipeSO> _craftingRecipes;
-    [SerializeField] private UICrafting _uICrafting;
+    [SerializeField] private CraftingPanel _craftingPanel;
+    [SerializeField] private RecipesPanel _recipesPanel;
+    [SerializeField] private IngredientsPanel _ingredientsPanel;
     private List<int> _recipeUIIds = new List<int>();
     private int _currentRecipeUIId = -1;
     private Action<RecipeSO> _onCraftItemRequest;
@@ -19,15 +21,20 @@ public class CraftingSystem : MonoBehaviour
 
     private void Start()
     {
-        _uICrafting = GetComponent<UICrafting>();
-        _uICrafting.OnRecipeButtonClicked += RecipeClickedHandler;
-        _uICrafting.OnCraftButtonClicked += CraftRecipeHandler;
-        _uICrafting.BlockCraftButton();
+        _recipesPanel.ClearRecipeUI();
+        _recipesPanel.OnRecipeButtonClicked += RecipeClickedHandler;
+        _craftingPanel.OnCraftButtonClicked += CraftRecipeHandler;
+        _craftingPanel.BlockCraftButton();
     }
 
     public void ToggleCraftingUI(bool saveLastViewedRecipe = false)
     {
-        _uICrafting.ToggleUI();
+        _craftingPanel.ToggleUI();
+        if(_craftingPanel.IsVisible == true)
+        {
+            _ingredientsPanel.HideIngredientsUI();
+            _recipeUIIds = _recipesPanel.PrepareRecipeItems(_craftingRecipes);
+        }
         if(saveLastViewedRecipe == false)
         {
             _currentRecipeUIId = -1;
@@ -35,10 +42,6 @@ public class CraftingSystem : MonoBehaviour
         if(_currentRecipeUIId != -1)
         {
             RecheckIngredients();
-        }
-        if(_uICrafting.IsVisible)
-        {
-            _recipeUIIds = _uICrafting.PrepareRecipeItems(_craftingRecipes);
         }
     }
 
@@ -60,7 +63,7 @@ public class CraftingSystem : MonoBehaviour
     private void RecipeClickedHandler(int id)
     {
         _currentRecipeUIId = id;
-        _uICrafting.ClearIngredientsUI();
+        _ingredientsPanel.ClearIngredientsUI();
         var recipeIndex = _recipeUIIds.IndexOf(_currentRecipeUIId);
         var recipe = _craftingRecipes[recipeIndex];
         var ingredientsIdCount = recipe.GetIngredients();
@@ -72,21 +75,21 @@ public class CraftingSystem : MonoBehaviour
             {
                 blockCraftBtn = !enoughItemFlag;
             }
-            _uICrafting.AddIngredient(ItemDataManager.Instance.GetItemName(key), ItemDataManager.Instance.GetItemSprite(key), ingredientsIdCount[key], enoughItemFlag);
+            _ingredientsPanel.AddIngredient(ItemDataManager.Instance.GetItemName(key), ItemDataManager.Instance.GetItemSprite(key), ingredientsIdCount[key], enoughItemFlag);
         }
 
-        _uICrafting.ShowIngredientsUI();
+        _ingredientsPanel.ShowIngredientsUI();
         if (blockCraftBtn)
         {
-            _uICrafting.BlockCraftButton();
+            _craftingPanel.BlockCraftButton();
         }
         else
         {
-            _uICrafting.UnblockCraftButton();
+            _craftingPanel.UnblockCraftButton();
         }
         if(_onCheckInventoryIsFull.Invoke())
         {
-            _uICrafting.ShowMaxInventory();
+            _ingredientsPanel.ShowMaxInventory();
         }
     }
 }

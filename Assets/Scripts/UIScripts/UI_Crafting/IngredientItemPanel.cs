@@ -13,7 +13,6 @@ public class IngredientItemPanel : ItemPanel
         var panelColor = _panelImage.color;
         panelColor.a = Mathf.Clamp01(value);
         _panelImage.color = panelColor;
-        Debug.Log(panelColor.a);
     }
 
     public void SetUnavailable()
