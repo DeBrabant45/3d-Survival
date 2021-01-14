@@ -12,17 +12,17 @@ public class InventorySystem : MonoBehaviour, ISaveable
     [SerializeField] InteractionManager _interactionManager;
     [SerializeField] private HotbarPanel _hotbarPanel;
     [SerializeField] private InventoryPanel _inventoryPanel;
-    private UIInventory _uIInventory;
+    [SerializeField] private UIInventory _uIInventory;
     private InventorySystemData _inventoryData;
     private Action _onInventoryStateChanged;
     private DraggableItem _draggableItem;
-
+ 
     public int PlayerStorageSize { get => _playerStorageSize; }
     public Action OnInventoryStateChanged { get => _onInventoryStateChanged; set => _onInventoryStateChanged = value; }
 
     private void Awake()
     {
-        _uIInventory = GetComponent<UIInventory>();
+        //_uIInventory = GetComponent<UIInventory>();
         _draggableItem = new DraggableItem();
     }
 

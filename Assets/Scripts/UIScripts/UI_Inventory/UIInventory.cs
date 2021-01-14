@@ -8,27 +8,27 @@ using UnityEngine.UI;
 
 public class UIInventory : MonoBehaviour
 {
-    [SerializeField] private GameObject _inventoryGeneralPanel;
+    [SerializeField] private GameObject _inventoryPanel;
     [SerializeField] private UIStorageButtons _uIStorageButtons;
     [SerializeField] private Canvas _canvas;
 
-    public bool IsInventoryVisable { get => _inventoryGeneralPanel.activeSelf; }
+    public bool IsInventoryVisable { get => _inventoryPanel.activeSelf; }
     public Canvas Canvas { get => _canvas; set => _canvas = value; }
 
     private void Awake()
     {
-        _inventoryGeneralPanel.SetActive(false);
+        _inventoryPanel.SetActive(false);
     }
 
     public void ToggleUI()
     {
-        if(_inventoryGeneralPanel.activeSelf == false)
+        if(_inventoryPanel.activeSelf == false)
         {
-            _inventoryGeneralPanel.SetActive(true);
+            _inventoryPanel.SetActive(true);
         }
         else
         {
-            _inventoryGeneralPanel.SetActive(false);
+            _inventoryPanel.SetActive(false);
         }
         _uIStorageButtons.HideAllButtons();
     }
