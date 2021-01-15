@@ -38,7 +38,15 @@ public class MovementState : BaseState
     public override void HandlePrimaryInput()
     {
         base.HandlePrimaryInput();
-        controllerReference.TransitionToState(controllerReference.interactState);
+        if (controllerReference.InventorySystem.WeaponEquipped)
+        {
+            controllerReference.TransitionToState(controllerReference.attackState);
+        }
+        else
+        {
+            Debug.Log("No weapon set, cannot perform attack");
+        }
+        //controllerReference.TransitionToState(controllerReference.interactState);
     }
 
     public override void HandleSecondaryInput()

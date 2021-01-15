@@ -16,13 +16,13 @@ public class InventorySystem : MonoBehaviour, ISaveable
     private InventorySystemData _inventoryData;
     private Action _onInventoryStateChanged;
     private DraggableItem _draggableItem;
- 
+
     public int PlayerStorageSize { get => _playerStorageSize; }
     public Action OnInventoryStateChanged { get => _onInventoryStateChanged; set => _onInventoryStateChanged = value; }
+    public bool WeaponEquipped { get => _inventoryData.ItemEquipped; }
 
     private void Awake()
     {
-        //_uIInventory = GetComponent<UIInventory>();
         _draggableItem = new DraggableItem();
     }
 

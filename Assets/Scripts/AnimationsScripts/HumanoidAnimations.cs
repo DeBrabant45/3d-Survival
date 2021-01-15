@@ -1,10 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HumanoidAnimations : MonoBehaviour
 {
+    [SerializeField] Action _onFinishedAttacking;
     private Animator _animator;
+
+    public Action OnFinishedAttacking { get => _onFinishedAttacking; set => _onFinishedAttacking = value; }
 
     private void Awake()
     {
@@ -39,6 +43,16 @@ public class HumanoidAnimations : MonoBehaviour
     public void SetMovementFloat(float value)
     {
         _animator.SetFloat("move", value);
+    }
+
+    public void TriggerAttackAnimation()
+    {
+        _animator.SetTrigger("attack");
+    }
+
+    public void FinishedAttackingCallBack()
+    {
+        _onFinishedAttacking.Invoke();
     }
 
     public float SetCorrectAnimation(float desiredRotationAngle, int angleThreshold, int inputVerticalDirection)

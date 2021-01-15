@@ -18,6 +18,7 @@ namespace Inventory
         public int PlayerStorageLimit { get => _playerStorage.StorageLimit; }
         public int HotbarStorageLimit { get => _hotbarStorage.StorageLimit; }
         public int SelectedItemUIID { get => _selectedItemUIID; }
+        public bool ItemEquipped { get => true; }
 
         public InventorySystemData(int playerStorageSize, int hotbarStorageSize)
         {
