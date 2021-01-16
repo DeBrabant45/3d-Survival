@@ -98,4 +98,9 @@ public class HotbarPanel : MonoBehaviour
         _hotbarUIItems[draggedItemID].SwapWithData(droppedItemData.ItemName, droppedItemData.ItemCount, droppedItemData.ItemImage.sprite, droppedItemData.IsEmpty);
         inventoryItems[droppedItemID].SwapWithData(tempName, tempCount, tempSprite, tempIsEmpty);
     }
+
+    public void ToggleEquipSelectedItem(int equippedUI_ID)
+    {
+        _hotbarUIItems[equippedUI_ID].ToggleEquippedIndicator();
+    }
 }

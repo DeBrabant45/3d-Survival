@@ -115,4 +115,9 @@ public class InventoryPanel : MonoBehaviour
             GetItemFromInventoryDicitionary(ui_id).ClearItem();
         }
     }
+
+    public void ToggleEquipSelectedItem(int equippedUI_ID)
+    {
+        _inventoryUIItems[equippedUI_ID].ToggleEquippedIndicator();
+    }
 }

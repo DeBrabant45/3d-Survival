@@ -110,20 +110,41 @@ public class InventorySystem : MonoBehaviour, ISaveable
         {
             DeselectCurrentItem();
             ItemSpawnManager.Instance.RemoveItemFromPlayerHand();
-            if(_inventoryData.ItemEquipped)
+            if (_inventoryData.ItemEquipped)
             {
-                if(_inventoryData.EquippedUI_ID == ui_id)
+                if (_inventoryData.EquippedUI_ID == ui_id)
                 {
-                    //new UI method
+                    ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
                     return;
                 }
+                else
+                {
+                    ToggleEquippedSelectedItemUI();
+                    _inventoryData.UnequipItem();
+                }
             }
             _inventoryData.EquipItem(ui_id);
-            //new UI method
+            ToggleEquippedSelectedItemUI();
             ItemSpawnManager.Instance.CreateItemObjectInPlayersHand(itemData.ID);
         }
 
+    }
+
+    private void ToggleEquippedSelectedItemUI()
+    {
+        if (_hotbarPanel.IsItemInHotbarDictionary(_inventoryData.EquippedUI_ID))
+        {
+            _hotbarPanel.ToggleEquipSelectedItem(_inventoryData.EquippedUI_ID);
+        }
+        else if(_inventoryPanel.IsItemInInventoryDictionary(_inventoryData.EquippedUI_ID))
+        {
+            _inventoryPanel.ToggleEquipSelectedItem(_inventoryData.EquippedUI_ID);
+        }
+        else
+        {
+            throw new Exception("Selecteditem is not in Iventory or Hotbar " + _inventoryData.EquippedUI_ID);
+        }
     }
 
     private void UpdateUI(int ui_id, int count)
@@ -225,6 +246,14 @@ public class InventorySystem : MonoBehaviour, ISaveable
             }
             _inventoryData.AddInventoryUIElement(uIItemElement.GetInstanceID());
         }
+        for (int i = 0; i < uIElements.Count; i++)
+        {
+            var uIItemElement = uIElements[i];
+            if (_inventoryData.EquippedUI_ID == uIItemElement.GetInstanceID())
+            {
+                ToggleEquippedSelectedItemUI();
+            }
+        }
     }
 
     private void PrepareUI()
@@ -265,6 +294,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
         _hotbarPanel.SwapUIHotbarItemToHotBarSlot(droppedItemID, draggedItemID);
         _draggableItem.DestroyDraggedObject();
         _inventoryData.SwapStorageItemsInsideHotbar(droppedItemID, draggedItemID);
+        SetCurrentEquippedItemToDroppedItem(droppedItemID, draggedItemID);
     }
 
     private void DropItemsFromHotbarToInventory(int droppedItemID, int draggedItemID)
@@ -272,6 +302,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
         _hotbarPanel.SwapUIHotbarItemToInventorySlot(_inventoryPanel.InventoryUIItems, droppedItemID, draggedItemID);
         _draggableItem.DestroyDraggedObject();
         _inventoryData.SwapStorageItemFromHotbarToInventory(droppedItemID, draggedItemID);
+        SetCurrentEquippedItemToDroppedItem(droppedItemID, draggedItemID);
     }
 
 
@@ -294,13 +325,28 @@ public class InventorySystem : MonoBehaviour, ISaveable
         _inventoryPanel.SwapUIInventoryItemToHotBarSlot(_hotbarPanel.HotbarUIItems, droppedItemID, draggedItemID);
         _draggableItem.DestroyDraggedObject();
         _inventoryData.SwapStorageItemFromInventoryToHotbar(droppedItemID, draggedItemID);
+        SetCurrentEquippedItemToDroppedItem(droppedItemID, draggedItemID);
+    }
+
+    private void SetCurrentEquippedItemToDroppedItem(int droppedItemID, int draggedItemID)
+    {
+        if (_inventoryData.ItemEquipped && _inventoryData.EquippedUI_ID == draggedItemID)
+        {
+            DeselectCurrentItem();
+            ToggleEquippedSelectedItemUI();
+            _inventoryData.UnequipItem();
+            _inventoryData.EquipItem(droppedItemID);
+            ToggleEquippedSelectedItemUI();
+        }
     }
 
     private void DropItemsFromInventoryToInventory(int droppedItemID, int draggedItemID)
     {
+        //var itemData = ItemDataManager.Instance.GetItemData(_inventoryData.GetItemIDFor(draggedItemID));
         _inventoryPanel.SwapUIInventoryItemToInventorySlot(droppedItemID, draggedItemID);
         _draggableItem.DestroyDraggedObject();
         _inventoryData.SwapStorageItemsInsideInventory(droppedItemID, draggedItemID);
+        SetCurrentEquippedItemToDroppedItem(droppedItemID, draggedItemID);
     }
 
     private void UIElementDropHandler(PointerEventData eventData, int droppedItemID)

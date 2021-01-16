@@ -3023,7 +3023,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 634993294}
-  m_LocalRotation: {x: -0.07792442, y: 0.42285886, z: 0.036527038, w: 0.9020997}
+  m_LocalRotation: {x: -0.07792442, y: 0.42285892, z: 0.03652704, w: 0.9020997}
   m_LocalPosition: {x: 6.464157, y: 2.95, z: -8.402137}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4141,7 +4141,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756745841}
-  m_LocalRotation: {x: -0.077924415, y: 0.42285883, z: 0.036527034, w: 0.9020998}
+  m_LocalRotation: {x: -0.077924415, y: 0.42285886, z: 0.036527038, w: 0.9020998}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6848,6 +6848,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1360040840}
   m_CullTransparentMesh: 0
+--- !u!4 &1363184934 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1363184934, guid: 8b9fd8f05c07ebb46814473bc8b89290,
+    type: 3}
+  m_PrefabInstance: {fileID: 6392459566361476241}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1367041366
 GameObject:
   m_ObjectHideFlags: 0
@@ -9153,7 +9159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1387c2df08096439a79594bcbecf14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerStorageSize: 20
+  _playerStorageSize: 2
   _interactionManager: {fileID: 1383727984}
   _hotbarPanel: {fileID: 1993783857}
   _inventoryPanel: {fileID: 1082971724}
@@ -11647,6 +11653,11 @@ PrefabInstance:
       propertyPath: _craftingSystem
       value: 
       objectReference: {fileID: 1526907232}
+    - target: {fileID: 3141112363377342737, guid: 8b9fd8f05c07ebb46814473bc8b89290,
+        type: 3}
+      propertyPath: _itemSlot
+      value: 
+      objectReference: {fileID: 1363184934}
     - target: {fileID: 3141112363377342957, guid: 8b9fd8f05c07ebb46814473bc8b89290,
         type: 3}
       propertyPath: m_Name

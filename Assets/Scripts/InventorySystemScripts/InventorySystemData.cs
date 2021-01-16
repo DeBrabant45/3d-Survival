@@ -13,13 +13,34 @@ namespace Inventory
         private Storage _hotbarStorage;
         private List<int> _inventoryUIElementIDList = new List<int>();
         private List<int> _hotbarUIElementIDList = new List<int>();
+        private int _equippedItemStorageIndex = -1;
+        private Storage _equippedItemStorage = null;
 
         public Action UpdateHotbarCallback;
         public int PlayerStorageLimit { get => _playerStorage.StorageLimit; }
         public int HotbarStorageLimit { get => _hotbarStorage.StorageLimit; }
         public int SelectedItemUIID { get => _selectedItemUIID; }
-        public bool ItemEquipped { get => true; }
-        public int EquippedUI_ID { get; internal set; }
+        public bool ItemEquipped { get => _equippedItemStorageIndex != -1; }
+        public int EquippedUI_ID 
+        { 
+            get 
+            {
+                if(_equippedItemStorage == null)
+                {
+                    return -1;
+                }
+                if(_equippedItemStorage == _hotbarStorage)
+                {
+                    Debug.Log("I'm in the hotbar");
+                    return _hotbarUIElementIDList[_equippedItemStorageIndex];
+                }
+                else
+                {
+                    Debug.Log("I'm in the inventory");
+                    return _inventoryUIElementIDList[_equippedItemStorageIndex];
+                }
+            } 
+        }
 
         public InventorySystemData(int playerStorageSize, int hotbarStorageSize)
         {
@@ -135,14 +156,32 @@ namespace Inventory
             return 0;
         }
 
-        internal void EquipItem(int ui_id)
+        public void EquipItem(int ui_id)
         {
-            throw new NotImplementedException();
+            UnequipItem();
+            if(_hotbarUIElementIDList.Contains(ui_id))
+            {
+                _equippedItemStorageIndex = _hotbarUIElementIDList.IndexOf(ui_id);
+                _equippedItemStorage = _hotbarStorage;
+            }
+            else if(_inventoryUIElementIDList.Contains(ui_id) && _playerStorage.CheckIfItemIsEmpty(_inventoryUIElementIDList.IndexOf(ui_id)) == false)
+            {
+                _equippedItemStorageIndex = _inventoryUIElementIDList.IndexOf(ui_id);
+                _equippedItemStorage = _playerStorage;
+            }
+            else
+            {
+                throw new Exception("No item with ui_id " + ui_id);
+            }
         }
 
-        internal void UnequipItem()
+        public void UnequipItem()
         {
-            throw new NotImplementedException();
+            if(_equippedItemStorageIndex != -1)
+            {
+                _equippedItemStorageIndex = -1;
+                _equippedItemStorage = null;
+            }
         }
 
         public bool IsItemInStorage(string id, int count)
@@ -245,7 +284,6 @@ namespace Inventory
                 _playerStorage.SwapItemWithIndexFor(storage_Id_DraggedItem, storageData_Id_DroppedItem);
                 //Swap data with dropped item to dragged item
                 _hotbarStorage.SwapItemWithIndexFor(storage_Id_DroppedItem, storageData_Id_DraggedItem);
-                Debug.Log(storageData_Id_DroppedItem);
             }
             else
             {
