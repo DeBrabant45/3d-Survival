@@ -19,6 +19,7 @@ namespace Inventory
         public int HotbarStorageLimit { get => _hotbarStorage.StorageLimit; }
         public int SelectedItemUIID { get => _selectedItemUIID; }
         public bool ItemEquipped { get => true; }
+        public int EquippedUI_ID { get; internal set; }
 
         public InventorySystemData(int playerStorageSize, int hotbarStorageSize)
         {
@@ -132,6 +133,16 @@ namespace Inventory
                 }
             }
             return 0;
+        }
+
+        internal void EquipItem(int ui_id)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void UnequipItem()
+        {
+            throw new NotImplementedException();
         }
 
         public bool IsItemInStorage(string id, int count)

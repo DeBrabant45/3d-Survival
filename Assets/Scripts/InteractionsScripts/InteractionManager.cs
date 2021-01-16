@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using SVS.InventorySystem;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,5 +26,20 @@ public class InteractionManager : MonoBehaviour
                 return false;
         }
         //return false;
+    }
+
+    public bool EquipItem(ItemSO itemData)
+    {
+        var itemType = itemData.GetItemType();
+        switch (itemType)
+        {
+            case ItemType.None:
+                throw new Exception("Item cannot be set to none");
+            case ItemType.Weapon:
+                return true;
+            default:
+                break;
+        }
+        return false;
     }
 }

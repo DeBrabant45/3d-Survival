@@ -12,6 +12,7 @@ public class AgentController : MonoBehaviour
     [SerializeField] DetectionSystem _detectionSystem;
     [SerializeField] GameManager _gameManager;
     [SerializeField] CraftingSystem _craftingSystem;
+    [SerializeField] Transform _itemSlot;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -30,6 +31,7 @@ public class AgentController : MonoBehaviour
     public GameManager GameManager { get => _gameManager; }
     public BaseState PreviousState { get => _previousState; }
     public CraftingSystem CraftingSystem { get => _craftingSystem; }
+    public Transform ItemSlot { get => _itemSlot; }
 
     private void OnEnable()
     {

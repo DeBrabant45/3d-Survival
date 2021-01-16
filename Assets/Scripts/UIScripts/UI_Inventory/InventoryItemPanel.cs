@@ -10,7 +10,9 @@ public class InventoryItemPanel : ItemPanel, IPointerClickHandler, IDragHandler,
     [SerializeField] private Text _countText;
     [SerializeField] private int _itemCount;
     [SerializeField] bool _isHotBarItem = false;
+    [SerializeField] private Image _equippedIndicator;
     private bool _isEmpty = true;
+    private bool _equipped = false;
 
     public Action<int, bool> OnClickEvent;
     public Action<PointerEventData> DragStopCallBack;
@@ -31,6 +33,14 @@ public class InventoryItemPanel : ItemPanel, IPointerClickHandler, IDragHandler,
         _countText.text = "";
         _isEmpty = false;
         SetImageSprite(image);
+        if (_equipped)
+        {
+            ModityEquippendIndicatorAlpha(1);
+        }
+        else
+        {
+            ModityEquippendIndicatorAlpha(0);
+        }
     }
 
     public void SetItemUIElement(string name, int count, Sprite image)
@@ -44,6 +54,14 @@ public class InventoryItemPanel : ItemPanel, IPointerClickHandler, IDragHandler,
         _countText.text = (count < 0) ? "" : _itemCount + "";
         _isEmpty = false;
         SetImageSprite(image);
+        if(_equipped)
+        {
+            ModityEquippendIndicatorAlpha(1);
+        }
+        else
+        {
+            ModityEquippendIndicatorAlpha(0);
+        }
     }
 
     public void SwapWithData(string name, int count, Sprite image, bool isEmpty)
@@ -106,5 +124,26 @@ public class InventoryItemPanel : ItemPanel, IPointerClickHandler, IDragHandler,
     public void OnDrop(PointerEventData eventData)
     {
         DropCallBack.Invoke(eventData, GetInstanceID());
+    }
+
+    public void ToggleEquippedIndicator()
+    {
+        if(_equipped == false)
+        {
+            ModityEquippendIndicatorAlpha(1);
+            _equipped = true;
+        }
+        else
+        {
+            ModityEquippendIndicatorAlpha(0);
+            _equipped = false;
+        }
+    }
+
+    private void ModityEquippendIndicatorAlpha(int alpha)
+    {
+        Color color = _equippedIndicator.color;
+        color.a = Mathf.Clamp01(alpha);
+        _equippedIndicator.color = color;
     }
 }

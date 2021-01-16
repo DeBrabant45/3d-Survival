@@ -104,8 +104,26 @@ public class InventorySystem : MonoBehaviour, ISaveable
             {
                 UpdateUI(ui_id, _inventoryData.GetItemCountFor(ui_id));
             }
+            OnInventoryStateChanged.Invoke();
         }
-        OnInventoryStateChanged.Invoke();
+        else if(_interactionManager.EquipItem(itemData))
+        {
+            DeselectCurrentItem();
+            ItemSpawnManager.Instance.RemoveItemFromPlayerHand();
+            if(_inventoryData.ItemEquipped)
+            {
+                if(_inventoryData.EquippedUI_ID == ui_id)
+                {
+                    //new UI method
+                    _inventoryData.UnequipItem();
+                    return;
+                }
+            }
+            _inventoryData.EquipItem(ui_id);
+            //new UI method
+            ItemSpawnManager.Instance.CreateItemObjectInPlayersHand(itemData.ID);
+        }
+
     }
 
     private void UpdateUI(int ui_id, int count)
@@ -336,6 +354,13 @@ public class InventorySystem : MonoBehaviour, ISaveable
             _inventoryData.SetSelectedItem(ui_id);
             _inventoryPanel.HighLightSelectedItem(ui_id);
             _uIInventory.ToggleItemButtons(ItemDataManager.Instance.IsItemUsabel(_inventoryData.GetItemIDFor(_inventoryData.SelectedItemUIID)), true);
+            if(_inventoryData.ItemEquipped)
+            {
+                if(ui_id == _inventoryData.EquippedUI_ID)
+                {
+                    _uIInventory.ToggleItemButtons(ItemDataManager.Instance.IsItemUsabel(_inventoryData.GetItemIDFor(_inventoryData.SelectedItemUIID)), false);
+                }
+            }
         }
         return;
     }

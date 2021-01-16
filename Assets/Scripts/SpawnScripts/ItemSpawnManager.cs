@@ -86,4 +86,20 @@ public class ItemSpawnManager : MonoBehaviour
         var zRadius = Random.Range(-radius, radius);
         return new Vector3(xRadius, yRadius, zRadius);
     }
+
+    public void RemoveItemFromPlayerHand()
+    {
+        foreach (Transform child in _playerTransform.GetComponent<AgentController>().ItemSlot)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    public void CreateItemObjectInPlayersHand(string itemID)
+    {
+        var itemPrefab = ItemDataManager.Instance.GetItemPrefab(itemID);
+        var item = Instantiate(itemPrefab, _playerTransform.GetComponent<AgentController>().ItemSlot);
+        item.transform.localPosition = Vector3.zero;
+        item.transform.localRotation = Quaternion.identity;
+    }
 }
