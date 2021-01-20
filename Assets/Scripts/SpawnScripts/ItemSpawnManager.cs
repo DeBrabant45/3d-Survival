@@ -35,6 +35,12 @@ public class ItemSpawnManager : MonoBehaviour
         PrepareItemGameObject(itemID, currentItemCount, itemGameObject);
     }
 
+    public void CreateItemInPlace(Vector3 hitpoint, MaterialItemSO itemToSpawn, int resourceCountToSpawn)
+    {
+        var itemGameObject = Instantiate(itemToSpawn.Model, hitpoint + Vector3.up * 0.2f, Quaternion.identity);
+        PrepareItemGameObject(itemToSpawn.ID, resourceCountToSpawn, itemGameObject);
+    }
+
     private void PrepareItemGameObject(string itemID, int currentItemCount, GameObject itemGameObject)
     {
         itemGameObject.AddComponent<BoxCollider>();

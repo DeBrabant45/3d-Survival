@@ -8,12 +8,16 @@ public class DetectionSystem : MonoBehaviour
     [SerializeField] private LayerMask _objectDetectionMask;
     [SerializeField] private float _detectionRadius;
     [SerializeField] private Material _selectionMaterial;
+    [SerializeField] private Transform _weaponRaycastStartPosition;
+    [SerializeField] private float _attackDistance = 0.8f;
     private List<Collider> _collidersList = new List<Collider>();
     private Collider _currentCollider;
     private List<Material[]> _currentColliderMaterailsList = new List<Material[]>();
+    private Action<Collider, Vector3> _onAttackSuccessful;
 
     public Collider CurrentCollider { get => _currentCollider; }
     public float DetectionRadius { get => _detectionRadius; }
+    public Action<Collider, Vector3> OnAttackSuccessful { get => _onAttackSuccessful; set => _onAttackSuccessful = value; }
 
     public Collider[] DetectObjectsInfront(Vector3 movementDirectionVector)
     {
@@ -103,6 +107,15 @@ public class DetectionSystem : MonoBehaviour
         {
             var renderer = _currentCollider.GetComponent<Renderer>();
             renderer.materials = _currentColliderMaterailsList[0];
+        }
+    }
+
+    public void DetectColliderInFront()
+    {
+        RaycastHit hit;
+        if(Physics.SphereCast(_weaponRaycastStartPosition.position, 0.2f, transform.forward, out hit, _attackDistance))
+        {
+            _onAttackSuccessful?.Invoke(hit.collider, hit.point);
         }
     }
 }

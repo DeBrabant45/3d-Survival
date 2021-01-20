@@ -20,6 +20,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
     public int PlayerStorageSize { get => _playerStorageSize; }
     public Action OnInventoryStateChanged { get => _onInventoryStateChanged; set => _onInventoryStateChanged = value; }
     public bool WeaponEquipped { get => _inventoryData.ItemEquipped; }
+    public string EquippedWeaponID { get => _inventoryData.EquippedItemID; }
 
     private void Awake()
     {
@@ -114,16 +115,19 @@ public class InventorySystem : MonoBehaviour, ISaveable
             {
                 if (_inventoryData.EquippedUI_ID == ui_id)
                 {
+                    //Removes equipped item if user clicks use on already equipped item 
                     ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
                     return;
                 }
                 else
                 {
+                    //Removes old equipped item if user equips another item
                     ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
                 }
             }
+            //Adds newly equipped item 
             _inventoryData.EquipItem(ui_id);
             ToggleEquippedSelectedItemUI();
             ItemSpawnManager.Instance.CreateItemObjectInPlayersHand(itemData.ID);
@@ -246,6 +250,8 @@ public class InventorySystem : MonoBehaviour, ISaveable
             }
             _inventoryData.AddInventoryUIElement(uIItemElement.GetInstanceID());
         }
+
+        //refactor
         for (int i = 0; i < uIElements.Count; i++)
         {
             var uIItemElement = uIElements[i];
@@ -342,7 +348,6 @@ public class InventorySystem : MonoBehaviour, ISaveable
 
     private void DropItemsFromInventoryToInventory(int droppedItemID, int draggedItemID)
     {
-        //var itemData = ItemDataManager.Instance.GetItemData(_inventoryData.GetItemIDFor(draggedItemID));
         _inventoryPanel.SwapUIInventoryItemToInventorySlot(droppedItemID, draggedItemID);
         _draggableItem.DestroyDraggedObject();
         _inventoryData.SwapStorageItemsInsideInventory(droppedItemID, draggedItemID);

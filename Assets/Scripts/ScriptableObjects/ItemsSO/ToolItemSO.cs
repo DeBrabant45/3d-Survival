@@ -23,10 +23,3 @@ public class ToolItemSO : WeaponItemSO
         ItemTypeSO = ItemType.Weapon;
     }
 }
-
-public enum ResourceType
-{
-    None,
-    Wood,
-    Stone
-}

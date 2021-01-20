@@ -22,6 +22,8 @@ public class InventoryItemPanel : ItemPanel, IPointerClickHandler, IDragHandler,
     public int ItemCount { get => _itemCount; }
     public bool IsEmpty { get => _isEmpty; }
 
+
+    //refactor method
     public override void SetItemUIElement(string name, Sprite image)
     {
         ItemName = name;

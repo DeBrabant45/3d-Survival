@@ -42,6 +42,8 @@ namespace Inventory
             } 
         }
 
+        public string EquippedItemID { get => _equippedItemStorage.GetItemData(_equippedItemStorageIndex).ID; }
+
         public InventorySystemData(int playerStorageSize, int hotbarStorageSize)
         {
             _playerStorage = new Storage(playerStorageSize);
