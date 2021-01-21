@@ -13,7 +13,6 @@ public class AgentController : MonoBehaviour
     [SerializeField] GameManager _gameManager;
     [SerializeField] CraftingSystem _craftingSystem;
     [SerializeField] Transform _itemSlot;
-    [SerializeField] AudioSource _attackSwingSound;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -24,6 +23,7 @@ public class AgentController : MonoBehaviour
     public readonly BaseState interactState = new InteractState();
     public readonly BaseState menuState = new MenuState();
     public readonly BaseState attackState = new AttackState();
+    public readonly BaseState rangedAttackState = new RangedAttackState();
     public PlayerInput InputFromPlayer { get => _input; }
     public AgentMovement Movement { get => _movement; }
     public HumanoidAnimations AgentAnimations { get => _agentAnimations; }
@@ -33,7 +33,6 @@ public class AgentController : MonoBehaviour
     public BaseState PreviousState { get => _previousState; }
     public CraftingSystem CraftingSystem { get => _craftingSystem; }
     public Transform ItemSlot { get => _itemSlot; }
-    public AudioSource AttackSwingSound { get => _attackSwingSound; }
 
     private void OnEnable()
     {

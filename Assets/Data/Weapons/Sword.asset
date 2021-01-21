@@ -22,3 +22,4 @@ MonoBehaviour:
   _minimalDamage: 5
   _maximumDamage: 10
   _criticalDamageChance: 0.2
+  _weaponType: 2

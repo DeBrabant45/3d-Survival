@@ -31,12 +31,10 @@ namespace Inventory
                 }
                 if(_equippedItemStorage == _hotbarStorage)
                 {
-                    Debug.Log("I'm in the hotbar");
                     return _hotbarUIElementIDList[_equippedItemStorageIndex];
                 }
                 else
                 {
-                    Debug.Log("I'm in the inventory");
                     return _inventoryUIElementIDList[_equippedItemStorageIndex];
                 }
             } 
@@ -44,7 +42,7 @@ namespace Inventory
 
         public string EquippedItemID { get => _equippedItemStorage.GetItemData(_equippedItemStorageIndex).ID; }
 
-        public InventorySystemData(int playerStorageSize, int hotbarStorageSize)
+    public InventorySystemData(int playerStorageSize, int hotbarStorageSize)
         {
             _playerStorage = new Storage(playerStorageSize);
             _hotbarStorage = new Storage(hotbarStorageSize);

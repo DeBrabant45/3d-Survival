@@ -40,13 +40,20 @@ public class MovementState : BaseState
         base.HandlePrimaryInput();
         if (controllerReference.InventorySystem.WeaponEquipped)
         {
-            controllerReference.TransitionToState(controllerReference.attackState);
+            var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
+            if(((WeaponItemSO)equippedItem).Weapon == WeaponType.Melee)
+            {
+                controllerReference.TransitionToState(controllerReference.attackState);
+            }
+            else 
+            {
+                controllerReference.TransitionToState(controllerReference.rangedAttackState);
+            }
         }
         else
         {
             Debug.Log("No weapon set, cannot perform attack");
         }
-        //controllerReference.TransitionToState(controllerReference.interactState);
     }
 
     public override void HandleSecondaryInput()

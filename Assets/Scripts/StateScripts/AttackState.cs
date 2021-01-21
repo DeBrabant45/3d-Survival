@@ -11,7 +11,6 @@ public class AttackState : BaseState
         controllerReference.Movement.StopMovement();
         controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBack;
         controllerReference.AgentAnimations.TriggerAttackAnimation();
-        controllerReference.GameManager.AudioManager.WeaponAttackSound.PlayAttackSound(controllerReference.AttackSwingSound);
         controllerReference.DetectionSystem.OnAttackSuccessful += PreformHit;
     }
 

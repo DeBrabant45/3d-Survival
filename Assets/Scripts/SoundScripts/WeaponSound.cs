@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class WeaponSound : MonoBehaviour
 {
-    [SerializeField] private AudioClip _weaponWoosh;
-    public AudioClip WeaponWoosh { get => _weaponWoosh; set => _weaponWoosh = value; }
+    [SerializeField] private AudioSource _weaponSound;
+    [SerializeField] private AudioClip _swingWoosh;
 
-    public void PlayAttackSound(AudioSource audio)
+    public void PlayWeaponWooshSound()
     {
-        audio.PlayOneShot(_weaponWoosh);
+        _weaponSound.PlayOneShot(_swingWoosh);
     }
 }

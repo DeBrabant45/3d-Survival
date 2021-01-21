@@ -23,6 +23,7 @@ MonoBehaviour:
   _minimalDamage: 1
   _maximumDamage: 2
   _criticalDamageChance: 0
+  _weaponType: 2
   _baseHarvestPower: 3
   _resourceBoosted: 1
   _boostedHarevestPower: 6
