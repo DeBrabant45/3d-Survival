@@ -10,6 +10,8 @@ public class DetectionSystem : MonoBehaviour
     [SerializeField] private Material _selectionMaterial;
     [SerializeField] private Transform _weaponRaycastStartPosition;
     [SerializeField] private float _attackDistance = 0.8f;
+    [SerializeField] private Camera _playerAimDirection;
+    [SerializeField] private float _shootingRange = 10f;
     private List<Collider> _collidersList = new List<Collider>();
     private Collider _currentCollider;
     private List<Material[]> _currentColliderMaterailsList = new List<Material[]>();
@@ -114,6 +116,15 @@ public class DetectionSystem : MonoBehaviour
     {
         RaycastHit hit;
         if(Physics.SphereCast(_weaponRaycastStartPosition.position, 0.2f, transform.forward, out hit, _attackDistance))
+        {
+            _onAttackSuccessful?.Invoke(hit.collider, hit.point);
+        }
+    }
+
+    public void DetectColliderFromRange()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(_playerAimDirection.transform.position, _playerAimDirection.transform.forward, out hit, _shootingRange))
         {
             _onAttackSuccessful?.Invoke(hit.collider, hit.point);
         }

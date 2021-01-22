@@ -50,6 +50,11 @@ public class HumanoidAnimations : MonoBehaviour
         _animator.SetTrigger("attack");
     }
 
+    public void TriggerShootAnimation()
+    {
+        _animator.SetTrigger("shoot");
+    }
+
     public void FinishedAttackingCallBack()
     {
         _onFinishedAttacking.Invoke();

@@ -11,6 +11,7 @@ public class WeaponItemSO : ItemSO
     [SerializeField] WeaponType _weaponType;
 
     public WeaponType Weapon { get => _weaponType; }
+    public int MaximumDamage { get => _maximumDamage; }
 
     public override bool IsUsable()
     {

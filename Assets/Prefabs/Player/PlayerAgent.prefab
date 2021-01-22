@@ -802,6 +802,7 @@ MonoBehaviour:
   _detectionSystem: {fileID: 0}
   _gameManager: {fileID: 0}
   _craftingSystem: {fileID: 0}
+  _itemSlot: {fileID: 0}
 --- !u!114 &3141112363377342739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,6 +848,10 @@ MonoBehaviour:
     m_Bits: 256
   _detectionRadius: 1
   _selectionMaterial: {fileID: 2100000, guid: 393a23caf2848784dbb92e81e83523ac, type: 2}
+  _weaponRaycastStartPosition: {fileID: 0}
+  _attackDistance: 0.8
+  _playerView: {fileID: 0}
+  _shootingRange: 10
 --- !u!1 &3328373895473228898
 GameObject:
   m_ObjectHideFlags: 0
