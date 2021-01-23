@@ -12,14 +12,18 @@ public class DetectionSystem : MonoBehaviour
     [SerializeField] private float _attackDistance = 0.8f;
     [SerializeField] private Camera _playerAimDirection;
     [SerializeField] private float _shootingRange = 10f;
+    [SerializeField] GameObject _impactEffect;
     private List<Collider> _collidersList = new List<Collider>();
     private Collider _currentCollider;
     private List<Material[]> _currentColliderMaterailsList = new List<Material[]>();
     private Action<Collider, Vector3> _onAttackSuccessful;
+    private Action<Collider, Vector3, RaycastHit> _onRangeAttackSuccessful;
 
     public Collider CurrentCollider { get => _currentCollider; }
     public float DetectionRadius { get => _detectionRadius; }
     public Action<Collider, Vector3> OnAttackSuccessful { get => _onAttackSuccessful; set => _onAttackSuccessful = value; }
+    public GameObject ImpactEffect { get => _impactEffect; }
+    public Action<Collider, Vector3, RaycastHit> OnRangeAttackSuccessful { get => _onRangeAttackSuccessful; set => _onRangeAttackSuccessful = value; }
 
     public Collider[] DetectObjectsInfront(Vector3 movementDirectionVector)
     {
@@ -126,7 +130,7 @@ public class DetectionSystem : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(_playerAimDirection.transform.position, _playerAimDirection.transform.forward, out hit, _shootingRange))
         {
-            _onAttackSuccessful?.Invoke(hit.collider, hit.point);
+            _onRangeAttackSuccessful?.Invoke(hit.collider, hit.point, hit);
         }
     }
 }
