@@ -23,3 +23,5 @@ MonoBehaviour:
   _maximumDamage: 2
   _criticalDamageChance: 0.2
   _weaponType: 1
+  audioClip: {fileID: 6066699563006986452, guid: 51742df321d261a4eb837c4e207ad3f5,
+    type: 3}

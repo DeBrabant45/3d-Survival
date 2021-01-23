@@ -15,7 +15,7 @@ MonoBehaviour:
   _iD: 5c27e7a5150b45b5829522485869ac7f
   _itemName: Sword
   _imageSprite: {fileID: 21300000, guid: ac8db7ae0fa9e66458a9a983bcbbb0b5, type: 3}
-  _model: {fileID: -927199367670048503, guid: 6b7cad5d378cc7d4c8b3d9929acb8550, type: 3}
+  _model: {fileID: 6522044585065854801, guid: 7abe7e2a2c857824693687c0d0291fcb, type: 3}
   _isStackable: 0
   _stackLimit: 1
   _itemType: 2
@@ -23,3 +23,4 @@ MonoBehaviour:
   _maximumDamage: 10
   _criticalDamageChance: 0.2
   _weaponType: 2
+  audioClip: {fileID: 0}
