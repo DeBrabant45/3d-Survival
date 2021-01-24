@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66e5228fe1877a5479dd58d8539db0d4, type: 3}
+  m_Name: LeadBall
+  m_EditorClassIdentifier: 
+  _iD: e24bedcccbb9449a9440e5c3be9ba531
+  _itemName: Lead Ball
+  _imageSprite: {fileID: 9092450002152678091, guid: 0e3986646a6245a4eacbf7e97abd98b7,
+    type: 3}
+  _model: {fileID: 8452813244600721380, guid: 9bdd25684c510bd41a66ffdd0f76a59e, type: 3}
+  _isStackable: 1
+  _stackLimit: 100
+  _itemType: 5

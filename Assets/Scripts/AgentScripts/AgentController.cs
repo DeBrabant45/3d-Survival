@@ -13,6 +13,7 @@ public class AgentController : MonoBehaviour
     [SerializeField] GameManager _gameManager;
     [SerializeField] CraftingSystem _craftingSystem;
     [SerializeField] Transform _itemSlot;
+    [SerializeField] AmmoSystem _ammoSystem;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -24,6 +25,7 @@ public class AgentController : MonoBehaviour
     public readonly BaseState menuState = new MenuState();
     public readonly BaseState meleeAttackState = new MeleeAttackState();
     public readonly BaseState rangedAttackState = new RangedAttackState();
+    public readonly BaseState reloadRangedWeaponState = new ReloadRangedWeaponState();
     public PlayerInput InputFromPlayer { get => _input; }
     public AgentMovement Movement { get => _movement; }
     public HumanoidAnimations AgentAnimations { get => _agentAnimations; }
@@ -33,6 +35,7 @@ public class AgentController : MonoBehaviour
     public BaseState PreviousState { get => _previousState; }
     public CraftingSystem CraftingSystem { get => _craftingSystem; }
     public Transform ItemSlot { get => _itemSlot; }
+    public AmmoSystem AmmoSystem { get => _ammoSystem; }
 
     private void OnEnable()
     {
@@ -51,6 +54,7 @@ public class AgentController : MonoBehaviour
         _craftingSystem.OnCheckInventoryIsFull += _inventorySystem.CheckInventoryIsFull;
         _craftingSystem.OnCraftItemRequest += _inventorySystem.CraftAnItem;
         _inventorySystem.OnInventoryStateChanged += _craftingSystem.RecheckIngredients;
+        _ammoSystem.OnAmmoAvailability += _inventorySystem.CheckResourceAvailability;
     }
 
     private void AssignInputListeners()
@@ -61,6 +65,7 @@ public class AgentController : MonoBehaviour
         _input.OnPrimaryAction += HandlePrimaryInput;
         _input.OnSecondaryAction += HandleSecondaryInput;
         _input.OnMenuToggledKey += HandleMenuInput;
+        _input.OnReload += HandleReloadInput;
     }
 
     private void HandleMenuInput()
@@ -91,6 +96,11 @@ public class AgentController : MonoBehaviour
     private void HandleHotBarInput(int hotBarKey)
     {
         _currentState.HandleHotBarInput(hotBarKey);
+    }
+
+    private void HandleReloadInput()
+    {
+        _currentState.HandleReloadInput();
     }
 
     private void Update()

@@ -73,6 +73,12 @@ public class MovementState : BaseState
         controllerReference.TransitionToState(controllerReference.interactState);
     }
 
+    public override void HandleReloadInput()
+    {
+        base.HandleReloadInput();
+        controllerReference.TransitionToState(controllerReference.reloadRangedWeaponState);
+    }
+
     public override void HandleHotBarInput(int hotbarKey)
     {
         base.HandleHotBarInput(hotbarKey);

@@ -36,6 +36,11 @@ public class InventorySystem : MonoBehaviour, ISaveable
         AddEventHandlersToHotbarUIElements();
     }
 
+    private void Update()
+    {
+
+    }
+
     private void UseInventoryItemHandler()
     {
         var selectedID = _inventoryData.SelectedItemUIID;
@@ -78,6 +83,11 @@ public class InventorySystem : MonoBehaviour, ISaveable
         UpdateInventoryItems();
         UpdateHotBarHandler();
         OnInventoryStateChanged.Invoke();
+    }
+
+    public void RemoveAmmoItemCount(AmmoItemSO ammoItem)
+    {
+        _inventoryData.TakeOneFromItem(ammoItem.ID, 1);
     }
 
     private void UpdateInventoryItems()

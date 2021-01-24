@@ -57,5 +57,6 @@ public enum ItemType
     Food,
     Weapon,
     Material,
-    Structure
+    Structure,
+    Ammo
 }

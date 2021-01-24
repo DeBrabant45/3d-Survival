@@ -17,6 +17,7 @@ public class PlayerInput : MonoBehaviour
     public Action OnPrimaryAction { get; set; }
     public Action OnSecondaryAction { get; set; }
     public Action OnMenuToggledKey { get; set; }
+    public Action OnReload { get; set; }
 
     private void Start()
     {
@@ -34,6 +35,15 @@ public class PlayerInput : MonoBehaviour
         GetHotBarInput();
         GetPrimaryAction();
         GetSecondaryAction();
+        GetReloadInput();
+    }
+
+    private void GetReloadInput()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            OnReload?.Invoke();
+        }
     }
 
     private void CheckMenuButton()
