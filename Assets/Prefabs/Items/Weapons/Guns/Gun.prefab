@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 4496256517781420699}
   - component: {fileID: 2320627848589120722}
   - component: {fileID: 4138883567495754818}
+  - component: {fileID: -5523011861961002429}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -4974,6 +4975,20 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &-5523011861961002429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750997205959635715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f366f7cb6ab77e46a0f4f713665caf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ammoCount: 1
+  _rangedWeapon: {fileID: 11400000, guid: 75690266cc2932a4480ba2bacd878079, type: 2}
 --- !u!1 &6750997205959635717
 GameObject:
   m_ObjectHideFlags: 0

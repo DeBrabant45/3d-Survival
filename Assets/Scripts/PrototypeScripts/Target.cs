@@ -8,9 +8,9 @@ public class Target : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        Debug.Log(amount);
+        //Debug.Log(amount);
         health -= amount;
-        Debug.Log(health);
+        //Debug.Log(health);
         if(health <= 0f)
         {
             Die();

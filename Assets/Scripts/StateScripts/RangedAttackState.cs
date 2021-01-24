@@ -24,6 +24,8 @@ public class RangedAttackState : BaseState
     {
         var target = hitObject.transform.GetComponent<Target>();
         var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
+        var itemSlotGun = controllerReference.ItemSlot.GetComponentInChildren<GunAmmo>();
+        itemSlotGun.RemoveFromCurrentAmmoCount(1);
         AddDamageToTarget(target, equippedItem);
         AddWeaponImpactForce(hit, equippedItem);
         CreateWeaponImpactEffect(hit);

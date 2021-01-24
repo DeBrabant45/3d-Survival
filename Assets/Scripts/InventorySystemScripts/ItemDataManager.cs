@@ -61,7 +61,7 @@ public class ItemDataManager : MonoBehaviour
     {
         if (_itemsDictionary.ContainsKey(id) == false)
         {
-            throw new System.Exception("ItemDataManager doesn't have " + id);
+            throw new System.Exception("ItemDataManager doesn't have " + id + " Add Item to Item Data Manager list!");
         }
     }
 }
