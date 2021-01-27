@@ -4,13 +4,35 @@ using UnityEngine;
 
 public class RangedAttackState : BaseState
 {
+    private ItemSO equippedWeapon;
+    private GunAmmo itemSlotGun;
+
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        controllerReference.Movement.StopMovement();
-        controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBack;
-        controllerReference.AgentAnimations.TriggerShootAnimation();
-        controllerReference.DetectionSystem.OnRangeAttackSuccessful += PreformShoot;
+        itemSlotGun = controllerReference.ItemSlot.GetComponentInChildren<GunAmmo>();
+        if(itemSlotGun != null && itemSlotGun.IsAmmoEmpty() == false)
+        {
+            controllerReference.Movement.StopMovement();
+            equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
+            controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBack;
+            controllerReference.AgentAnimations.TriggerShootAnimation();
+            controllerReference.DetectionSystem.OnRangeAttackSuccessful += PreformShoot;
+            RemoveAmmoWhenShooting();
+        }
+        else if(itemSlotGun.IsAmmoEmpty() == true)
+        {
+            controllerReference.TransitionToState(controllerReference.reloadRangedWeaponState);
+        }
+        else
+        {
+            controllerReference.TransitionToState(controllerReference.PreviousState);
+        }
+    }
+
+    private void RemoveAmmoWhenShooting()
+    {
+        itemSlotGun.RemoveFromCurrentAmmoCount(((RangedWeaponItemSO)equippedWeapon).MaxAmmoCount);
     }
 
     private void TransitionBack()
@@ -23,11 +45,8 @@ public class RangedAttackState : BaseState
     public void PreformShoot(Collider hitObject, Vector3 hitPosition, RaycastHit hit)
     {
         var target = hitObject.transform.GetComponent<Target>();
-        var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-        var itemSlotGun = controllerReference.ItemSlot.GetComponentInChildren<GunAmmo>();
-        itemSlotGun.RemoveFromCurrentAmmoCount(1);
-        AddDamageToTarget(target, equippedItem);
-        AddWeaponImpactForce(hit, equippedItem);
+        AddDamageToTarget(target, equippedWeapon);
+        AddWeaponImpactForce(hit, equippedWeapon);
         CreateWeaponImpactEffect(hit);
     }
 

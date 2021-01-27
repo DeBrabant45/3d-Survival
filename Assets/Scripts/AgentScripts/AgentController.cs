@@ -55,6 +55,7 @@ public class AgentController : MonoBehaviour
         _craftingSystem.OnCraftItemRequest += _inventorySystem.CraftAnItem;
         _inventorySystem.OnInventoryStateChanged += _craftingSystem.RecheckIngredients;
         _ammoSystem.OnAmmoAvailability += _inventorySystem.CheckResourceAvailability;
+        _ammoSystem.OnAmmoItemRequest += _inventorySystem.RemoveAmmoItemCount;
     }
 
     private void AssignInputListeners()

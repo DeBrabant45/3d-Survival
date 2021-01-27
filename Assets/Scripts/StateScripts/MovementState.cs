@@ -41,24 +41,13 @@ public class MovementState : BaseState
         if (controllerReference.InventorySystem.WeaponEquipped)
         {
             var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-            var itemSlotGun = controllerReference.ItemSlot.GetComponentInChildren<GunAmmo>();
             if(((WeaponItemSO)equippedItem).WeaponTypeSO == WeaponType.Melee)
             {
                 controllerReference.TransitionToState(controllerReference.meleeAttackState);
             }
             else 
             {
-                if(itemSlotGun != null)
-                {
-                    if (itemSlotGun.IsAmmoEmpty() != true)
-                    {
-                        controllerReference.TransitionToState(controllerReference.rangedAttackState);
-                    }
-                    else
-                    {
-                        Debug.Log("We need to go into the reload state");
-                    }
-                }
+                controllerReference.TransitionToState(controllerReference.rangedAttackState);
             }
         }
         else

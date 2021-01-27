@@ -55,6 +55,11 @@ public class HumanoidAnimations : MonoBehaviour
         _animator.SetTrigger("shoot");
     }
 
+    public void TrigggerReloadWeaponAnimation()
+    {
+        _animator.SetTrigger("reloadWeapon");
+    }
+
     public void FinishedAttackingCallBack()
     {
         _onFinishedAttacking.Invoke();
