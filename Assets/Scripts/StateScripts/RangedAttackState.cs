@@ -11,18 +11,21 @@ public class RangedAttackState : BaseState
     {
         base.EnterState(controller);
         itemSlotGun = controllerReference.ItemSlot.GetComponentInChildren<GunAmmo>();
-        if(itemSlotGun != null && itemSlotGun.IsAmmoEmpty() == false)
+        if(itemSlotGun != null)
         {
-            controllerReference.Movement.StopMovement();
-            equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-            controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBack;
-            controllerReference.AgentAnimations.TriggerShootAnimation();
-            controllerReference.DetectionSystem.OnRangeAttackSuccessful += PreformShoot;
-            RemoveAmmoWhenShooting();
-        }
-        else if(itemSlotGun.IsAmmoEmpty() == true)
-        {
-            controllerReference.TransitionToState(controllerReference.reloadRangedWeaponState);
+            if(itemSlotGun.IsAmmoEmpty() == false)
+            {
+                controllerReference.Movement.StopMovement();
+                equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
+                controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBack;
+                controllerReference.AgentAnimations.TriggerShootAnimation();
+                controllerReference.DetectionSystem.OnRangeAttackSuccessful += PreformShoot;
+                RemoveAmmoWhenShooting();
+            }
+            else
+            {
+                controllerReference.TransitionToState(controllerReference.reloadRangedWeaponState);
+            }
         }
         else
         {
