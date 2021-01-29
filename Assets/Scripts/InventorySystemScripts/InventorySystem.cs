@@ -34,6 +34,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
         _uIInventory.AssignDropButtonHandler(DropHandler);
         _uIInventory.AssignUseButtonHandler(UseInventoryItemHandler);
         AddEventHandlersToHotbarUIElements();
+        _onInventoryStateChanged += RangedWeaponEvents.current.InventoryHasChanged;
     }
 
     private void UseInventoryItemHandler()
@@ -160,7 +161,6 @@ public class InventorySystem : MonoBehaviour, ISaveable
         if (itemData.GetType() == typeof(RangedWeaponItemSO))
         {
             RangedWeaponEvents.current.RangedWeaponUnequipped();
-            RangedWeaponEvents.current.AmmoAmountChange();
         }
     }
 
@@ -169,7 +169,6 @@ public class InventorySystem : MonoBehaviour, ISaveable
         if (itemData.GetType() == typeof(RangedWeaponItemSO))
         {
             RangedWeaponEvents.current.RangedWeaponEquipped();
-            RangedWeaponEvents.current.AmmoAmountChange();
         }
     }
 

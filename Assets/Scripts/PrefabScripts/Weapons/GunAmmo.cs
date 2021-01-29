@@ -11,6 +11,7 @@ public class GunAmmo : MonoBehaviour
     private void Awake()
     {
         _currentAmmoCount = _rangedWeapon.PreloadedAmmoAmount;
+        RangedWeaponEvents.current.RangedWeaponAmmoAmountChange(_currentAmmoCount);
     }
 
     public void ReloadAmmoCount()
@@ -18,14 +19,14 @@ public class GunAmmo : MonoBehaviour
         if (_currentAmmoCount < _rangedWeapon.MaxAmmoCount)
         {
             _currentAmmoCount = _rangedWeapon.MaxAmmoCount;
-            RangedWeaponEvents.current.AmmoAmountChange();
+            RangedWeaponEvents.current.RangedWeaponAmmoAmountChange(_currentAmmoCount);
         }
     }
 
     public void RemoveFromCurrentAmmoCount()
     {
         _currentAmmoCount--;
-        RangedWeaponEvents.current.AmmoAmountChange();
+        RangedWeaponEvents.current.RangedWeaponAmmoAmountChange(_currentAmmoCount);
     }
 
     public bool IsAmmoEmpty()
