@@ -35,7 +35,7 @@ public class RangedAttackState : BaseState
 
     private void RemoveAmmoWhenShooting()
     {
-        itemSlotGun.RemoveFromCurrentAmmoCount(((RangedWeaponItemSO)equippedWeapon).MaxAmmoCount);
+        itemSlotGun.RemoveFromCurrentAmmoCount(((RangedWeaponItemSO)equippedWeapon).WeaponMagazineSize);
     }
 
     private void TransitionBack()

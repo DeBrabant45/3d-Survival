@@ -195,6 +195,11 @@ namespace Inventory
             return false;
         }
 
+        public int ItemAmountInStorage(string id)
+        {
+            return _playerStorage.GetItemCount(id) + _hotbarStorage.GetItemCount(id);
+        }
+
         public bool IsInventoryFull()
         {
             return _hotbarStorage.CheckIfStorageIsFull() && _playerStorage.CheckIfStorageIsFull();

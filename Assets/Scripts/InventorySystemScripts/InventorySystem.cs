@@ -99,6 +99,16 @@ public class InventorySystem : MonoBehaviour, ISaveable
         return _inventoryData.IsItemInStorage(id, count);
     }
 
+    public int ItemAmountInStorage(string id)
+    {
+        return _inventoryData.ItemAmountInStorage(id);
+    }
+
+    public ItemSO EquippedItem()
+    {
+        return ItemDataManager.Instance.GetItemData(EquippedWeaponID);
+    }
+
     private void UseItem(ItemSO itemData, int ui_id)
     {
         if(_interactionManager.UseItem(itemData))
@@ -126,6 +136,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
                     //Removes equipped item if user clicks use on already equipped item 
                     ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
+                    RangedWeaponEvents.current.RangedWeaponUnequipped();
                     return;
                 }
                 else
@@ -133,14 +144,24 @@ public class InventorySystem : MonoBehaviour, ISaveable
                     //Removes old equipped item if user equips another item
                     ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
+                    RangedWeaponEvents.current.RangedWeaponUnequipped();
                 }
             }
             //Adds newly equipped item 
             _inventoryData.EquipItem(ui_id);
             ToggleEquippedSelectedItemUI();
             ItemSpawnManager.Instance.CreateItemObjectInPlayersHand(itemData.ID);
+            RangedWeaponEvent(itemData);
         }
+    }
 
+    private void RangedWeaponEvent(ItemSO itemData)
+    {
+        if (itemData.GetType() == typeof(RangedWeaponItemSO))
+        {
+            RangedWeaponEvents.current.RangedWeaponEquipped();
+            RangedWeaponEvents.current.AmmoAmountChange();
+        }
     }
 
     private void ToggleEquippedSelectedItemUI()

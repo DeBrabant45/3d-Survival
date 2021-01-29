@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class GunAmmo : MonoBehaviour
@@ -9,22 +8,24 @@ public class GunAmmo : MonoBehaviour
 
     public int CurrentAmmoCount { get => _currentAmmoCount; }
 
-    private void Start()
+    private void OnEnable()
     {
-        _currentAmmoCount = _rangedWeapon.StartCurrentAmmoCount;
+        _currentAmmoCount = _rangedWeapon.PreloadedAmmoAmount;
     }
 
     public void AddToCurrentAmmoCount(int amount)
     {
-        if (_currentAmmoCount < _rangedWeapon.MaxAmmoCount)
+        if (_currentAmmoCount < _rangedWeapon.WeaponMagazineSize)
         {
             _currentAmmoCount += amount;
+            RangedWeaponEvents.current.AmmoAmountChange();
         }
     }
 
     public void RemoveFromCurrentAmmoCount(int amount)
     {
         _currentAmmoCount -= amount;
+        RangedWeaponEvents.current.AmmoAmountChange();
     }
 
     public bool IsAmmoEmpty()
@@ -38,7 +39,7 @@ public class GunAmmo : MonoBehaviour
 
     public bool IsAmmoFull()
     {
-        if (_currentAmmoCount == _rangedWeapon.MaxAmmoCount)
+        if (_currentAmmoCount == _rangedWeapon.WeaponMagazineSize)
         {
             return true;
         }

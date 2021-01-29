@@ -29,8 +29,8 @@ public class ReloadRangedWeaponState : BaseState
             if(itemSlotGun != null && itemSlotGun.IsAmmoEmpty() == true)
             {
                 controllerReference.AgentAnimations.TrigggerReloadWeaponAnimation();
-                controllerReference.AmmoSystem.ReloadAmmoRequest(((RangedWeaponItemSO)_equippedWeapon).MaxAmmoCount);
-                itemSlotGun.AddToCurrentAmmoCount(((RangedWeaponItemSO)_equippedWeapon).MaxAmmoCount);
+                controllerReference.AmmoSystem.ReloadAmmoRequest(((RangedWeaponItemSO)_equippedWeapon).WeaponMagazineSize);
+                itemSlotGun.AddToCurrentAmmoCount(((RangedWeaponItemSO)_equippedWeapon).WeaponMagazineSize);
             }
         }
     }

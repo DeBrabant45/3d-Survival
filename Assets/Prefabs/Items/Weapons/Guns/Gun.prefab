@@ -4987,8 +4987,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f366f7cb6ab77e46a0f4f713665caf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ammoCount: 1
   _rangedWeapon: {fileID: 11400000, guid: 75690266cc2932a4480ba2bacd878079, type: 2}
+  _currentAmmoCount: 0
 --- !u!1 &6750997205959635717
 GameObject:
   m_ObjectHideFlags: 0

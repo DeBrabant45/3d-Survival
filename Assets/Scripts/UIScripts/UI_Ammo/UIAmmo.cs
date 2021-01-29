@@ -10,21 +10,23 @@ public class UIAmmo : MonoBehaviour
     [SerializeField] private Text _ammoInStorageTxt;
     [SerializeField] private Image _equippedWeaponIcon;
 
+    public GameObject AmmoPanel { get => _ammoPanel; }
+
     private void Start()
     {
-        //_ammoPanel.SetActive(false);
+        _ammoPanel.SetActive(false);
+        RangedWeaponEvents.current.onRangedWeaponEquipped += ActivateAmmoPanel;
+        RangedWeaponEvents.current.onRangedWeaponUnequipped += InActivateAmmoPanel;
     }
 
-    public void ToggleAmmoPanel()
+    public void ActivateAmmoPanel()
     {
-        if (_ammoPanel.activeSelf == false)
-        {
-            _ammoPanel.SetActive(true);
-        }
-        else
-        {
-            _ammoPanel.SetActive(false);
-        }
+        _ammoPanel.SetActive(true);
+    }
+
+    public void InActivateAmmoPanel()
+    {
+        _ammoPanel.SetActive(false);
     }
 
     public void SetAmmoInGun(int ammoCount)
@@ -37,8 +39,8 @@ public class UIAmmo : MonoBehaviour
         _ammoInStorageTxt.text = ammoCount + "";
     }
 
-    public void SetEquippedWeaponIcon(Image weaponIcon)
+    public void SetEquippedWeaponIcon(Sprite weaponIcon)
     {
-        _equippedWeaponIcon = weaponIcon;
+        _equippedWeaponIcon.sprite = weaponIcon;
     }
 }
