@@ -136,7 +136,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
                     //Removes equipped item if user clicks use on already equipped item 
                     ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
-                    RangedWeaponEvents.current.RangedWeaponUnequipped();
+                    RangeWeaponEventUnequip(itemData);
                     return;
                 }
                 else
@@ -144,7 +144,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
                     //Removes old equipped item if user equips another item
                     ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
-                    RangedWeaponEvents.current.RangedWeaponUnequipped();
+                    RangeWeaponEventUnequip(itemData);
                 }
             }
             //Adds newly equipped item 
@@ -152,6 +152,15 @@ public class InventorySystem : MonoBehaviour, ISaveable
             ToggleEquippedSelectedItemUI();
             ItemSpawnManager.Instance.CreateItemObjectInPlayersHand(itemData.ID);
             RangedWeaponEvent(itemData);
+        }
+    }
+
+    private static void RangeWeaponEventUnequip(ItemSO itemData)
+    {
+        if (itemData.GetType() == typeof(RangedWeaponItemSO))
+        {
+            RangedWeaponEvents.current.RangedWeaponUnequipped();
+            RangedWeaponEvents.current.AmmoAmountChange();
         }
     }
 

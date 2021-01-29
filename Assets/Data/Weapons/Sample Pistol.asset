@@ -15,7 +15,7 @@ MonoBehaviour:
   _iD: 4e161ae5538a4f9391785f36af44169d
   _itemName: Flintlock Pistol
   _imageSprite: {fileID: 21300000, guid: 41ec97f5c0f9f5d4295105bd3f888aea, type: 3}
-  _model: {fileID: 6750997205959635715, guid: 5964e813a6596794c95e4523e4c28596, type: 3}
+  _model: {fileID: 6750997205959635715, guid: bc2fb0148a38c8341847601065b78220, type: 3}
   _isStackable: 0
   _stackLimit: 1
   _itemType: 2
@@ -24,5 +24,5 @@ MonoBehaviour:
   _criticalDamageChance: 0.2
   _weaponType: 1
   _weaponImpactForce: 100
-  _maxAmmoCount: 1
-  _startCurrentAmmoCount: 1
+  _maxAmmoCount: 5
+  _preloadedAmmoAmount: 5

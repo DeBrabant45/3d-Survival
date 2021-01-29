@@ -4989,6 +4989,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rangedWeapon: {fileID: 11400000, guid: 75690266cc2932a4480ba2bacd878079, type: 2}
   _currentAmmoCount: 0
+  _maxAmmoCount: 1
+  _preloadedAmount: 1
 --- !u!1 &6750997205959635717
 GameObject:
   m_ObjectHideFlags: 0
