@@ -66,7 +66,7 @@ public class AgentMovement : MonoBehaviour
                             _temporaryDesiredRotationAngle = -90;
                         }
                         //Calculate rotation based on right or left direction
-                        _endRotationY = Quaternion.Euler(transform.localEulerAngles) * Quaternion.Euler(Vector3.up * _temporaryDesiredRotationAngle);
+                        _endRotationY = Quaternion.Euler(Vector3.up * _temporaryDesiredRotationAngle);
                     }
                     _inputVerticalDirection = 1;
                     moveDirection = transform.forward * _movementSpeed;

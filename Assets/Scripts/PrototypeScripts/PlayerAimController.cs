@@ -5,48 +5,25 @@ using UnityEngine;
 
 public class PlayerAimController : MonoBehaviour
 {
-    public PlayerInput input;
-    
-    public GameObject mainCamera;
-    public GameObject aimCamera;
-    public GameObject aimReticle;
+    public float turnSpeed = 15;
+    public float aimDuration = 0.3f;
+    public Cinemachine.AxisState xAxis;
+    public Cinemachine.AxisState yAxis;
+    public Transform cameraLookAt;
 
-    // Start is called before the first frame update
-    void Start()
+    private Camera mainCamera;
+
+    private void Start()
     {
-        input = GetComponent<PlayerInput>();
-        input.OnZoom += SetCam;
+        mainCamera = Camera.main;
     }
 
-    private void SetCam()
+    private void FixedUpdate()
     {
-        mainCamera.SetActive(false);
-        aimCamera.SetActive(true);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //if (input.OnZoom == 1f && !aimCamera.activeInHierarchy)
-        //{
-        //    mainCamera.SetActive(false);
-        //    aimCamera.SetActive(true);
-
-        //    //Allow time for the camera to blend before enabling the UI
-        //    StartCoroutine(ShowReticle());
-        //}
-        //else if (input.aimValue != 1f && !mainCamera.activeInHierarchy)
-        //{
-        //    mainCamera.SetActive(true);
-        //    aimCamera.SetActive(false);
-        //    aimReticle.SetActive(false);
-        //}
-
-    }
-
-    IEnumerator ShowReticle()
-    {
-        yield return new WaitForSeconds(0.25f);
-        aimReticle.SetActive(enabled);
+        xAxis.Update(Time.fixedDeltaTime);
+        yAxis.Update(Time.fixedDeltaTime);
+        cameraLookAt.eulerAngles = new Vector3(yAxis.Value, xAxis.Value, 0);
+        float yawCamera = mainCamera.transform.rotation.eulerAngles.y;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, yawCamera, 0), turnSpeed * Time.deltaTime);
     }
 }

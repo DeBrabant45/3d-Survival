@@ -18,6 +18,7 @@ public class PlayerInput : MonoBehaviour
     public Action OnSecondaryAction { get; set; }
     public Action OnMenuToggledKey { get; set; }
     public Action OnReload { get; set; }
+    public Action OnZoom { get; set; }
 
     private void Start()
     {
@@ -36,6 +37,7 @@ public class PlayerInput : MonoBehaviour
         GetPrimaryAction();
         GetSecondaryAction();
         GetReloadInput();
+        GetZoomInput();
     }
 
     private void GetReloadInput()
@@ -43,6 +45,14 @@ public class PlayerInput : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R))
         {
             OnReload?.Invoke();
+        }
+    }
+
+    private void GetZoomInput()
+    {
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            OnZoom?.Invoke();
         }
     }
 
@@ -121,6 +131,6 @@ public class PlayerInput : MonoBehaviour
     private void GetMovementInput()
     {
         MovementInputVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        //Debug.Log(MovementInputVector);
+        Debug.Log(MovementInputVector);
     }
 }
