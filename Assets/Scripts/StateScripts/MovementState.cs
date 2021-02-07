@@ -26,7 +26,6 @@ public class MovementState : BaseState
             var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
             if (((WeaponItemSO)equippedItem).WeaponTypeSO == WeaponType.Melee)
             {
-                //Set player to Aim state for Melee weapons
                 controllerReference.TransitionToState(controllerReference.meleeWeaponAimState);
             }
             else
@@ -36,7 +35,7 @@ public class MovementState : BaseState
         }
         else
         {
-            //Set player to free look state without a weapon
+            controllerReference.TransitionToState(controllerReference.freeAimState);
         }
     }
 

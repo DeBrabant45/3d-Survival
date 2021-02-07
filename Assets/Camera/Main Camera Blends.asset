@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CustomBlends:
   - m_From: PlayerFollowCamera
-    m_To: PlayerAimCamera
+    m_To: PlayerFollowCamera (1)
     m_Blend:
-      m_Style: 0
+      m_Style: 2
       m_Time: 1
       m_CustomCurve:
         serializedVersion: 2
@@ -42,10 +42,10 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 0
-  - m_From: PlayerAimCamera
+  - m_From: PlayerFollowCamera (1)
     m_To: PlayerFollowCamera
     m_Blend:
-      m_Style: 0
+      m_Style: 1
       m_Time: 1
       m_CustomCurve:
         serializedVersion: 2

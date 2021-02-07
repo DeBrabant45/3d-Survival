@@ -24,6 +24,7 @@ public class AgentController : MonoBehaviour
     public readonly BaseState inventoryState = new InventoryState();
     public readonly BaseState interactState = new InteractState();
     public readonly BaseState menuState = new MenuState();
+    public readonly BaseState freeAimState = new FreeAimState();
     public readonly BaseState meleeAttackState = new MeleeAttackState();
     public readonly BaseState meleeWeaponAimState = new MeleeWeaponAimState();
     public readonly BaseState rangedWeaponAimState = new RangedWeaponAimState();

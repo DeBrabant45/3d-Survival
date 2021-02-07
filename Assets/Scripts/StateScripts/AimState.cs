@@ -8,16 +8,14 @@ public abstract class AimState : BaseState
     {
         base.EnterState(controller);
         controllerReference.Movement.StopMovement();
-        controllerReference.InputFromPlayer.PlayerFollowCamera.Priority = 0;
-        controllerReference.InputFromPlayer.PlayerAimCamera.Priority = 1;
+        controllerReference.AgentAimController.SetZoomInFieldOfView();
         controllerReference.AgentAimController.AimCrossHair.enabled = true;
     }
 
     public override void HandleAimInput()
     {
         controllerReference.TransitionToState(controllerReference.movementState);
-        controllerReference.InputFromPlayer.PlayerFollowCamera.Priority = 1;
-        controllerReference.InputFromPlayer.PlayerAimCamera.Priority = 0;
+        controllerReference.AgentAimController.SetZoomOutFieldOfView();
         controllerReference.AgentAimController.AimCrossHair.enabled = false;
     }
 
