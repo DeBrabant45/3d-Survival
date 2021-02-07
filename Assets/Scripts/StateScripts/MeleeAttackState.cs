@@ -18,7 +18,7 @@ public class MeleeAttackState : BaseState
     {
         controllerReference.AgentAnimations.OnFinishedAttacking -= TransitionBack;
         controllerReference.DetectionSystem.OnAttackSuccessful -= PreformHit;
-        controllerReference.TransitionToState(controllerReference.movementState);
+        controllerReference.TransitionToState(controllerReference.meleeWeaponAimState);
     }
 
     public void PreformHit(Collider hitObject, Vector3 hitPosition)

@@ -42,7 +42,7 @@ public class RangedAttackState : BaseState
     {
         controllerReference.AgentAnimations.OnFinishedAttacking -= TransitionBack;
         controllerReference.DetectionSystem.OnRangeAttackSuccessful -= PreformShoot;
-        controllerReference.TransitionToState(controllerReference.movementState);
+        controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
     }
 
     public void PreformShoot(Collider hitObject, Vector3 hitPosition, RaycastHit hit)

@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerInput : MonoBehaviour
 {
+    [SerializeField] CinemachineFreeLook _playerFollowCamera;
+    [SerializeField] CinemachineVirtualCamera _playerAimCamera;
     private Camera _mainCamera;
     private float _previousPrimaryActionInput = 0;
     private float _previousSecondaryActionInput = 0;
@@ -18,7 +21,9 @@ public class PlayerInput : MonoBehaviour
     public Action OnSecondaryAction { get; set; }
     public Action OnMenuToggledKey { get; set; }
     public Action OnReload { get; set; }
-    public Action OnZoom { get; set; }
+    public Action OnAim { get; set; }
+    public CinemachineFreeLook PlayerFollowCamera { get => _playerFollowCamera; set => _playerFollowCamera = value; }
+    public CinemachineVirtualCamera PlayerAimCamera { get => _playerAimCamera; set => _playerAimCamera = value; }
 
     private void Start()
     {
@@ -37,7 +42,7 @@ public class PlayerInput : MonoBehaviour
         GetPrimaryAction();
         GetSecondaryAction();
         GetReloadInput();
-        GetZoomInput();
+        GetAimInput();
     }
 
     private void GetReloadInput()
@@ -48,11 +53,11 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    private void GetZoomInput()
+    private void GetAimInput()
     {
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            OnZoom?.Invoke();
+            OnAim?.Invoke();
         }
     }
 
@@ -131,6 +136,5 @@ public class PlayerInput : MonoBehaviour
     private void GetMovementInput()
     {
         MovementInputVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        Debug.Log(MovementInputVector);
     }
 }

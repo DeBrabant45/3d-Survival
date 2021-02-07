@@ -6,7 +6,8 @@ using UnityEngine;
 public class AgentController : MonoBehaviour
 {
     [SerializeField] AgentMovement _movement;
-    [SerializeField] PlayerInput _input;
+    [SerializeField] AgentAimController _agentAimController;
+    [SerializeField] PlayerInput _inputFromPlayer;
     [SerializeField] HumanoidAnimations _agentAnimations;
     [SerializeField] InventorySystem _inventorySystem;
     [SerializeField] DetectionSystem _detectionSystem;
@@ -24,9 +25,12 @@ public class AgentController : MonoBehaviour
     public readonly BaseState interactState = new InteractState();
     public readonly BaseState menuState = new MenuState();
     public readonly BaseState meleeAttackState = new MeleeAttackState();
-    public readonly BaseState rangedAttackState = new RangedAttackState();
+    public readonly BaseState meleeWeaponAimState = new MeleeWeaponAimState();
+    public readonly BaseState rangedWeaponAimState = new RangedWeaponAimState();
+    public readonly BaseState rangedWeaponAttackState = new RangedAttackState();
     public readonly BaseState reloadRangedWeaponState = new ReloadRangedWeaponState();
-    public PlayerInput InputFromPlayer { get => _input; }
+
+    public PlayerInput InputFromPlayer { get => _inputFromPlayer; }
     public AgentMovement Movement { get => _movement; }
     public HumanoidAnimations AgentAnimations { get => _agentAnimations; }
     public InventorySystem InventorySystem { get => _inventorySystem; }
@@ -36,16 +40,18 @@ public class AgentController : MonoBehaviour
     public CraftingSystem CraftingSystem { get => _craftingSystem; }
     public Transform ItemSlot { get => _itemSlot; }
     public AmmoSystem AmmoSystem { get => _ammoSystem; }
+    public AgentAimController AgentAimController { get => _agentAimController; }
 
     private void OnEnable()
     {
         _movement = GetComponent<AgentMovement>();
-        _input = GetComponent<PlayerInput>();
+        _inputFromPlayer = GetComponent<PlayerInput>();
         _agentAnimations = GetComponent<HumanoidAnimations>();
+        _detectionSystem = GetComponent<DetectionSystem>();
+        _agentAimController = GetComponent<AgentAimController>();
         _currentState = movementState;
         _currentState.EnterState(this);
         AssignInputListeners();
-        _detectionSystem = GetComponent<DetectionSystem>();
     }
 
     private void Start()
@@ -62,13 +68,19 @@ public class AgentController : MonoBehaviour
 
     private void AssignInputListeners()
     {
-        _input.OnJump += HandleJump;
-        _input.OnHotBarKey += HandleHotBarInput;
-        _input.OnToggleInventory += HandleInventoryInput;
-        _input.OnPrimaryAction += HandlePrimaryInput;
-        _input.OnSecondaryAction += HandleSecondaryInput;
-        _input.OnMenuToggledKey += HandleMenuInput;
-        _input.OnReload += HandleReloadInput;
+        _inputFromPlayer.OnJump += HandleJump;
+        _inputFromPlayer.OnHotBarKey += HandleHotBarInput;
+        _inputFromPlayer.OnToggleInventory += HandleInventoryInput;
+        _inputFromPlayer.OnPrimaryAction += HandlePrimaryInput;
+        _inputFromPlayer.OnSecondaryAction += HandleSecondaryInput;
+        _inputFromPlayer.OnMenuToggledKey += HandleMenuInput;
+        _inputFromPlayer.OnReload += HandleReloadInput;
+        _inputFromPlayer.OnAim += HandleAimInput;
+    }
+
+    private void HandleAimInput()
+    {
+        _currentState.HandleAimInput();
     }
 
     private void HandleMenuInput()
@@ -116,13 +128,13 @@ public class AgentController : MonoBehaviour
         if(Application.isPlaying)
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position + _input.MovementDirectionVector, _detectionSystem.DetectionRadius);
+            Gizmos.DrawWireSphere(transform.position + _inputFromPlayer.MovementDirectionVector, _detectionSystem.DetectionRadius);
         }
     }
 
     private void OnDisable()
     {
-        _input.OnJump -= _currentState.HandleJumpInput;
+        _inputFromPlayer.OnJump -= _currentState.HandleJumpInput;
     }
 
     public void TransitionToState(BaseState state)

@@ -19,6 +19,27 @@ public class MovementState : BaseState
         controllerReference.Movement.HandleMovementDirection(input);
     }
 
+    public override void HandleAimInput()
+    {
+        if (controllerReference.InventorySystem.WeaponEquipped)
+        {
+            var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
+            if (((WeaponItemSO)equippedItem).WeaponTypeSO == WeaponType.Melee)
+            {
+                //Set player to Aim state for Melee weapons
+                controllerReference.TransitionToState(controllerReference.meleeWeaponAimState);
+            }
+            else
+            {
+                controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
+            }
+        }
+        else
+        {
+            //Set player to free look state without a weapon
+        }
+    }
+
     public override void HandleMovement(Vector2 input)
     {
         base.HandleMovement(input);
@@ -38,22 +59,18 @@ public class MovementState : BaseState
     public override void HandlePrimaryInput()
     {
         base.HandlePrimaryInput();
-        if (controllerReference.InventorySystem.WeaponEquipped)
-        {
-            var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-            if(((WeaponItemSO)equippedItem).WeaponTypeSO == WeaponType.Melee)
-            {
-                controllerReference.TransitionToState(controllerReference.meleeAttackState);
-            }
-            else 
-            {
-                controllerReference.TransitionToState(controllerReference.rangedAttackState);
-            }
-        }
-        else
-        {
-            Debug.Log("No weapon set, cannot perform attack");
-        }
+        //if (controllerReference.InventorySystem.WeaponEquipped)
+        //{
+        //    var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
+        //    if(((WeaponItemSO)equippedItem).WeaponTypeSO == WeaponType.Melee)
+        //    {
+        //        controllerReference.TransitionToState(controllerReference.meleeAttackState);
+        //    }
+        //}
+        //else
+        //{
+        //    Debug.Log("No weapon set, cannot perform attack");
+        //}
     }
 
     public override void HandleSecondaryInput()

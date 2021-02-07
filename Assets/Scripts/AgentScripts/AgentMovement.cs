@@ -76,6 +76,7 @@ public class AgentMovement : MonoBehaviour
                     _temporaryMovementTriggered = false;
                     agentAnimations.SetMovementFloat(0);
                     moveDirection = Vector3.zero;
+
                 }
             }
         }

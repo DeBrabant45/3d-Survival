@@ -13,7 +13,7 @@ public class ReloadRangedWeaponState : BaseState
         {
             _equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
             PreformWeaponReload();
-            controllerReference.TransitionToState(controllerReference.movementState);
+            controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
         }
         else
         {

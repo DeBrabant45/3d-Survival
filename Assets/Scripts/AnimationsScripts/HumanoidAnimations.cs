@@ -60,6 +60,26 @@ public class HumanoidAnimations : MonoBehaviour
         _animator.SetTrigger("reloadWeapon");
     }
 
+    public void ActivatePistolAimAnimation()
+    {
+        _animator.SetBool("pistolAim", true);
+    }
+
+    public void DeactivatePistolAimAnimation()
+    {
+        _animator.SetBool("pistolAim", false);
+    }    
+    
+    public void ActivateSwordAimAnimation()
+    {
+        _animator.SetBool("swordAim", true);
+    }
+
+    public void DeactivateSwordAimAnimation()
+    {
+        _animator.SetBool("swordAim", false);
+    }
+
     public void FinishedAttackingCallBack()
     {
         _onFinishedAttacking.Invoke();
