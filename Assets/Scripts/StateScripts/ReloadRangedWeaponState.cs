@@ -9,11 +9,11 @@ public class ReloadRangedWeaponState : BaseState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        if(controllerReference.InventorySystem.WeaponEquipped)
+        controllerReference.AgentAnimations.OnFinishedReloading += TransitionBackAfterReloadingAnimation;
+        if (controllerReference.InventorySystem.WeaponEquipped)
         {
             _equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
             PreformWeaponReload();
-            controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
         }
         else
         {
@@ -32,6 +32,19 @@ public class ReloadRangedWeaponState : BaseState
                 controllerReference.AmmoSystem.ReloadAmmoRequest(((RangedWeaponItemSO)_equippedWeapon).MaxAmmoCount);
                 itemSlotGun.ReloadAmmoCount();
             }
+        }
+    }
+
+    private void TransitionBackAfterReloadingAnimation()
+    {
+        controllerReference.AgentAnimations.OnFinishedReloading -= TransitionBackAfterReloadingAnimation;
+        if(controllerReference.AgentAimController.AimCrossHair.IsActive())
+        {
+            controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
+        }
+        else
+        {
+            controllerReference.TransitionToState(controllerReference.PreviousState);
         }
     }
 }

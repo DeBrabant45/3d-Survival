@@ -7,18 +7,18 @@ public class RangedWeaponAimState : AimState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        controllerReference.AgentAnimations.ActivatePistolAimAnimation();
+        controllerReference.AgentAimController.IsAimActive = true;
     }
 
     public override void HandlePrimaryInput()
     {
-        controllerReference.AgentAnimations.DeactivatePistolAimAnimation();
+        controllerReference.AgentAimController.IsAimActive = false;
         controllerReference.TransitionToState(controllerReference.rangedWeaponAttackState);
     }
 
     public override void HandleAimInput()
     {
         base.HandleAimInput();
-        controllerReference.AgentAnimations.DeactivatePistolAimAnimation();
+        controllerReference.AgentAimController.IsAimActive = false;
     }
 }

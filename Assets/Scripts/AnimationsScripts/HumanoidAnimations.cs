@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class HumanoidAnimations : MonoBehaviour
 {
-    [SerializeField] Action _onFinishedAttacking;
     private Animator _animator;
+    private Action _onFinishedAttacking;
+    private Action _onFinishedReloading;
 
     public Action OnFinishedAttacking { get => _onFinishedAttacking; set => _onFinishedAttacking = value; }
+    public Action OnFinishedReloading { get => _onFinishedReloading; set => _onFinishedReloading = value; }
 
     private void Awake()
     {
@@ -58,17 +60,7 @@ public class HumanoidAnimations : MonoBehaviour
     public void TrigggerReloadWeaponAnimation()
     {
         _animator.SetTrigger("reloadWeapon");
-    }
-
-    public void ActivatePistolAimAnimation()
-    {
-        _animator.SetBool("pistolAim", true);
-    }
-
-    public void DeactivatePistolAimAnimation()
-    {
-        _animator.SetBool("pistolAim", false);
-    }    
+    }  
     
     public void ActivateSwordAimAnimation()
     {
@@ -83,6 +75,11 @@ public class HumanoidAnimations : MonoBehaviour
     public void FinishedAttackingCallBack()
     {
         _onFinishedAttacking.Invoke();
+    }
+    
+    public void FinishedReloadingCallBack()
+    {
+        _onFinishedReloading.Invoke();
     }
 
     public float SetCorrectAnimation(float desiredRotationAngle, int angleThreshold, int inputVerticalDirection)

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
+using UnityEngine.Animations.Rigging;
 
 public class AgentAimController : MonoBehaviour
 {
@@ -13,14 +11,30 @@ public class AgentAimController : MonoBehaviour
     [SerializeField] private CinemachineFreeLook _playerFollowCamera;
     [SerializeField] private int _cameraZoomInFieldOfView;
     [SerializeField] private int _cameraZoomOutFieldOfView;
+    [SerializeField] private Rig _playerAim;
+    private bool _isAimActive = false;
     private Camera mainCamera;
 
     public Image AimCrossHair { get => _aimCrossHair; set => _aimCrossHair = value; }
+    public bool IsAimActive { get => _isAimActive; set => _isAimActive = value; }
 
     private void Start()
     {
         mainCamera = Camera.main;
         _aimCrossHair.enabled = false;
+        _playerAim.weight = 0;
+    }
+
+    public void SetPlayerAimRigWeight()
+    {
+        if(_isAimActive == true)
+        {
+            _playerAim.weight += Time.deltaTime / _aimDuration;
+        }
+        else
+        {
+            _playerAim.weight -= Time.deltaTime / _aimDuration;
+        }
     }
 
     public void SetZoomInFieldOfView()
@@ -37,5 +51,10 @@ public class AgentAimController : MonoBehaviour
     {
         float yawCamera = mainCamera.transform.rotation.eulerAngles.y;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, yawCamera, 0), _turnSpeed * Time.deltaTime);
+    }
+
+    private void Update()
+    {
+        SetPlayerAimRigWeight();
     }
 }
