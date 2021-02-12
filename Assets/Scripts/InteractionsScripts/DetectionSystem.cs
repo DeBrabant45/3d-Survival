@@ -9,8 +9,8 @@ public class DetectionSystem : MonoBehaviour
     [SerializeField] private float _detectionRadius;
     [SerializeField] private Material _selectionMaterial;
     [SerializeField] private Transform _weaponRaycastStartPosition;
+    [SerializeField] private Transform _rangedWeaponRaycastStartPosition;
     [SerializeField] private float _attackDistance = 0.8f;
-    [SerializeField] private Camera _playerAimDirection;
     [SerializeField] private float _shootingRange = 10f;
     [SerializeField] GameObject _impactEffect;
     private List<Collider> _collidersList = new List<Collider>();
@@ -128,7 +128,7 @@ public class DetectionSystem : MonoBehaviour
     public void DetectColliderFromRange()
     {
         RaycastHit hit;
-        if (Physics.Raycast(_playerAimDirection.transform.position, _playerAimDirection.transform.forward, out hit, _shootingRange))
+        if (Physics.Raycast(_rangedWeaponRaycastStartPosition.transform.position, transform.forward, out hit, _shootingRange))
         {
             _onRangeAttackSuccessful?.Invoke(hit.collider, hit.point, hit);
         }
