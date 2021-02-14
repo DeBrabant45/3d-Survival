@@ -47,9 +47,39 @@ public class HumanoidAnimations : MonoBehaviour
         _animator.SetFloat("move", value);
     }
 
-    public void TriggerAttackAnimation()
+    public void TriggerMeleeAttackOneAnimation()
     {
-        _animator.SetTrigger("attack");
+        _animator.SetTrigger("meleeWeaponAttackOne");
+    }    
+    
+    public void TriggerMeleeAttackTwoAnimation()
+    {
+        _animator.SetTrigger("meleeWeaponAttackTwo");
+    }    
+    
+    public void TriggerMeleeAttackThreeAnimation()
+    {
+        _animator.SetTrigger("meleeWeaponAttackThree");
+    }    
+    
+    public void TriggerUnarmedMeleeAttackOneAnimation()
+    {
+        _animator.SetTrigger("meleeUnarmedAttackOne");
+    }    
+    
+    public void TriggerUnarmedMeleeAttackTwoAnimation()
+    {
+        _animator.SetTrigger("meleeUnarmedAttackTwo");
+    }    
+    
+    public void TriggerUnarmedMeleeAttackThreeAnimation()
+    {
+        _animator.SetTrigger("meleeUnarmedAttackThree");
+    }    
+    
+    public void TriggerUnarmedMeleeAttackFourAnimation()
+    {
+        _animator.SetTrigger("meleeUnarmedAttackFour");
     }
 
     public void TriggerShootAnimation()
@@ -62,14 +92,24 @@ public class HumanoidAnimations : MonoBehaviour
         _animator.SetTrigger("reloadWeapon");
     }  
     
-    public void ActivateSwordAimAnimation()
+    public void ActivateMeleeWeaponStanceAnimation()
     {
-        _animator.SetBool("swordAim", true);
+        _animator.SetBool("meleeWeaponStance", true);
     }
 
-    public void DeactivateSwordAimAnimation()
+    public void DeactivateMeleeWeaponStanceAnimation()
     {
-        _animator.SetBool("swordAim", false);
+        _animator.SetBool("meleeWeaponStance", false);
+    }    
+    
+    public void ActivateUnarmedStanceAnimation()
+    {
+        _animator.SetBool("meleeUnarmedStance", true);
+    }
+
+    public void DeactivateUnarmedStanceAnimation()
+    {
+        _animator.SetBool("meleeUnarmedStance", false);
     }
 
     public void FinishedAttackingCallBack()

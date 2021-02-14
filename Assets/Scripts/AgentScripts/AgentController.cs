@@ -24,8 +24,14 @@ public class AgentController : MonoBehaviour
     public readonly BaseState inventoryState = new InventoryState();
     public readonly BaseState interactState = new InteractState();
     public readonly BaseState menuState = new MenuState();
-    public readonly BaseState freeAimState = new FreeAimState();
-    public readonly BaseState meleeAttackState = new MeleeAttackState();
+    public readonly BaseState meleeUnarmedAim = new MeleeUnarmedAimState();
+    public readonly BaseState meleeUnarmedAttackOne = new MeleeUnarmedAttackOneState();
+    public readonly BaseState meleeUnarmedAttackTwo = new MeleeUnarmedAttackTwoState();
+    public readonly BaseState meleeUnarmedAttackThree = new MeleeUnarmedAttackThreeState();
+    public readonly BaseState meleeUnarmedAttackFour = new MeleeUnarmedAttackFourState();
+    public readonly BaseState meleeWeaponAttackOne = new MeleeWeaponAttackOneState();
+    public readonly BaseState meleeWeaponAttackTwo = new MeleeWeaponAttackTwoState();
+    public readonly BaseState meleeWeaponAttackThree = new MeleeWeaponAttackThreeState();
     public readonly BaseState meleeWeaponAimState = new MeleeWeaponAimState();
     public readonly BaseState rangedWeaponAimState = new RangedWeaponAimState();
     public readonly BaseState rangedWeaponAttackState = new RangedAttackState();
@@ -124,6 +130,11 @@ public class AgentController : MonoBehaviour
         _currentState.Update();
     }
 
+    private void FixedUpdate()
+    {
+        _currentState.FixedUpdate();
+    }
+
     private void OnDrawGizmos()
     {
         if(Application.isPlaying)
@@ -144,6 +155,6 @@ public class AgentController : MonoBehaviour
         //Debug.Log(_previousState + " old State");
         _currentState = state;
         _currentState.EnterState(this);
-        //Debug.Log(_currentState + " new State");
+        Debug.Log(_currentState + " new State");
     }
 }
