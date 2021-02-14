@@ -13,6 +13,6 @@ public class MeleeUnarmedAttackThreeState : MeleeState
     public override void TransitionBackFromAnimation()
     {
         base.TransitionBackFromAnimation();
-        DetermindNextState(controllerReference.meleeUnarmedAttackFour);
+        DetermindNextState(controllerReference.meleeUnarmedAttackFour, controllerReference.meleeUnarmedAim);
     }
 }

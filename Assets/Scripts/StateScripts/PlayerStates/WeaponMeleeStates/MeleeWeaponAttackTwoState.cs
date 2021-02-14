@@ -13,6 +13,6 @@ public class MeleeWeaponAttackTwoState : MeleeState
     public override void TransitionBackFromAnimation()
     {
         base.TransitionBackFromAnimation();
-        DetermindNextState(controllerReference.meleeWeaponAttackThree);
+        DetermindNextState(controllerReference.meleeWeaponAttackThree, controllerReference.meleeWeaponAimState);
     }
 }

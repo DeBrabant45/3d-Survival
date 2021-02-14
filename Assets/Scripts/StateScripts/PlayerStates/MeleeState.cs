@@ -20,7 +20,7 @@ public abstract class MeleeState : BaseState
         controllerReference.DetectionSystem.OnAttackSuccessful -= PreformHit;
     }
 
-    public void DetermindNextState(BaseState nextState)
+    public void DetermindNextState(BaseState nextState, BaseState returnState)
     {
         if (count >= 1)
         {
@@ -28,7 +28,7 @@ public abstract class MeleeState : BaseState
         }
         else
         {
-            controllerReference.TransitionToState(controllerReference.meleeUnarmedAim);
+            controllerReference.TransitionToState(returnState);
         }
     }
 
