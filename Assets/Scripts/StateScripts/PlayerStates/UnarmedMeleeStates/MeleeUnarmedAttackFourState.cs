@@ -7,7 +7,6 @@ public class MeleeUnarmedAttackFourState : MeleeState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        controllerReference.AgentAnimations.TriggerUnarmedMeleeAttackFourAnimation();
     }
 
     public override void TransitionBackFromAnimation()

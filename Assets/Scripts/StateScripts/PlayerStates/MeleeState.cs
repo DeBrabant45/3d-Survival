@@ -4,14 +4,15 @@ using UnityEngine;
 
 public abstract class MeleeState : BaseState
 {
-    protected int count = 0;
+    private bool _buttonSmash = false;
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        count = 0;
+        _buttonSmash = false;
         controllerReference.Movement.StopMovement();
         controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBackFromAnimation;
         controllerReference.DetectionSystem.OnAttackSuccessful += PreformHit;
+        controllerReference.AgentAnimations.TriggerMeleeAnimation();
     }
 
     public virtual void TransitionBackFromAnimation()
@@ -22,7 +23,7 @@ public abstract class MeleeState : BaseState
 
     public void DetermindNextState(BaseState nextState, BaseState returnState)
     {
-        if (count >= 1)
+        if (_buttonSmash == true)
         {
             controllerReference.TransitionToState(nextState);
         }
@@ -44,6 +45,14 @@ public abstract class MeleeState : BaseState
 
     public override void HandlePrimaryInput()
     {
-        count = 1;
+        if(_buttonSmash == false)
+        {
+            _buttonSmash = true;
+        }
+    }
+
+    public override void FixedUpdate()
+    {
+        controllerReference.AgentAimController.SetCameraToMovePlayer();
     }
 }

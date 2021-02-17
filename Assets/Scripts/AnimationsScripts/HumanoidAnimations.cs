@@ -47,41 +47,11 @@ public class HumanoidAnimations : MonoBehaviour
         _animator.SetFloat("move", value);
     }
 
-    public void TriggerMeleeAttackOneAnimation()
+    public void TriggerMeleeAnimation()
     {
-        _animator.SetTrigger("meleeWeaponAttackOne");
+        _animator.SetTrigger("meleeAttack");
     }    
-    
-    public void TriggerMeleeAttackTwoAnimation()
-    {
-        _animator.SetTrigger("meleeWeaponAttackTwo");
-    }    
-    
-    public void TriggerMeleeAttackThreeAnimation()
-    {
-        _animator.SetTrigger("meleeWeaponAttackThree");
-    }    
-    
-    public void TriggerUnarmedMeleeAttackOneAnimation()
-    {
-        _animator.SetTrigger("meleeUnarmedAttackOne");
-    }    
-    
-    public void TriggerUnarmedMeleeAttackTwoAnimation()
-    {
-        _animator.SetTrigger("meleeUnarmedAttackTwo");
-    }    
-    
-    public void TriggerUnarmedMeleeAttackThreeAnimation()
-    {
-        _animator.SetTrigger("meleeUnarmedAttackThree");
-    }    
-    
-    public void TriggerUnarmedMeleeAttackFourAnimation()
-    {
-        _animator.SetTrigger("meleeUnarmedAttackFour");
-    }
-
+      
     public void TriggerShootAnimation()
     {
         _animator.SetTrigger("shoot");
@@ -90,26 +60,16 @@ public class HumanoidAnimations : MonoBehaviour
     public void TrigggerReloadWeaponAnimation()
     {
         _animator.SetTrigger("reloadWeapon");
-    }  
-    
-    public void ActivateMeleeWeaponStanceAnimation()
-    {
-        _animator.SetBool("meleeWeaponStance", true);
-    }
+    }   
 
-    public void DeactivateMeleeWeaponStanceAnimation()
+    public void IsMeleeWeaponStanceAnimationActive(bool value)
     {
-        _animator.SetBool("meleeWeaponStance", false);
+        _animator.SetBool("meleeWeaponStance", value);
     }    
     
-    public void ActivateUnarmedStanceAnimation()
+    public void IsMeleeUnarmedStanceAnimationActive(bool value)
     {
-        _animator.SetBool("meleeUnarmedStance", true);
-    }
-
-    public void DeactivateUnarmedStanceAnimation()
-    {
-        _animator.SetBool("meleeUnarmedStance", false);
+        _animator.SetBool("meleeUnarmedStance", value);
     }
 
     public void FinishedAttackingCallBack()

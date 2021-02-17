@@ -7,19 +7,19 @@ public class MeleeWeaponAimState : AimState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        controllerReference.AgentAnimations.ActivateMeleeWeaponStanceAnimation();
+        controllerReference.AgentAnimations.IsMeleeWeaponStanceAnimationActive(true);
     }
 
     public override void HandlePrimaryInput()
     {
-        controllerReference.AgentAnimations.DeactivateMeleeWeaponStanceAnimation();
+        controllerReference.AgentAnimations.IsMeleeWeaponStanceAnimationActive(false);
         controllerReference.TransitionToState(controllerReference.meleeWeaponAttackOne);
     }
 
     public override void HandleAimInput()
     {
         base.HandleAimInput();
-        controllerReference.AgentAnimations.DeactivateMeleeWeaponStanceAnimation();
+        controllerReference.AgentAnimations.IsMeleeWeaponStanceAnimationActive(false);
     }
 
     public override void HandleMovement(Vector2 input)
