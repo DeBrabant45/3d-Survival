@@ -6,14 +6,26 @@ using UnityEngine;
 public class ReloadRangedWeaponState : BaseState
 {
     private ItemSO _equippedWeapon;
+    private GunAmmo itemSlotGun;
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
         controllerReference.AgentAnimations.OnFinishedReloading += TransitionBackAfterReloadingAnimation;
-        if (controllerReference.InventorySystem.WeaponEquipped)
+        itemSlotGun = controllerReference.ItemSlot.GetComponentInChildren<GunAmmo>();
+        if (itemSlotGun != null)
         {
-            _equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-            PreformWeaponReload();
+            if (controllerReference.AmmoSystem.IsAmmoAvailable() && itemSlotGun.IsAmmoEmpty() == true)
+            {
+                _equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
+                PreformWeaponReload();
+            }
+            else if (controllerReference.AgentAimController.AimCrossHair.IsActive())
+            {
+                controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
+            }
+            else
+            {
+            }
         }
         else
         {
@@ -23,16 +35,10 @@ public class ReloadRangedWeaponState : BaseState
 
     private void PreformWeaponReload()
     {
-        if(controllerReference.AmmoSystem.IsAmmoAvailable() == true && _equippedWeapon.GetType() == typeof(RangedWeaponItemSO))
-        {
-            var itemSlotGun = controllerReference.ItemSlot.GetComponentInChildren<GunAmmo>();
-            if(itemSlotGun != null && itemSlotGun.IsAmmoEmpty() == true)
-            {
-                controllerReference.AgentAnimations.TrigggerReloadWeaponAnimation();
-                controllerReference.AmmoSystem.ReloadAmmoRequest(((RangedWeaponItemSO)_equippedWeapon).MaxAmmoCount);
-                itemSlotGun.ReloadAmmoCount();
-            }
-        }
+        controllerReference.Movement.StopMovement();
+        controllerReference.AgentAnimations.TrigggerReloadWeaponAnimation();
+        controllerReference.AmmoSystem.ReloadAmmoRequest(((RangedWeaponItemSO)_equippedWeapon).MaxAmmoCount);
+        itemSlotGun.ReloadAmmoCount();
     }
 
     private void TransitionBackAfterReloadingAnimation()
@@ -46,5 +52,10 @@ public class ReloadRangedWeaponState : BaseState
         {
             controllerReference.TransitionToState(controllerReference.PreviousState);
         }
+    }
+
+    public override void FixedUpdate()
+    {
+        controllerReference.AgentAimController.SetCameraToMovePlayer();
     }
 }

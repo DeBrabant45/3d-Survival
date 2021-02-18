@@ -28,6 +28,13 @@ public class RangedWeaponAimState : AimState
         controllerReference.Movement.HandleMovement(input);
     }
 
+    public override void HandleReloadInput()
+    {
+        base.HandleReloadInput();
+        controllerReference.AgentAimController.IsAimActive = false;
+        controllerReference.TransitionToState(controllerReference.reloadRangedWeaponState);
+    }
+
     public override void Update()
     {
         base.Update();

@@ -76,4 +76,9 @@ public class RangedAttackState : BaseState
         GameObject.Destroy(impactEffect, 2f);
     }
 
+    public override void FixedUpdate()
+    {
+        controllerReference.AgentAimController.SetCameraToMovePlayer();
+    }
+
 }

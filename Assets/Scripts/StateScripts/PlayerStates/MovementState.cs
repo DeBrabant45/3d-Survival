@@ -58,18 +58,6 @@ public class MovementState : BaseState
     public override void HandlePrimaryInput()
     {
         base.HandlePrimaryInput();
-        //if (controllerReference.InventorySystem.WeaponEquipped)
-        //{
-        //    var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-        //    if(((WeaponItemSO)equippedItem).WeaponTypeSO == WeaponType.Melee)
-        //    {
-        //        controllerReference.TransitionToState(controllerReference.meleeAttackState);
-        //    }
-        //}
-        //else
-        //{
-        //    Debug.Log("No weapon set, cannot perform attack");
-        //}
     }
 
     public override void HandleSecondaryInput()
