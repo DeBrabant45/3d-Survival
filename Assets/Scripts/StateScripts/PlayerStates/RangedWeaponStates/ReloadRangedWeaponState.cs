@@ -25,6 +25,7 @@ public class ReloadRangedWeaponState : BaseState
             }
             else
             {
+                controllerReference.TransitionToState(controllerReference.PreviousState);
             }
         }
         else
