@@ -53,6 +53,6 @@ public abstract class MeleeState : BaseState
 
     public override void FixedUpdate()
     {
-        controllerReference.AgentAimController.SetCameraToMovePlayer();
+        ////controllerReference.AgentAimController.SetCameraToMovePlayer();
     }
 }

@@ -21,6 +21,6 @@ public abstract class AimState : BaseState
 
     public override void FixedUpdate()
     {
-        controllerReference.AgentAimController.SetCameraToMovePlayer();
+        //controllerReference.AgentAimController.SetCameraToMovePlayer();
     }
 }

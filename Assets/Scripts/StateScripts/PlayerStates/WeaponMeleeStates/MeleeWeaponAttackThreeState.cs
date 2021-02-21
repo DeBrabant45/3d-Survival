@@ -17,6 +17,6 @@ public class MeleeWeaponAttackThreeState : MeleeState
 
     public override void FixedUpdate()
     {
-        controllerReference.AgentAimController.SetCameraToMovePlayer();
+        //controllerReference.AgentAimController.SetCameraToMovePlayer();
     }
 }

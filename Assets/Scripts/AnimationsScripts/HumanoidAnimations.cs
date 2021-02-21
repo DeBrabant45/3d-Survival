@@ -82,6 +82,16 @@ public class HumanoidAnimations : MonoBehaviour
         _onFinishedReloading.Invoke();
     }
 
+    public void SetAnimationInputX(float value)
+    {
+        _animator.SetFloat("InputX", value);
+    }    
+    
+    public void SetAnimationInputY(float value)
+    {
+        _animator.SetFloat("InputY", value);
+    }
+
     public float SetCorrectAnimation(float desiredRotationAngle, int angleThreshold, int inputVerticalDirection)
     {
         float currentAnimationSpeed = _animator.GetFloat("move");

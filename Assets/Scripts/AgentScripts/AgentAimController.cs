@@ -56,5 +56,6 @@ public class AgentAimController : MonoBehaviour
     private void Update()
     {
         SetPlayerAimRigWeight();
+        SetCameraToMovePlayer();
     }
 }
