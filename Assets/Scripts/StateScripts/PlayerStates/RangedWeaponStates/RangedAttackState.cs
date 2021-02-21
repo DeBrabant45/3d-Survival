@@ -75,10 +75,4 @@ public class RangedAttackState : BaseState
         GameObject impactEffect = GameObject.Instantiate(controllerReference.DetectionSystem.ImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
         GameObject.Destroy(impactEffect, 2f);
     }
-
-    public override void FixedUpdate()
-    {
-        //controllerReference.AgentAimController.SetCameraToMovePlayer();
-    }
-
 }

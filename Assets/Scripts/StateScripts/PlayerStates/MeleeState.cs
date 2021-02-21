@@ -50,9 +50,4 @@ public abstract class MeleeState : BaseState
             _buttonSmash = true;
         }
     }
-
-    public override void FixedUpdate()
-    {
-        ////controllerReference.AgentAimController.SetCameraToMovePlayer();
-    }
 }

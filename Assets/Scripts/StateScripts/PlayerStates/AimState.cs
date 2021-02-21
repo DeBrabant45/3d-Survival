@@ -18,9 +18,4 @@ public abstract class AimState : BaseState
         controllerReference.AgentAimController.SetZoomOutFieldOfView();
         controllerReference.AgentAimController.AimCrossHair.enabled = false;
     }
-
-    public override void FixedUpdate()
-    {
-        //controllerReference.AgentAimController.SetCameraToMovePlayer();
-    }
 }

@@ -54,9 +54,4 @@ public class ReloadRangedWeaponState : BaseState
             controllerReference.TransitionToState(controllerReference.PreviousState);
         }
     }
-
-    public override void FixedUpdate()
-    {
-        //controllerReference.AgentAimController.SetCameraToMovePlayer();
-    }
 }

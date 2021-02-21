@@ -13,14 +13,14 @@ public class AgentAimController : MonoBehaviour
     [SerializeField] private int _cameraZoomOutFieldOfView;
     [SerializeField] private Rig _playerAim;
     private bool _isAimActive = false;
-    private Camera mainCamera;
+    private Camera _mainCamera;
 
     public Image AimCrossHair { get => _aimCrossHair; set => _aimCrossHair = value; }
     public bool IsAimActive { get => _isAimActive; set => _isAimActive = value; }
 
     private void Start()
     {
-        mainCamera = Camera.main;
+        _mainCamera = Camera.main;
         _aimCrossHair.enabled = false;
         _playerAim.weight = 0;
     }
@@ -49,7 +49,7 @@ public class AgentAimController : MonoBehaviour
 
     public void SetCameraToMovePlayer()
     {
-        float yawCamera = mainCamera.transform.rotation.eulerAngles.y;
+        float yawCamera = _mainCamera.transform.rotation.eulerAngles.y;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, yawCamera, 0), _turnSpeed * Time.deltaTime);
     }
 

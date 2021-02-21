@@ -15,9 +15,4 @@ public class MeleeWeaponAttackOneState : MeleeState
         base.TransitionBackFromAnimation();
         DetermindNextState(controllerReference.meleeWeaponAttackTwo, controllerReference.meleeWeaponAimState);
     }
-
-    public override void FixedUpdate()
-    {
-        //controllerReference.AgentAimController.SetCameraToMovePlayer();
-    }
 }

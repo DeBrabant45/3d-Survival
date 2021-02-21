@@ -14,9 +14,4 @@ public class MeleeWeaponAttackThreeState : MeleeState
         base.TransitionBackFromAnimation();
         controllerReference.TransitionToState(controllerReference.meleeWeaponAimState);
     }
-
-    public override void FixedUpdate()
-    {
-        //controllerReference.AgentAimController.SetCameraToMovePlayer();
-    }
 }
