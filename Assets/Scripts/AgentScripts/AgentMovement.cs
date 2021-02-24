@@ -21,6 +21,7 @@ public class AgentMovement : MonoBehaviour
     private bool _temporaryMovementTriggered = false;
     private Vector2 _input;
     private Transform _mainCameraTransform;
+    private bool _isMoving = false;
 
 
     private void Start()
@@ -49,6 +50,7 @@ public class AgentMovement : MonoBehaviour
                     _inputVerticalDirection = Mathf.FloorToInt(input.y);
                 }
                 moveDirection = input.y * transform.forward;
+                _isMoving = true;
             }
             else
             {
@@ -60,6 +62,7 @@ public class AgentMovement : MonoBehaviour
                     }
                     _inputVerticalDirection = 1;
                     moveDirection = new Vector3(input.x, 0f, 0f);
+                    _isMoving = true;
                 }
                 else
                 {
@@ -73,12 +76,12 @@ public class AgentMovement : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(moveDirection.magnitude);
         agentAnimations.SetAnimationInputX(_input.x);
         agentAnimations.SetAnimationInputY(_input.y);
+        Debug.Log(CharacterIsGrounded());
         if (CharacterIsGrounded())
         {
-            if (moveDirection.magnitude > 0f && _isJumpingCompleted)
+            if (_isMoving && _isJumpingCompleted)
             {
                 if(_temporaryMovementTriggered == false)
                 {
@@ -92,7 +95,10 @@ public class AgentMovement : MonoBehaviour
                 }
             }
         }
-        moveDirection.y -= _gravity;
+        else
+        {
+           moveDirection.y -= _gravity;
+        }
         AgentIsJumping();
         characterController.Move(moveDirection * _movementSpeed * Time.deltaTime);
     }
@@ -101,10 +107,10 @@ public class AgentMovement : MonoBehaviour
     {
         if (_isJumping == true)
         {
+            _isMoving = false;
             _isJumping = false;
             _isJumpingCompleted = false;
             moveDirection.y = _jumpSpeed;
-            agentAnimations.SetMovementFloat(0);
             agentAnimations.TriggerJumpAnimation();
         }
     }
@@ -147,9 +153,9 @@ public class AgentMovement : MonoBehaviour
 
     public void StopMovement()
     {
+        _isMoving = false;
         moveDirection = Vector3.zero;
         desiredRotationAngle = 0;
-        agentAnimations.SetMovementFloat(0);
         _inputVerticalDirection = 0;
     }
 
