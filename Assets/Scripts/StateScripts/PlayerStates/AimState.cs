@@ -18,4 +18,18 @@ public abstract class AimState : BaseState
         controllerReference.AgentAimController.SetZoomOutFieldOfView();
         controllerReference.AgentAimController.AimCrossHair.enabled = false;
     }
+
+    public override void HandleMovement(Vector2 input)
+    {
+        base.HandleMovement(input);
+        controllerReference.Movement.HandleMovement(input);
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        controllerReference.DetectionSystem.PreformDetection(controllerReference.InputFromPlayer.MovementDirectionVector);
+        HandleMovement(controllerReference.InputFromPlayer.MovementInputVector);
+        HandleCameraDirection(controllerReference.InputFromPlayer.MovementDirectionVector);
+    }
 }

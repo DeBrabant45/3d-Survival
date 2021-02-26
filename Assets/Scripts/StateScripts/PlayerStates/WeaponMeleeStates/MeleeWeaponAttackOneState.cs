@@ -8,6 +8,7 @@ public class MeleeWeaponAttackOneState : MeleeState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
+        controllerReference.AgentAnimations.TriggerMeleeWeaponAnimation();
     }
 
     public override void TransitionBackFromAnimation()

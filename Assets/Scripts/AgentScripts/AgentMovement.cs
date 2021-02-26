@@ -76,14 +76,11 @@ public class AgentMovement : MonoBehaviour
 
     private void Update()
     {
-        agentAnimations.SetAnimationInputX(_input.x);
-        agentAnimations.SetAnimationInputY(_input.y);
-        Debug.Log(CharacterIsGrounded());
         if (CharacterIsGrounded())
         {
             if (_isMoving && _isJumpingCompleted)
             {
-                if(_temporaryMovementTriggered == false)
+                if (_temporaryMovementTriggered == false)
                 {
                     RotateAgent();
                 }
@@ -93,6 +90,13 @@ public class AgentMovement : MonoBehaviour
                     Vector3 move = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                     moveDirection = move;
                 }
+                agentAnimations.SetAnimationInputX(_input.x);
+                agentAnimations.SetAnimationInputY(_input.y);
+            }
+            else
+            {
+                agentAnimations.SetAnimationInputX(0);
+                agentAnimations.SetAnimationInputY(0);
             }
         }
         else
@@ -157,6 +161,8 @@ public class AgentMovement : MonoBehaviour
         moveDirection = Vector3.zero;
         desiredRotationAngle = 0;
         _inputVerticalDirection = 0;
+        agentAnimations.SetAnimationInputX(0);
+        agentAnimations.SetAnimationInputY(0);
     }
 
     public bool HasCompletedJumping()

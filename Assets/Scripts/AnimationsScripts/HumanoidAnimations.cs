@@ -47,9 +47,14 @@ public class HumanoidAnimations : MonoBehaviour
         _animator.SetFloat("move", value);
     }
 
-    public void TriggerMeleeAnimation()
+    public void TriggerMeleeWeaponAnimation()
     {
-        _animator.SetTrigger("meleeAttack");
+        _animator.SetTrigger("meleeWeaponAttack");
+    }      
+    
+    public void TriggerMeleeUnarmedAnimation()
+    {
+        _animator.SetTrigger("meleeUnarmedAttack");
     }    
       
     public void TriggerShootAnimation()
@@ -90,42 +95,5 @@ public class HumanoidAnimations : MonoBehaviour
     public void SetAnimationInputY(float value)
     {
         _animator.SetFloat("InputY", value);
-    }
-
-    public float SetCorrectAnimation(float desiredRotationAngle, int angleThreshold, int inputVerticalDirection)
-    {
-        float currentAnimationSpeed = _animator.GetFloat("move");
-        if(desiredRotationAngle > angleThreshold || desiredRotationAngle < -angleThreshold)
-        {
-            currentAnimationSpeed = BeginWalkingAnimation(inputVerticalDirection, currentAnimationSpeed);
-        }
-        else
-        {
-            currentAnimationSpeed = BeginRunningAnimation(inputVerticalDirection, currentAnimationSpeed);
-        }
-        return Mathf.Abs(currentAnimationSpeed);
-    }
-
-    private float BeginRunningAnimation(int inputVerticalDirection, float currentAnimationSpeed)
-    {
-        if (currentAnimationSpeed < 1)
-        {
-            currentAnimationSpeed += inputVerticalDirection * Time.deltaTime * 2;
-            //Debug.Log("I'm running");
-        }
-        SetMovementFloat(Mathf.Clamp(currentAnimationSpeed, -1, 1));
-        return currentAnimationSpeed;
-    }
-
-    private float BeginWalkingAnimation(int inputVerticalDirection, float currentAnimationSpeed)
-    {
-        if (Mathf.Abs(currentAnimationSpeed) < .2f)
-        {
-            currentAnimationSpeed += inputVerticalDirection * Time.deltaTime * 2;
-            currentAnimationSpeed = Mathf.Clamp(currentAnimationSpeed, -0.2f, 0.2f);
-            //Debug.Log("I'm walking");
-        }
-        SetMovementFloat(currentAnimationSpeed);
-        return currentAnimationSpeed;
     }
 }

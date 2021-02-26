@@ -12,7 +12,6 @@ public abstract class MeleeState : BaseState
         controllerReference.Movement.StopMovement();
         controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBackFromAnimation;
         controllerReference.DetectionSystem.OnAttackSuccessful += PreformHit;
-        controllerReference.AgentAnimations.TriggerMeleeAnimation();
     }
 
     public virtual void TransitionBackFromAnimation()

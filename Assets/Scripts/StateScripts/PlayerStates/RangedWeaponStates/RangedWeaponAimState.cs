@@ -22,24 +22,10 @@ public class RangedWeaponAimState : AimState
         controllerReference.AgentAimController.IsAimActive = false;
     }
 
-    public override void HandleMovement(Vector2 input)
-    {
-        base.HandleMovement(input);
-        controllerReference.Movement.HandleMovement(input);
-    }
-
     public override void HandleReloadInput()
     {
         base.HandleReloadInput();
         controllerReference.AgentAimController.IsAimActive = false;
         controllerReference.TransitionToState(controllerReference.reloadRangedWeaponState);
-    }
-
-    public override void Update()
-    {
-        base.Update();
-        controllerReference.DetectionSystem.PreformDetection(controllerReference.InputFromPlayer.MovementDirectionVector);
-        HandleMovement(controllerReference.InputFromPlayer.MovementInputVector);
-        HandleCameraDirection(controllerReference.InputFromPlayer.MovementDirectionVector);
     }
 }
