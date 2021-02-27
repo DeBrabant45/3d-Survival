@@ -16,9 +16,9 @@ public class RangedWeaponAimState : AimState
         controllerReference.TransitionToState(controllerReference.rangedWeaponAttackState);
     }
 
-    public override void HandleAimInput()
+    public override void HandleEquipItemInput()
     {
-        base.HandleAimInput();
+        base.HandleEquipItemInput();
         controllerReference.AgentAimController.IsAimActive = false;
     }
 

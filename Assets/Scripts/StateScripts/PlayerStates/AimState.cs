@@ -12,11 +12,12 @@ public abstract class AimState : BaseState
         controllerReference.AgentAimController.AimCrossHair.enabled = true;
     }
 
-    public override void HandleAimInput()
+    public override void HandleEquipItemInput()
     {
         controllerReference.TransitionToState(controllerReference.movementState);
         controllerReference.AgentAimController.SetZoomOutFieldOfView();
         controllerReference.AgentAimController.AimCrossHair.enabled = false;
+        controllerReference.TransitionToState(controllerReference.unequipItemState);
     }
 
     public override void HandleMovement(Vector2 input)

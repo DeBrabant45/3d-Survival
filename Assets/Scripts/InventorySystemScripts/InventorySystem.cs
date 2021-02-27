@@ -129,7 +129,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
         else if(_interactionManager.EquipItem(itemData))
         {
             DeselectCurrentItem();
-            ItemSpawnManager.Instance.RemoveItemFromPlayerHand();
+            ItemSpawnManager.Instance.RemoveItemFromPlayersBack();
             if (_inventoryData.ItemEquipped)
             {
                 if (_inventoryData.EquippedUI_ID == ui_id)
@@ -151,7 +151,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
             //Adds newly equipped item 
             _inventoryData.EquipItem(ui_id);
             ToggleEquippedSelectedItemUI();
-            ItemSpawnManager.Instance.CreateItemObjectInPlayersHand(itemData.ID);
+            ItemSpawnManager.Instance.CreateItemObjectOnPlayersBack(itemData.ID);
             RangedWeaponEvent(itemData);
         }
     }

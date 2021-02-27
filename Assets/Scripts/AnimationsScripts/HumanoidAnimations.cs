@@ -8,9 +8,11 @@ public class HumanoidAnimations : MonoBehaviour
     private Animator _animator;
     private Action _onFinishedAttacking;
     private Action _onFinishedReloading;
+    private Action _animationFunctionTrigger;
 
     public Action OnFinishedAttacking { get => _onFinishedAttacking; set => _onFinishedAttacking = value; }
     public Action OnFinishedReloading { get => _onFinishedReloading; set => _onFinishedReloading = value; }
+    public Action OnAnimationFunctionTrigger { get => _animationFunctionTrigger; set => _animationFunctionTrigger = value; }
 
     private void Awake()
     {
@@ -65,6 +67,16 @@ public class HumanoidAnimations : MonoBehaviour
     public void TrigggerReloadWeaponAnimation()
     {
         _animator.SetTrigger("reloadWeapon");
+    }       
+    
+    public void TrigggerEquipWeaponAnimation()
+    {
+        _animator.SetTrigger("equipItem");
+    }      
+    
+    public void TrigggerUnequipWeaponAnimation()
+    {
+        _animator.SetTrigger("unequipItem");
     }   
 
     public void IsMeleeWeaponStanceAnimationActive(bool value)
@@ -85,6 +97,11 @@ public class HumanoidAnimations : MonoBehaviour
     public void FinishedReloadingCallBack()
     {
         _onFinishedReloading.Invoke();
+    }
+
+    public void AnimationFunctionTriggerCallBack()
+    {
+        _animationFunctionTrigger.Invoke();
     }
 
     public void SetAnimationInputX(float value)

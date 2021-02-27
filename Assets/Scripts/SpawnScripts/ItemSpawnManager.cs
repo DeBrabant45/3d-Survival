@@ -10,6 +10,7 @@ public class ItemSpawnManager : MonoBehaviour
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private string _pickableLayerMask;
     [SerializeField] private Transform _itemSpawnerParent;
+    private GameObject _item;
 
     public static ItemSpawnManager Instance { get => _instance; }
 
@@ -101,11 +102,34 @@ public class ItemSpawnManager : MonoBehaviour
         }
     }
 
-    public void CreateItemObjectInPlayersHand(string itemID)
+    public void SwapBackItemToPlayersHand()
     {
-        var itemPrefab = ItemDataManager.Instance.GetItemPrefab(itemID);
-        var item = Instantiate(itemPrefab, _playerTransform.GetComponent<AgentController>().ItemSlot);
+        var item = Instantiate(_item, _playerTransform.GetComponent<AgentController>().ItemSlot);
         item.transform.localPosition = Vector3.zero;
         item.transform.localRotation = Quaternion.identity;
+        RemoveItemFromPlayersBack();
+    }
+
+    public void SwapHandItemToPlayersBack()
+    {
+        var item = Instantiate(_item, _playerTransform.GetComponent<AgentController>().BackItemSlot);
+        item.transform.localPosition = Vector3.zero;
+        RemoveItemFromPlayerHand();
+    }
+
+    public void CreateItemObjectOnPlayersBack(string itemID)
+    {
+        var itemPrefab = ItemDataManager.Instance.GetItemPrefab(itemID);
+        var item = Instantiate(itemPrefab, _playerTransform.GetComponent<AgentController>().BackItemSlot);
+        item.transform.localPosition = Vector3.zero;
+        _item = itemPrefab;
+    }
+
+    public void RemoveItemFromPlayersBack()
+    {
+        foreach (Transform child in _playerTransform.GetComponent<AgentController>().BackItemSlot)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }

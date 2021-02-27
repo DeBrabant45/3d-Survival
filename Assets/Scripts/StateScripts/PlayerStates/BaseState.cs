@@ -23,24 +23,5 @@ public abstract class BaseState
     public virtual void HandlePrimaryInput() { }
     public virtual void HandleMenuInput() { }
     public virtual void HandleReloadInput() { }
-    public virtual void HandleAimInput() 
-    {
-        //if (controllerReference.InventorySystem.WeaponEquipped)
-        //{
-        //    var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-        //    if (((WeaponItemSO)equippedItem).WeaponTypeSO == WeaponType.Melee)
-        //    {
-        //        //Set player to Aim state for Melee weapons
-        //        controllerReference.TransitionToState(controllerReference.meleeWeaponAimState);
-        //    }
-        //    else
-        //    {
-        //        controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
-        //    }
-        //}
-        //else
-        //{
-        //    //Set player to free look state without a weapon
-        //}
-    }
+    public virtual void HandleEquipItemInput() { }
 }

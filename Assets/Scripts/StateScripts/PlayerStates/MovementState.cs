@@ -19,19 +19,11 @@ public class MovementState : BaseState
         controllerReference.Movement.HandleMovementDirection(input);
     }
 
-    public override void HandleAimInput()
+    public override void HandleEquipItemInput()
     {
         if (controllerReference.InventorySystem.WeaponEquipped)
         {
-            var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-            if (((WeaponItemSO)equippedItem).WeaponTypeSO == WeaponType.Melee)
-            {
-                controllerReference.TransitionToState(controllerReference.meleeWeaponAimState);
-            }
-            else
-            {
-                controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
-            }
+            controllerReference.TransitionToState(controllerReference.equipItemState);
         }
         else
         {

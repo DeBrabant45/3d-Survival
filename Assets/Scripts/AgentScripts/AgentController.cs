@@ -14,6 +14,7 @@ public class AgentController : MonoBehaviour
     [SerializeField] GameManager _gameManager;
     [SerializeField] CraftingSystem _craftingSystem;
     [SerializeField] Transform _itemSlot;
+    [SerializeField] Transform _backItemSlot;
     [SerializeField] AmmoSystem _ammoSystem;
     private BaseState _previousState;
     private BaseState _currentState;
@@ -36,6 +37,8 @@ public class AgentController : MonoBehaviour
     public readonly BaseState rangedWeaponAimState = new RangedWeaponAimState();
     public readonly BaseState rangedWeaponAttackState = new RangedAttackState();
     public readonly BaseState reloadRangedWeaponState = new ReloadRangedWeaponState();
+    public readonly BaseState equipItemState = new EquipItemState();
+    public readonly BaseState unequipItemState = new UnequipItemState();
 
     public PlayerInput InputFromPlayer { get => _inputFromPlayer; }
     public AgentMovement Movement { get => _movement; }
@@ -48,6 +51,7 @@ public class AgentController : MonoBehaviour
     public Transform ItemSlot { get => _itemSlot; }
     public AmmoSystem AmmoSystem { get => _ammoSystem; }
     public AgentAimController AgentAimController { get => _agentAimController; }
+    public Transform BackItemSlot { get => _backItemSlot; }
 
     private void OnEnable()
     {
@@ -87,7 +91,7 @@ public class AgentController : MonoBehaviour
 
     private void HandleAimInput()
     {
-        _currentState.HandleAimInput();
+        _currentState.HandleEquipItemInput();
     }
 
     private void HandleMenuInput()
