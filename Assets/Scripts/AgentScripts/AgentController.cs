@@ -19,6 +19,7 @@ public class AgentController : MonoBehaviour
     private BaseState _previousState;
     private BaseState _currentState;
 
+    #region StateObjects 
     public readonly BaseState movementState = new MovementState();
     public readonly BaseState jumpState = new JumpState();
     public readonly BaseState fallingState = new FallingState();
@@ -39,6 +40,8 @@ public class AgentController : MonoBehaviour
     public readonly BaseState reloadRangedWeaponState = new ReloadRangedWeaponState();
     public readonly BaseState equipItemState = new EquipItemState();
     public readonly BaseState unequipItemState = new UnequipItemState();
+    public readonly BaseState placementState = new PlacementState();
+    #endregion 
 
     public PlayerInput InputFromPlayer { get => _inputFromPlayer; }
     public AgentMovement Movement { get => _movement; }
@@ -75,6 +78,7 @@ public class AgentController : MonoBehaviour
         _ammoSystem.OnAmmoItemRequest += _inventorySystem.RemoveAmmoItemCount;
         _ammoSystem.OnAmmoCountInStorage += _inventorySystem.ItemAmountInStorage;
         _ammoSystem.EquippedItemRequest += _inventorySystem.EquippedItem;
+        _inventorySystem.OnStructureUse += HandlePlacementInput;
     }
 
     private void AssignInputListeners()
@@ -127,6 +131,11 @@ public class AgentController : MonoBehaviour
     private void HandleReloadInput()
     {
         _currentState.HandleReloadInput();
+    }
+
+    private void HandlePlacementInput()
+    {
+        _currentState.HandlePlacementInput();
     }
 
     private void Update()

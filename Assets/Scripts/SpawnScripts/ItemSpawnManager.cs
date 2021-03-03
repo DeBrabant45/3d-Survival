@@ -29,6 +29,18 @@ public class ItemSpawnManager : MonoBehaviour
         StartCoroutine(SpawnAllItems());
     }
 
+    public PlacementHelper CreateStructure(StructureItemSO structureData)
+    {
+        var structure = Instantiate(structureData.Model, _playerTransform.position + _playerTransform.forward, Quaternion.identity);
+        var collider = structure.AddComponent<BoxCollider>();
+        collider.isTrigger = true;
+        var rb = structure.AddComponent<Rigidbody>();
+        rb.isKinematic = true;
+        var placementHelper = structure.AddComponent<PlacementHelper>();
+        placementHelper.Initialize(_playerTransform);
+        return placementHelper;
+    }
+
     public void CreateItemAtPlayersFeet(string itemID, int currentItemCount)
     {
         var itemPrfab = ItemDataManager.Instance.GetItemPrefab(itemID);

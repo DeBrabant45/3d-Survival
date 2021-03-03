@@ -13,14 +13,19 @@ public class InventorySystem : MonoBehaviour, ISaveable
     [SerializeField] private HotbarPanel _hotbarPanel;
     [SerializeField] private InventoryPanel _inventoryPanel;
     [SerializeField] private UIInventory _uIInventory;
+    [SerializeField] private StructureItemSO _selectedStructureData = null;
+    [SerializeField] private int _selectedStructureUIID = 0;
     private InventorySystemData _inventoryData;
     private Action _onInventoryStateChanged;
+    private Action _onStructureUse;
     private DraggableItem _draggableItem;
 
     public int PlayerStorageSize { get => _playerStorageSize; }
     public Action OnInventoryStateChanged { get => _onInventoryStateChanged; set => _onInventoryStateChanged = value; }
     public bool WeaponEquipped { get => _inventoryData.ItemEquipped; }
     public string EquippedWeaponID { get => _inventoryData.EquippedItemID; }
+    public Action OnStructureUse { get => _onStructureUse; set => _onStructureUse = value; }
+    public StructureItemSO SelectedStructureData { get => _selectedStructureData; set => _selectedStructureData = value; }
 
     private void Awake()
     {
@@ -112,6 +117,13 @@ public class InventorySystem : MonoBehaviour, ISaveable
 
     private void UseItem(ItemSO itemData, int ui_id)
     {
+        if(itemData.GetItemType() == ItemType.Structure)
+        {
+            _selectedStructureUIID = ui_id;
+            _selectedStructureData = (StructureItemSO)itemData;
+            _onStructureUse.Invoke();
+            return;
+        }
         if(_interactionManager.UseItem(itemData))
         {
             _inventoryData.TakeOneFromItem(ui_id);

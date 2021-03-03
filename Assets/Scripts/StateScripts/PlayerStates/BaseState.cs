@@ -24,4 +24,5 @@ public abstract class BaseState
     public virtual void HandleMenuInput() { }
     public virtual void HandleReloadInput() { }
     public virtual void HandleEquipItemInput() { }
+    public virtual void HandlePlacementInput() { }
 }

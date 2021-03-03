@@ -9,4 +9,9 @@ public class StructureItemSO : ItemSO
     {
         ItemTypeSO = ItemType.Structure;
     }
+
+    public override bool IsUsable()
+    {
+        return true;
+    }
 }

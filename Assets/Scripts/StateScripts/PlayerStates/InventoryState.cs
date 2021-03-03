@@ -30,11 +30,23 @@ public class InventoryState : BaseState
     public override void HandleMenuInput()
     {
         base.HandleMenuInput();
+        DisableInventoryUI();
+        controllerReference.TransitionToState(controllerReference.menuState);
+    }
+
+    private void DisableInventoryUI()
+    {
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         controllerReference.InventorySystem.ToggleInventory();
         controllerReference.CraftingSystem.ToggleCraftingUI(true);
-        controllerReference.TransitionToState(controllerReference.menuState);
+    }
+
+    public override void HandlePlacementInput()
+    {
+        base.HandlePlacementInput();
+        DisableInventoryUI();
+        controllerReference.TransitionToState(controllerReference.placementState);
     }
 }

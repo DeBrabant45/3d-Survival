@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MovementState : BaseState
 {
-    private float _defaultFallingDelay = 0.2f;
-    private float _fallingDelay = 0;
+    protected float _defaultFallingDelay = 0.2f;
+    protected float _fallingDelay = 0;
 
     public override void EnterState(AgentController controller)
     {
@@ -76,24 +76,41 @@ public class MovementState : BaseState
         controllerReference.TransitionToState(controllerReference.menuState);
     }
 
+    public override void HandlePlacementInput()
+    {
+        base.HandlePlacementInput();
+        controllerReference.TransitionToState(controllerReference.placementState);
+    }
+
     public override void Update()
     {
         base.Update();
-        controllerReference.DetectionSystem.PreformDetection(controllerReference.InputFromPlayer.MovementDirectionVector);
+        PreformDetection();
         HandleMovement(controllerReference.InputFromPlayer.MovementInputVector);
         HandleCameraDirection(controllerReference.InputFromPlayer.MovementDirectionVector);
-        if(controllerReference.Movement.CharacterIsGrounded() == false)
+        HandleFallingDown();
+    }
+
+    protected void HandleFallingDown()
+    {
+        if (controllerReference.Movement.CharacterIsGrounded() == false)
         {
-            if(_fallingDelay > 0)
+            if (_fallingDelay > 0)
             {
                 _fallingDelay -= Time.deltaTime;
                 return;
             }
+            Debug.Log("I'm here");
             controllerReference.TransitionToState(controllerReference.fallingState);
         }
         else
         {
             _fallingDelay = _defaultFallingDelay;
         }
+    }
+
+    private void PreformDetection()
+    {
+        controllerReference.DetectionSystem.PreformDetection(controllerReference.InputFromPlayer.MovementDirectionVector);
     }
 }
