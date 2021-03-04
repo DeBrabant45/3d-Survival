@@ -16,7 +16,7 @@ MonoBehaviour:
   _itemName: Wood Tent
   _imageSprite: {fileID: -5229125744465068697, guid: a3a0e6d67513585499b26a44b7e4dc0e,
     type: 3}
-  _model: {fileID: 6839410421778368844, guid: 31c6f65eb8496724fbb720673314142e, type: 3}
+  _model: {fileID: 2705152947506614071, guid: 31c6f65eb8496724fbb720673314142e, type: 3}
   _isStackable: 0
   _stackLimit: 100
   _itemType: 4

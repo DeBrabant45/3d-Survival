@@ -14,13 +14,13 @@ public class PlacementHelper : MonoBehaviour
     private LayerMask _layerMask;
     private float _maxHeightDifference = 0.3f;
     private List<Material[]> _objectMaterials = new List<Material[]>();
-    private MaterialHelper _materialHelper;
+    private MaterialHelper _materialHelper = new MaterialHelper();
     private Material m_material;
 
     private void Start()
     {
         _layerMask.value = 1 << LayerMask.NameToLayer("Ground");
-        _materialHelper = new MaterialHelper();
+
     }
 
     public void Initialize(Transform transform)

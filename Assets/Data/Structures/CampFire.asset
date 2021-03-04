@@ -16,7 +16,7 @@ MonoBehaviour:
   _itemName: Camp Fire
   _imageSprite: {fileID: -4279434219207958025, guid: a3a0e6d67513585499b26a44b7e4dc0e,
     type: 3}
-  _model: {fileID: 4806640388172998791, guid: a7af422da100c454ebbe015a7da04557, type: 3}
+  _model: {fileID: 5461193393154602343, guid: a7af422da100c454ebbe015a7da04557, type: 3}
   _isStackable: 0
   _stackLimit: 100
   _itemType: 4

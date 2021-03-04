@@ -18,6 +18,7 @@ public class DetectionSystem : MonoBehaviour
     private List<Material[]> _currentColliderMaterailsList = new List<Material[]>();
     private Action<Collider, Vector3> _onAttackSuccessful;
     private Action<Collider, Vector3, RaycastHit> _onRangeAttackSuccessful;
+    private MaterialHelper _materialHelper = new MaterialHelper();
 
     public Collider CurrentCollider { get => _currentCollider; }
     public float DetectionRadius { get => _detectionRadius; }
@@ -34,7 +35,6 @@ public class DetectionSystem : MonoBehaviour
     {
         var colliders = DetectObjectsInfront(movementDirectionVector);
         _collidersList.Clear();
-        MaterialHelper materialHelper = new MaterialHelper();
         foreach (var collider in colliders)
         {
             var pickableItem = collider.GetComponent<IPickable>();
@@ -48,7 +48,7 @@ public class DetectionSystem : MonoBehaviour
         {
             if(_currentCollider != null)
             {
-                materialHelper.SwapToOriginalMaterial(_currentCollider.gameObject, _currentColliderMaterailsList);
+                _materialHelper.SwapToOriginalMaterial(_currentCollider.gameObject, _currentColliderMaterailsList);
                 _currentCollider = null;
             }
             return;
@@ -57,13 +57,13 @@ public class DetectionSystem : MonoBehaviour
         if(_currentCollider == null)
         {
             _currentCollider = _collidersList[0];
-            materialHelper.SwapToSelectionMaterial(_currentCollider.gameObject, _currentColliderMaterailsList, _selectionMaterial);
+            _materialHelper.SwapToSelectionMaterial(_currentCollider.gameObject, _currentColliderMaterailsList, _selectionMaterial);
         }
         else if(_collidersList.Contains(_currentCollider) == false)
         {
-            materialHelper.SwapToOriginalMaterial(_currentCollider.gameObject, _currentColliderMaterailsList);
+            _materialHelper.SwapToOriginalMaterial(_currentCollider.gameObject, _currentColliderMaterailsList);
             _currentCollider = _collidersList[0];
-            materialHelper.SwapToSelectionMaterial(_currentCollider.gameObject, _currentColliderMaterailsList, _selectionMaterial);
+            _materialHelper.SwapToSelectionMaterial(_currentCollider.gameObject, _currentColliderMaterailsList, _selectionMaterial);
         }
     }
 
