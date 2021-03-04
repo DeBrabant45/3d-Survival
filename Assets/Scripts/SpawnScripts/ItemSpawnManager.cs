@@ -10,9 +10,11 @@ public class ItemSpawnManager : MonoBehaviour
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private string _pickableLayerMask;
     [SerializeField] private Transform _itemSpawnerParent;
+    [SerializeField] private Material _transparentMaterial;
     private GameObject _item;
 
     public static ItemSpawnManager Instance { get => _instance; }
+    public Material TransparentMaterial { get => _transparentMaterial; }
 
     //Refactor this from a lazy loader
     private void Awake()

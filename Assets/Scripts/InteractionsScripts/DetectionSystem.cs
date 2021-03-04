@@ -34,6 +34,7 @@ public class DetectionSystem : MonoBehaviour
     {
         var colliders = DetectObjectsInfront(movementDirectionVector);
         _collidersList.Clear();
+        MaterialHelper materialHelper = new MaterialHelper();
         foreach (var collider in colliders)
         {
             var pickableItem = collider.GetComponent<IPickable>();
@@ -47,7 +48,7 @@ public class DetectionSystem : MonoBehaviour
         {
             if(_currentCollider != null)
             {
-                SwapToOriginalMaterial();
+                materialHelper.SwapToOriginalMaterial(_currentCollider.gameObject, _currentColliderMaterailsList);
                 _currentCollider = null;
             }
             return;
@@ -56,63 +57,13 @@ public class DetectionSystem : MonoBehaviour
         if(_currentCollider == null)
         {
             _currentCollider = _collidersList[0];
-            SwapToSelectionMaterial();
+            materialHelper.SwapToSelectionMaterial(_currentCollider.gameObject, _currentColliderMaterailsList, _selectionMaterial);
         }
         else if(_collidersList.Contains(_currentCollider) == false)
         {
-            SwapToOriginalMaterial();
+            materialHelper.SwapToOriginalMaterial(_currentCollider.gameObject, _currentColliderMaterailsList);
             _currentCollider = _collidersList[0];
-            SwapToSelectionMaterial();
-        }
-    }
-
-    private void SwapToSelectionMaterial()
-    {
-        _currentColliderMaterailsList.Clear();
-        if (_currentCollider.transform.childCount > 0)
-        {
-            foreach (Transform child in _currentCollider.transform)
-            {
-                PrepareRendererToSwapMaterials();
-            }
-        }
-        else
-        {
-            PrepareRendererToSwapMaterials();
-        }
-    }
-
-    private void PrepareRendererToSwapMaterials()
-    {
-        var renderer = _currentCollider.GetComponent<Renderer>();
-        _currentColliderMaterailsList.Add(renderer.sharedMaterials);
-        SwapMaterials(renderer);
-    }
-
-    private void SwapMaterials(Renderer renderer)
-    {
-        Material[] matArray = new Material[renderer.materials.Length];
-        for (int i = 0; i < matArray.Length; i++)
-        {
-            matArray[i] = _selectionMaterial;
-        }
-        renderer.materials = matArray;
-    }
-
-    private void SwapToOriginalMaterial()
-    {
-        if(_currentColliderMaterailsList.Count > 1)
-        {
-            for (int i = 0; i < _currentColliderMaterailsList.Count; i++)
-            {
-                var renderer = _currentCollider.transform.GetChild(i).GetComponent<Renderer>();
-                renderer.materials = _currentColliderMaterailsList[i];
-            }
-        }
-        else
-        {
-            var renderer = _currentCollider.GetComponent<Renderer>();
-            renderer.materials = _currentColliderMaterailsList[0];
+            materialHelper.SwapToSelectionMaterial(_currentCollider.gameObject, _currentColliderMaterailsList, _selectionMaterial);
         }
     }
 
