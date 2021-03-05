@@ -16,11 +16,14 @@ public class PlacementHelper : MonoBehaviour
     private List<Material[]> _objectMaterials = new List<Material[]>();
     private MaterialHelper _materialHelper = new MaterialHelper();
     private Material m_material;
+    private float _lowestYHeight = 0;
+    private bool _stopMovement = false;
+
+    public bool CorrectLocation { get; private set; }
 
     private void Start()
     {
         _layerMask.value = 1 << LayerMask.NameToLayer("Ground");
-
     }
 
     public void Initialize(Transform transform)
@@ -36,14 +39,44 @@ public class PlacementHelper : MonoBehaviour
         m_material = GetComponent<Renderer>().material;
     }
 
-    public void PrepareForPlacement()
+    private void OnTriggerEnter(Collider collider)
     {
+        if(collider.gameObject.layer != LayerMask.NameToLayer("Pickable") && collider.gameObject.layer != LayerMask.NameToLayer("Player") && collider.gameObject.layer != LayerMask.NameToLayer("Ground"))
+        {
+            if(_collisions.Contains(collider) == false)
+            {
+                _collisions.Add(collider);
+                ChangeMaterialColor(Color.red);
+            }
+        }
+    }    
+    
+    private void OnTriggerExit(Collider collider)
+    {
+        _collisions.Remove(collider);
+        if(_collisions.Count == 0)
+        {
+            ChangeMaterialColor(Color.green);
+        }
+    }
+
+    public Structure PrepareForPlacement()
+    {
+        _stopMovement = true;
         _materialHelper.SwapToOriginalMaterial(gameObject, _objectMaterials);
+        Destroy(_rigidbody);
+        _boxCollider.isTrigger = false;
+        var structureComponent = GetComponent<Structure>();
+        if(structureComponent == null)
+        {
+            structureComponent = gameObject.AddComponent<Structure>();
+        }
+        return structureComponent;
     }
 
     private void FixedUpdate()
     {
-        if(_playerTransfrom != null)
+        if(_playerTransfrom != null && _stopMovement == false)
         {
             var positionToMove = _playerTransfrom.position + _playerTransfrom.forward;
             _rigidbody.position = positionToMove;
@@ -83,16 +116,24 @@ public class PlacementHelper : MonoBehaviour
             float[] heightValuesList = { hit1.point.y, hit2.point.y, hit3.point.y, hit4.point.y };
             var min = heightValuesList.Min();
             var max = heightValuesList.Max();
-            if (max - min > _maxHeightDifference)
+            if(min < _lowestYHeight)
+            {
+                ChangeMaterialColor(Color.red);
+                Debug.Log("Can't place in lower placement");
+                CorrectLocation = false;
+            }
+            else if (max - min > _maxHeightDifference)
             {
                 Debug.Log("Not even ground");
                 ChangeMaterialColor(Color.red);
+                CorrectLocation = false;
             }
             else
             {
                 Debug.Log("Even ground");
                 ChangeMaterialColor(Color.green);
                 _rigidbody.position = new Vector3(positionToMove.x, (max + min) / 2f, positionToMove.z);
+                CorrectLocation = true;
             }
         }
     }

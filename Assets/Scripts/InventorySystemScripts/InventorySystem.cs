@@ -42,6 +42,13 @@ public class InventorySystem : MonoBehaviour, ISaveable
         _onInventoryStateChanged += RangedWeaponEvents.current.InventoryHasChanged;
     }
 
+    public void RemoveSelectedStructureFromInventory()
+    {
+        RemoveItemFromInventory(_selectedStructureUIID);
+        _selectedStructureUIID = 0;
+        _selectedStructureData = null;
+    }
+
     private void UseInventoryItemHandler()
     {
         var selectedID = _inventoryData.SelectedItemUIID;
@@ -126,17 +133,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
         }
         if(_interactionManager.UseItem(itemData))
         {
-            _inventoryData.TakeOneFromItem(ui_id);
-            if (_inventoryData.IsSelectedItemEmpty(ui_id))
-            {
-                ClearUIElement(ui_id);
-                _inventoryData.RemoveItemFromInventory(ui_id);
-            }
-            else
-            {
-                UpdateUI(ui_id, _inventoryData.GetItemCountFor(ui_id));
-            }
-            OnInventoryStateChanged.Invoke();
+            RemoveItemFromInventory(ui_id);
         }
         else if(_interactionManager.EquipItem(itemData))
         {
@@ -166,6 +163,21 @@ public class InventorySystem : MonoBehaviour, ISaveable
             ItemSpawnManager.Instance.CreateItemObjectOnPlayersBack(itemData.ID);
             RangedWeaponEvent(itemData);
         }
+    }
+
+    private void RemoveItemFromInventory(int ui_id)
+    {
+        _inventoryData.TakeOneFromItem(ui_id);
+        if (_inventoryData.IsSelectedItemEmpty(ui_id))
+        {
+            ClearUIElement(ui_id);
+            _inventoryData.RemoveItemFromInventory(ui_id);
+        }
+        else
+        {
+            UpdateUI(ui_id, _inventoryData.GetItemCountFor(ui_id));
+        }
+        OnInventoryStateChanged.Invoke();
     }
 
     private static void RangeWeaponEventUnequip(ItemSO itemData)

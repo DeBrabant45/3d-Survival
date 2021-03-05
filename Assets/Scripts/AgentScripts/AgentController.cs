@@ -16,6 +16,7 @@ public class AgentController : MonoBehaviour
     [SerializeField] Transform _itemSlot;
     [SerializeField] Transform _backItemSlot;
     [SerializeField] AmmoSystem _ammoSystem;
+    [SerializeField] BuildingPlacementStorage _buildingPlacementStorage;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -55,6 +56,7 @@ public class AgentController : MonoBehaviour
     public AmmoSystem AmmoSystem { get => _ammoSystem; }
     public AgentAimController AgentAimController { get => _agentAimController; }
     public Transform BackItemSlot { get => _backItemSlot; }
+    public BuildingPlacementStorage BuildingPlacementStorage { get => _buildingPlacementStorage; }
 
     private void OnEnable()
     {

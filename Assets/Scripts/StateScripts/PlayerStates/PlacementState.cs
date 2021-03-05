@@ -22,13 +22,24 @@ public class PlacementState : MovementState
 
     public override void HandlePrimaryInput()
     {
-
+        if(_placementHelper.CorrectLocation)
+        {
+            var structureComponent = _placementHelper.PrepareForPlacement();
+            structureComponent.SetData(controllerReference.InventorySystem.SelectedStructureData);
+            _placementHelper.enabled = false;
+            controllerReference.InventorySystem.RemoveSelectedStructureFromInventory();
+            controllerReference.BuildingPlacementStorage.SaveStructureReference(structureComponent);
+            HandleSecondaryInput();
+        }
     }
 
     public override void HandleSecondaryInput()
     {
         Debug.Log("Existing Placement State");
-        DestroyPlacedObject();
+        if(_placementHelper.isActiveAndEnabled)
+        {
+            DestroyPlacedObject();
+        }
         controllerReference.TransitionToState(controllerReference.movementState);
     }
 
