@@ -19,12 +19,14 @@ public class DetectionSystem : MonoBehaviour
     private Action<Collider, Vector3> _onAttackSuccessful;
     private Action<Collider, Vector3, RaycastHit> _onRangeAttackSuccessful;
     private MaterialHelper _materialHelper = new MaterialHelper();
+    private Collider _usableCollider;
 
     public Collider CurrentCollider { get => _currentCollider; }
     public float DetectionRadius { get => _detectionRadius; }
     public Action<Collider, Vector3> OnAttackSuccessful { get => _onAttackSuccessful; set => _onAttackSuccessful = value; }
     public GameObject ImpactEffect { get => _impactEffect; }
     public Action<Collider, Vector3, RaycastHit> OnRangeAttackSuccessful { get => _onRangeAttackSuccessful; set => _onRangeAttackSuccessful = value; }
+    public Collider UsableCollider { get => _usableCollider; }
 
     public Collider[] DetectObjectsInfront(Vector3 movementDirectionVector)
     {
@@ -35,6 +37,7 @@ public class DetectionSystem : MonoBehaviour
     {
         var colliders = DetectObjectsInfront(movementDirectionVector);
         _collidersList.Clear();
+        bool isUsableFound = false;
         foreach (var collider in colliders)
         {
             var pickableItem = collider.GetComponent<IPickable>();
@@ -42,6 +45,17 @@ public class DetectionSystem : MonoBehaviour
             {
                 _collidersList.Add(collider);
             }
+            var usable = collider.GetComponent<IUsable>();
+            if (usable != null && isUsableFound == false)
+            {
+                _usableCollider = collider;
+                isUsableFound = true;
+            }
+        }
+
+        if(isUsableFound == false)
+        {
+            _usableCollider = null;
         }
 
         if(_collidersList.Count == 0)

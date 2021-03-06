@@ -7,18 +7,21 @@ public class MaterialHelper
     public void SwapToSelectionMaterial(GameObject objectToModify, List<Material[]> currentColliderMaterailsList, Material selectionMaterial)
     {
         currentColliderMaterailsList.Clear();
-
+        PrepareRendererToSwapMaterials(objectToModify, currentColliderMaterailsList, selectionMaterial);
         if (objectToModify.transform.childCount > 0)
         {
             foreach (Transform child in objectToModify.transform)
             {
-                PrepareRendererToSwapMaterials(child.gameObject, currentColliderMaterailsList, selectionMaterial);
+                if(child.gameObject.activeSelf)
+                {
+                    PrepareRendererToSwapMaterials(child.gameObject, currentColliderMaterailsList, selectionMaterial);
+                }
             }
         }
-        else
-        {
-            PrepareRendererToSwapMaterials(objectToModify, currentColliderMaterailsList, selectionMaterial);
-        }
+        //else
+        //{
+        //    PrepareRendererToSwapMaterials(objectToModify, currentColliderMaterailsList, selectionMaterial);
+        //}
     }
 
     public void PrepareRendererToSwapMaterials(GameObject objectToModify, List<Material[]> currentColliderMaterailsList, Material selectionMaterial)
@@ -40,21 +43,23 @@ public class MaterialHelper
 
     public void SwapToOriginalMaterial(GameObject objectToModify, List<Material[]> currentColliderMaterailsList)
     {
+        var renderer = objectToModify.GetComponent<Renderer>();
+        renderer.materials = currentColliderMaterailsList[0];
         if (currentColliderMaterailsList.Count > 1)
         {
             for (int i = 0; i < currentColliderMaterailsList.Count; i++)
             {
-                var childRenderer = objectToModify.transform.GetChild(i).GetComponent<Renderer>();
-                if(childRenderer != null)
+                if(objectToModify.transform.GetChild(i).gameObject.activeSelf)
                 {
+                    var childRenderer = objectToModify.transform.GetChild(i).GetComponent<Renderer>();
                     childRenderer.materials = currentColliderMaterailsList[i];
                 }
             }
         }
-        else
-        {
-            var renderer = objectToModify.GetComponent<Renderer>();
-            renderer.materials = currentColliderMaterailsList[0];
-        }
+        //else
+        //{
+        //    var renderer = objectToModify.GetComponent<Renderer>();
+        //    renderer.materials = currentColliderMaterailsList[0];
+        //}
     }
 }
