@@ -10,6 +10,7 @@ public class MovementState : BaseState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
+        Debug.Log("Move state");
         _fallingDelay = _defaultFallingDelay;
     }
 

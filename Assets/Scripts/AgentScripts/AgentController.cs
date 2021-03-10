@@ -144,6 +144,10 @@ public class AgentController : MonoBehaviour, ISaveable
 
     private void Update()
     {
+        if(Time.timeScale == 0)
+        {
+            return;
+        }
         _currentState.Update();
     }
 

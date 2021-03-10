@@ -6,7 +6,6 @@ public class StructureSavePosition : Structure, IUsable
 {
     public void Use()
     {
-        FindObjectOfType<AgentController>().SaveSpawnPoint();
-        Debug.Log("Spawn Position saved");
+        FindObjectOfType<StructuresInteractionManager>().ShowPlayerSleepUI();
     }
 }
