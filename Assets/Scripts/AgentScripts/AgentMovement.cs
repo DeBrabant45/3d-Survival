@@ -190,4 +190,11 @@ public class AgentMovement : MonoBehaviour
     {
         return characterController.isGrounded;
     }
+
+    public void TeleportPlayerTo(Vector3 position)
+    {
+        characterController.enabled = false;
+        transform.position = position;
+        characterController.enabled = true;
+    }
 }

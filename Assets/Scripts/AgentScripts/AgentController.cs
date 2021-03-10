@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AgentController : MonoBehaviour
+public class AgentController : MonoBehaviour, ISaveable
 {
     [SerializeField] AgentMovement _movement;
     [SerializeField] AgentAimController _agentAimController;
@@ -17,6 +18,7 @@ public class AgentController : MonoBehaviour
     [SerializeField] Transform _backItemSlot;
     [SerializeField] AmmoSystem _ammoSystem;
     [SerializeField] BuildingPlacementStorage _buildingPlacementStorage;
+    [SerializeField] Vector3? _spawnPosition = null;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -171,5 +173,37 @@ public class AgentController : MonoBehaviour
         _currentState = state;
         _currentState.EnterState(this);
         //Debug.Log(_currentState + " new State");
+    }
+
+    public void SaveSpawnPoint()
+    {
+        _spawnPosition = transform.position;
+    }
+
+    private void RespawnPlayer()
+    {
+        if (_spawnPosition != null)
+        {
+            _movement.TeleportPlayerTo(_spawnPosition.Value + Vector3.up);
+        }
+    }
+
+    public string GetJsonDataToSave()
+    {
+        var data = new TransformPosition
+        {
+            x = _spawnPosition.Value.x,
+            y = _spawnPosition.Value.y,
+            z = _spawnPosition.Value.z,
+        };
+
+        return JsonConvert.SerializeObject(data);
+    }
+
+    public void LoadJsonData(string jsonData)
+    {
+        var data = JsonConvert.DeserializeObject<TransformPosition>(jsonData);
+        _spawnPosition = new Vector3(data.x, data.y, data.z);
+        RespawnPlayer();
     }
 }

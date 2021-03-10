@@ -62,4 +62,24 @@ public class MaterialHelper
         //    renderer.materials = currentColliderMaterailsList[0];
         //}
     }
+
+    public void EnableEmission(GameObject gameObject, Color color)
+    {
+        var gameObjectrenderer = gameObject.GetComponent<Renderer>();
+        for(int i = 0; i < gameObjectrenderer.materials.Length; i++)
+        {
+            gameObjectrenderer.materials[i].EnableKeyword("_EMISSION");
+            gameObjectrenderer.materials[i].SetColor("_EmissionColor", color);
+            
+        }
+    }    
+    
+    public void DisableEmission(GameObject gameObject)
+    {
+        var gameObjectrenderer = gameObject.GetComponent<Renderer>();
+        for(int i = 0; i < gameObjectrenderer.materials.Length; i++)
+        {
+            gameObjectrenderer.materials[i].DisableKeyword("_EMISSION");
+        }
+    }
 }

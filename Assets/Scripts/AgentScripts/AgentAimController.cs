@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using Cinemachine;
 using UnityEngine.Animations.Rigging;
+using System;
 
 public class AgentAimController : MonoBehaviour
 {

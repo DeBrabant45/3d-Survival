@@ -119,18 +119,15 @@ public class PlacementHelper : MonoBehaviour
             if(min < _lowestYHeight)
             {
                 ChangeMaterialColor(Color.red);
-                Debug.Log("Can't place in lower placement");
                 CorrectLocation = false;
             }
             else if (max - min > _maxHeightDifference)
             {
-                Debug.Log("Not even ground");
                 ChangeMaterialColor(Color.red);
                 CorrectLocation = false;
             }
             else
             {
-                Debug.Log("Even ground");
                 ChangeMaterialColor(Color.green);
                 _rigidbody.position = new Vector3(positionToMove.x, (max + min) / 2f, positionToMove.z);
                 CorrectLocation = true;

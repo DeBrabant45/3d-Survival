@@ -13,6 +13,8 @@ public class DetectionSystem : MonoBehaviour
     [SerializeField] private float _attackDistance = 0.8f;
     [SerializeField] private float _shootingRange = 10f;
     [SerializeField] GameObject _impactEffect;
+    [ColorUsageAttribute(false, true), SerializeField] private Color _usableEmissionColor;
+
     private List<Collider> _collidersList = new List<Collider>();
     private Collider _currentCollider;
     private List<Material[]> _currentColliderMaterailsList = new List<Material[]>();
@@ -45,26 +47,28 @@ public class DetectionSystem : MonoBehaviour
             {
                 _collidersList.Add(collider);
             }
+
             var usable = collider.GetComponent<IUsable>();
             if (usable != null && isUsableFound == false)
             {
+                DisableEmissionsOnNonNullUsableCollider();
                 _usableCollider = collider;
                 isUsableFound = true;
+                _materialHelper.EnableEmission(_usableCollider.gameObject, _usableEmissionColor);
+                ResetOriginalMaterialOnCurrentCollider();
+                return;
             }
         }
 
         if(isUsableFound == false)
         {
+            DisableEmissionsOnNonNullUsableCollider();
             _usableCollider = null;
         }
 
         if(_collidersList.Count == 0)
         {
-            if(_currentCollider != null)
-            {
-                _materialHelper.SwapToOriginalMaterial(_currentCollider.gameObject, _currentColliderMaterailsList);
-                _currentCollider = null;
-            }
+            ResetOriginalMaterialOnCurrentCollider();
             return;
         }
 
@@ -78,6 +82,23 @@ public class DetectionSystem : MonoBehaviour
             _materialHelper.SwapToOriginalMaterial(_currentCollider.gameObject, _currentColliderMaterailsList);
             _currentCollider = _collidersList[0];
             _materialHelper.SwapToSelectionMaterial(_currentCollider.gameObject, _currentColliderMaterailsList, _selectionMaterial);
+        }
+    }
+
+    private void ResetOriginalMaterialOnCurrentCollider()
+    {
+        if (_currentCollider != null)
+        {
+            _materialHelper.SwapToOriginalMaterial(_currentCollider.gameObject, _currentColliderMaterailsList);
+            _currentCollider = null; 
+        }
+    }
+
+    private void DisableEmissionsOnNonNullUsableCollider()
+    {
+        if (_usableCollider != null)
+        {
+            _materialHelper.DisableEmission(_usableCollider.gameObject);
         }
     }
 
