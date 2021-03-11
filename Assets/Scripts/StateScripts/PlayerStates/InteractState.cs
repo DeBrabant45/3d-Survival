@@ -7,7 +7,6 @@ public class InteractState : BaseState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        Debug.Log("Interact state");
         var usableStructure = controllerReference.DetectionSystem.UsableCollider;
         if(usableStructure != null)
         {
