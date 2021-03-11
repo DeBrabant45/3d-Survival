@@ -48,7 +48,7 @@ public class PlayerSleepManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(_timeModifier);
             Debug.Log("Slept "  + i + "/" + seconds + "hours");
         }
-        Debug.Log("Respawn Items");
+        ItemSpawnManager.Instance.RespawnItems();
         Debug.Log("Restore player states");
         _playerSleepUI.ToggleAllButtons();
     }

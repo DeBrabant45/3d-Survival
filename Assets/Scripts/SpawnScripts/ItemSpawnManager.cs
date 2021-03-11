@@ -74,23 +74,40 @@ public class ItemSpawnManager : MonoBehaviour
             var spawner = itemSpawner.GetComponent<ItemSpawner>();
             if (spawner != null)
             {
-                Vector3 randomPosition = GenerateRandomPosition(spawner.Radius);
-                var spawnPosition = itemSpawner.position + randomPosition;
-                if (spawner.SingleObject && spawner.ItemToSpawn.IsStackable)
-                {
-                    CreateItemInPlace(spawnPosition, spawner.ItemToSpawn, spawner.Count);
-                }
-                else
-                {
-                    for (int i = 0; i < spawner.Count; i++)
-                    {
-                        spawnPosition = itemSpawner.position + randomPosition;
-                        CreateItemInPlace(spawnPosition, spawner.ItemToSpawn, 1);
-                        randomPosition = GenerateRandomPosition(spawner.Radius);
-                    }
-                }
+                SpawnItems(itemSpawner, spawner);
             }
             yield return new WaitForEndOfFrame();
+        }
+    }
+
+    private void SpawnItems(Transform itemSpawner, ItemSpawner spawner)
+    {
+        Vector3 randomPosition = GenerateRandomPosition(spawner.Radius);
+        var spawnPosition = itemSpawner.position + randomPosition;
+        if (spawner.SingleObject && spawner.ItemToSpawn.IsStackable)
+        {
+            CreateItemInPlace(spawnPosition, spawner.ItemToSpawn, spawner.Count);
+        }
+        else
+        {
+            for (int i = 0; i < spawner.Count; i++)
+            {
+                spawnPosition = itemSpawner.position + randomPosition;
+                CreateItemInPlace(spawnPosition, spawner.ItemToSpawn, 1);
+                randomPosition = GenerateRandomPosition(spawner.Radius);
+            }
+        }
+    }
+
+    public void RespawnItems()
+    {
+        foreach (Transform itemSpawner in _itemSpawnerParent)
+        {
+            var spawner = itemSpawner.GetComponent<ItemSpawner>();
+            if (spawner != null && spawner.Respawnable)
+            {
+                SpawnItems(itemSpawner, spawner);
+            }
         }
     }
 

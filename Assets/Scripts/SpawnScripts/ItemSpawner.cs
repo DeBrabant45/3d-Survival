@@ -10,11 +10,14 @@ public class ItemSpawner : MonoBehaviour
     [SerializeField] private bool _singleObject = false;
     [SerializeField] private bool _showGizmo = true;
     [SerializeField] private Color _gizmoColor = Color.green;
+    [SerializeField] private bool _respawnable = false;
 
     public bool SingleObject { get => _singleObject; }
     public ItemSO ItemToSpawn { get => _itemToSpawn; }
     public int Count { get => _count; }
     public float Radius { get => _radius; }
+    public bool Respawnable { get => _respawnable; }
+
 
     public void OnDrawGizmos()
     {
