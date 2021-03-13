@@ -52,4 +52,19 @@ public class PlayerStats : MonoBehaviour
             Stamina -= 10;
         }
     }
+
+    public void AddToHealth(float amount)
+    {
+        Health += amount;
+    }    
+    
+    public void AddToStamina(float amount)
+    {
+        Stamina += amount;
+    }
+
+    public void ReduceStamina(float amount)
+    {
+        Stamina -= amount;
+    }
 }

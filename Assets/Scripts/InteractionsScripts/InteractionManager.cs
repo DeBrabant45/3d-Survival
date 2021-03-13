@@ -6,6 +6,13 @@ using UnityEngine;
 
 public class InteractionManager : MonoBehaviour
 {
+    [SerializeField] AgentController _playerController;
+
+    private void Start()
+    {
+        _playerController = FindObjectOfType<AgentController>();
+    }
+
     public bool UseItem(ItemSO itemData)
     {
         var itemType = itemData.GetItemType();
@@ -15,7 +22,8 @@ public class InteractionManager : MonoBehaviour
                 throw new System.Exception("Item can't have itemtype of NONE");
             case ItemType.Food:
                 FoodItemSO foodData = (FoodItemSO)itemData;
-                Debug.Log("Boosting player stats with food");
+                _playerController.PlayerStat.AddToHealth(foodData.HealthBonus);
+                _playerController.PlayerStat.AddToStamina(foodData.StaminaBonus);
                 return true;
             case ItemType.Weapon:
                 WeaponItemSO weaponData = (WeaponItemSO)itemData;

@@ -19,6 +19,7 @@ public class AgentController : MonoBehaviour, ISaveable
     [SerializeField] AmmoSystem _ammoSystem;
     [SerializeField] BuildingPlacementStorage _buildingPlacementStorage;
     [SerializeField] Vector3? _spawnPosition = null;
+    [SerializeField] PlayerStats _playerStat;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -59,6 +60,7 @@ public class AgentController : MonoBehaviour, ISaveable
     public AgentAimController AgentAimController { get => _agentAimController; }
     public Transform BackItemSlot { get => _backItemSlot; }
     public BuildingPlacementStorage BuildingPlacementStorage { get => _buildingPlacementStorage; }
+    public PlayerStats PlayerStat { get => _playerStat; }
 
     private void OnEnable()
     {
@@ -95,6 +97,7 @@ public class AgentController : MonoBehaviour, ISaveable
         _inputFromPlayer.OnMenuToggledKey += HandleMenuInput;
         _inputFromPlayer.OnReload += HandleReloadInput;
         _inputFromPlayer.OnAim += HandleAimInput;
+        _playerStat = GetComponent<PlayerStats>();
     }
 
     private void HandleAimInput()
@@ -194,20 +197,28 @@ public class AgentController : MonoBehaviour, ISaveable
 
     public string GetJsonDataToSave()
     {
-        var data = new TransformPosition
+        var positionData = new TransformPosition
         {
             x = _spawnPosition.Value.x,
             y = _spawnPosition.Value.y,
             z = _spawnPosition.Value.z,
         };
+        var playerData = new PlayerData
+        {
+            PlayerPosition = positionData,
+            Health = _playerStat.Health,
+            Stamina = _playerStat.Stamina,
+        };
 
-        return JsonConvert.SerializeObject(data);
+        return JsonConvert.SerializeObject(playerData);
     }
 
     public void LoadJsonData(string jsonData)
     {
-        var data = JsonConvert.DeserializeObject<TransformPosition>(jsonData);
-        _spawnPosition = new Vector3(data.x, data.y, data.z);
+        var playerData = JsonConvert.DeserializeObject<PlayerData>(jsonData);
+        _spawnPosition = new Vector3(playerData.PlayerPosition.x, playerData.PlayerPosition.y, playerData.PlayerPosition.z);
         RespawnPlayer();
+        _playerStat.Health = playerData.Health;
+        _playerStat.Stamina = playerData.Stamina;
     }
 }

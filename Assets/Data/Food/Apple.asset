@@ -20,6 +20,6 @@ MonoBehaviour:
   _isStackable: 1
   _stackLimit: 100
   _itemType: 1
-  _staminaBonus: 0
-  _hungerBonus: 5
+  _staminaBonus: 10
+  _healthBonus: 20
   _energyBonus: 0
