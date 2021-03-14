@@ -56,8 +56,13 @@ public class PlayerStats : MonoBehaviour
     public void AddToHealth(float amount)
     {
         Health += amount;
-    }    
-    
+    }
+
+    public void ReduceHealth(float amount)
+    {
+        Health -= amount;
+    }
+
     public void AddToStamina(float amount)
     {
         Stamina += amount;
