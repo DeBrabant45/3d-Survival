@@ -29,11 +29,11 @@ public class PlacementState : MovementState
             _placementHelper.enabled = false;
             controllerReference.InventorySystem.RemoveSelectedStructureFromInventory();
             controllerReference.BuildingPlacementStorage.SaveStructureReference(structureComponent);
-            HandleSecondaryInput();
+            HandleSecondaryClickInput();
         }
     }
 
-    public override void HandleSecondaryInput()
+    public override void HandleSecondaryClickInput()
     {
         Debug.Log("Existing Placement State");
         if(_placementHelper.isActiveAndEnabled)

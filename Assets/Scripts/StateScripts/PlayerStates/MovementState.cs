@@ -52,9 +52,9 @@ public class MovementState : BaseState
         base.HandlePrimaryInput();
     }
 
-    public override void HandleSecondaryInput()
+    public override void HandleSecondaryClickInput()
     {
-        base.HandleSecondaryInput();
+        base.HandleSecondaryClickInput();
         controllerReference.TransitionToState(controllerReference.interactState);
     }
 

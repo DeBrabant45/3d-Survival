@@ -15,10 +15,12 @@ public class PlayerInput : MonoBehaviour
     public Action OnToggleInventory { get; set; }
     public Action<int> OnHotBarKey { get; set; }
     public Action OnPrimaryAction { get; set; }
-    public Action OnSecondaryAction { get; set; }
+    public Action OnSecondaryClickAction { get; set; }
     public Action OnMenuToggledKey { get; set; }
     public Action OnReload { get; set; }
     public Action OnAim { get; set; }
+    public Action OnSecondaryHeldDownAction { get; set; }
+    public Action OnSecondaryUpAction { get; set; }
 
     private void Start()
     {
@@ -35,9 +37,27 @@ public class PlayerInput : MonoBehaviour
         GetInventoryInput();
         GetHotBarInput();
         GetPrimaryAction();
-        GetSecondaryAction();
+        GetSecondaryClickAction();
         GetReloadInput();
         GetAimInput();
+        GetSecondaryHeldDownAction();
+        GetSecondaryUpAction();
+    }
+
+    private void GetSecondaryUpAction()
+    {
+        if (Input.GetMouseButtonUp(1))
+        {
+            OnSecondaryUpAction?.Invoke();
+        }
+    }
+
+    private void GetSecondaryHeldDownAction()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            OnSecondaryHeldDownAction?.Invoke();
+        }
     }
 
     private void GetReloadInput()
@@ -64,14 +84,14 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    private void GetSecondaryAction()
+    private void GetSecondaryClickAction()
     {
         var inputValue = Input.GetAxisRaw("Fire2");
         if (_previousSecondaryActionInput == 0)
         {
             if (inputValue >= 1)
             {
-                OnSecondaryAction?.Invoke();
+                OnSecondaryClickAction?.Invoke();
             }
         }
         _previousSecondaryActionInput = inputValue;

@@ -89,6 +89,11 @@ public class HumanoidAnimations : MonoBehaviour
         _animator.SetBool("meleeUnarmedStance", value);
     }
 
+    public void IsMeleeWeaponDefenseAnimationActive(bool value)
+    {
+        _animator.SetBool("meleeWeaponDefense", value);
+    }
+
     public void FinishedAttackingCallBack()
     {
         _onFinishedAttacking.Invoke();

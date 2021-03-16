@@ -31,9 +31,9 @@ public class InteractState : BaseState
         base.HandlePrimaryInput();
     }
 
-    public override void HandleSecondaryInput()
+    public override void HandleSecondaryClickInput()
     {
-        base.HandleSecondaryInput();
+        base.HandleSecondaryClickInput();
     }
 
     public override void Update()

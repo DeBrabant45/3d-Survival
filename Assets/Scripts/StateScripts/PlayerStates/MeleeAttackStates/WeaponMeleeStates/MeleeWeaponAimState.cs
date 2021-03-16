@@ -19,6 +19,11 @@ public class MeleeWeaponAimState : AimState
         }
     }
 
+    public override void HandleSecondaryHeldDownInput()
+    {
+        controllerReference.TransitionToState(controllerReference.defenseState);
+    }
+
     public override void HandleEquipItemInput()
     {
         base.HandleEquipItemInput();

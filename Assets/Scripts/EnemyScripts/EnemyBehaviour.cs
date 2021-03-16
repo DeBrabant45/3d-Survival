@@ -74,6 +74,11 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
         }
     }
 
+    public void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Hello");
+    }
+
     public void GetHit(WeaponItemSO weapon, Vector3 hitpoint)
     {
         _health -= weapon.GetDamageValue();

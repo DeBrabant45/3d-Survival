@@ -45,7 +45,8 @@ public class AgentController : MonoBehaviour, ISaveable
     public readonly BaseState equipItemState = new EquipItemState();
     public readonly BaseState unequipItemState = new UnequipItemState();
     public readonly BaseState placementState = new PlacementState();
-    #endregion 
+    public readonly BaseState defenseState = new DefenseState();
+    #endregion
 
     public PlayerInput InputFromPlayer { get => _inputFromPlayer; }
     public AgentMovement Movement { get => _movement; }
@@ -93,11 +94,23 @@ public class AgentController : MonoBehaviour, ISaveable
         _inputFromPlayer.OnHotBarKey += HandleHotBarInput;
         _inputFromPlayer.OnToggleInventory += HandleInventoryInput;
         _inputFromPlayer.OnPrimaryAction += HandlePrimaryInput;
-        _inputFromPlayer.OnSecondaryAction += HandleSecondaryInput;
+        _inputFromPlayer.OnSecondaryClickAction += HandleSecondaryClickInput;
         _inputFromPlayer.OnMenuToggledKey += HandleMenuInput;
         _inputFromPlayer.OnReload += HandleReloadInput;
         _inputFromPlayer.OnAim += HandleAimInput;
+        _inputFromPlayer.OnSecondaryHeldDownAction += HandleSecondaryHeldDownInput;
+        _inputFromPlayer.OnSecondaryUpAction += HandleSecondaryUpInput;
         _playerStat = GetComponent<PlayerStats>();
+    }
+
+    private void HandleSecondaryUpInput()
+    {
+        _currentState.HandleSecondaryUpInput();
+    }
+
+    private void HandleSecondaryHeldDownInput()
+    {
+        _currentState.HandleSecondaryHeldDownInput();
     }
 
     private void HandleAimInput()
@@ -110,9 +123,9 @@ public class AgentController : MonoBehaviour, ISaveable
         _currentState.HandleMenuInput();
     }
 
-    private void HandleSecondaryInput()
+    private void HandleSecondaryClickInput()
     {
-        _currentState.HandleSecondaryInput();
+        _currentState.HandleSecondaryClickInput();
     }
 
     private void HandlePrimaryInput()

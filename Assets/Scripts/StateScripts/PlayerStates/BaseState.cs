@@ -19,10 +19,12 @@ public abstract class BaseState
     public virtual void HandleHotBarInput(int hotbarKey) { }
     public virtual void Update() { }
     public virtual void FixedUpdate() { }
-    public virtual void HandleSecondaryInput() { }
+    public virtual void HandleSecondaryClickInput() { }
     public virtual void HandlePrimaryInput() { }
     public virtual void HandleMenuInput() { }
     public virtual void HandleReloadInput() { }
     public virtual void HandleEquipItemInput() { }
     public virtual void HandlePlacementInput() { }
+    public virtual void HandleSecondaryHeldDownInput() { }
+    public virtual void HandleSecondaryUpInput() { }
 }
