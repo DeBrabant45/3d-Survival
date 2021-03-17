@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour, IHittable
 {
     [SerializeField] private UnityEvent _onDeath;
     [SerializeField] private UI_PlayerStats _uIPlayerStats;
@@ -38,19 +38,12 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    int IHittable.Health => (int)_health;
+
     private void Awake()
     {
         Health = _healthInitialValue;
         Stamina = _staminaInitialValue;
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            Health -= 40;
-            Stamina -= 10;
-        }
     }
 
     public void AddToHealth(float amount)
@@ -71,5 +64,10 @@ public class PlayerStats : MonoBehaviour
     public void ReduceStamina(float amount)
     {
         Stamina -= amount;
+    }
+
+    public void GetHit(WeaponItemSO weapon, Vector3 hitpoint)
+    {
+        ReduceHealth(weapon.GetDamageValue());
     }
 }

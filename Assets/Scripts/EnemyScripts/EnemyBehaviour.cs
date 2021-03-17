@@ -10,10 +10,12 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
     [SerializeField] private NavMeshAgent _navMeshAgent;
     [SerializeField] private GameObject _target;
     [SerializeField] private float _stoppingDistance = 2f;
-    [SerializeField] private float _attackDamage;
     [SerializeField] private int _health;
     [SerializeField] private GameObject enemyModel;
     [SerializeField, Range(0, 1)] private float _hurtFeedbackTime = 0.2f;
+    [SerializeField] private Transform _attackStartPosition;
+    [SerializeField] private float _attackDistance = 0.8f;
+    [SerializeField] private WeaponItemSO _weaponItem;
     private bool _targetInRange = false;
     private bool _isDead;
     private Animator _animator;
@@ -47,7 +49,11 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
 
     public void Attack()
     {
-        _target.GetComponent<AgentController>().PlayerStat.ReduceHealth(_attackDamage);
+        RaycastHit hit;
+        if (Physics.SphereCast(_attackStartPosition.position, 0.2f, transform.forward, out hit, _attackDistance))
+        {
+            PreformHit(hit.collider, hit.point);
+        }
     }
 
     public void Death()
@@ -74,9 +80,17 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
         }
     }
 
-    public void OnCollisionEnter(Collision collision)
+    public void PreformHit(Collider hitObject, Vector3 hitPosition)
     {
-        Debug.Log("Hello");
+        var hittable = hitObject.GetComponent<IHittable>();
+        if (hittable != null)
+        {
+            Debug.Log(hitObject.gameObject.name);
+            if(hitObject.gameObject.name == "PlayerAgent")
+            {
+                hittable.GetHit(_weaponItem, hitPosition);
+            }
+        }
     }
 
     public void GetHit(WeaponItemSO weapon, Vector3 hitpoint)

@@ -8,6 +8,7 @@ public class DefenseState : BaseState
     {
         base.EnterState(controller);
         controllerReference.AgentAnimations.IsMeleeWeaponDefenseAnimationActive(true);
+        controllerReference.BlockObject.SetActive(true);
     }
 
     public override void HandleMovement(Vector2 input)
@@ -18,6 +19,7 @@ public class DefenseState : BaseState
 
     public override void HandleSecondaryUpInput()
     {
+        controllerReference.BlockObject.SetActive(false);
         controllerReference.TransitionToState(controllerReference.meleeWeaponAimState);
         controllerReference.AgentAnimations.IsMeleeWeaponDefenseAnimationActive(false);
     }

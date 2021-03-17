@@ -20,6 +20,7 @@ public class AgentController : MonoBehaviour, ISaveable
     [SerializeField] BuildingPlacementStorage _buildingPlacementStorage;
     [SerializeField] Vector3? _spawnPosition = null;
     [SerializeField] PlayerStats _playerStat;
+    [SerializeField] GameObject _blockObject;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -62,6 +63,7 @@ public class AgentController : MonoBehaviour, ISaveable
     public Transform BackItemSlot { get => _backItemSlot; }
     public BuildingPlacementStorage BuildingPlacementStorage { get => _buildingPlacementStorage; }
     public PlayerStats PlayerStat { get => _playerStat; }
+    public GameObject BlockObject { get => _blockObject; set => _blockObject = value; }
 
     private void OnEnable()
     {
