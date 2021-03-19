@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,16 @@ public class DefenseState : BaseState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
+
         controllerReference.AgentAnimations.IsMeleeWeaponDefenseAnimationActive(true);
-        controllerReference.BlockObject.SetActive(true);
+        controllerReference.PlayerStat.IsBlocking = true;
+        controllerReference.PlayerStat.OnBlockSuccessful += BlockReaction;
+    }
+
+    private void BlockReaction()
+    {
+        controllerReference.Movement.StopMovement();
+        controllerReference.AgentAnimations.TriggerBlockReact();
     }
 
     public override void HandleMovement(Vector2 input)
@@ -19,7 +28,7 @@ public class DefenseState : BaseState
 
     public override void HandleSecondaryUpInput()
     {
-        controllerReference.BlockObject.SetActive(false);
+        controllerReference.PlayerStat.IsBlocking = false;
         controllerReference.TransitionToState(controllerReference.meleeWeaponAimState);
         controllerReference.AgentAnimations.IsMeleeWeaponDefenseAnimationActive(false);
     }

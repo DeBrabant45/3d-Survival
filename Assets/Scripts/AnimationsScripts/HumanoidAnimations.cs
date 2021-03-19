@@ -94,6 +94,11 @@ public class HumanoidAnimations : MonoBehaviour
         _animator.SetBool("meleeWeaponDefense", value);
     }
 
+    public void TriggerBlockReact()
+    {
+        _animator.SetTrigger("meleeWeaponBlockReact");
+    }
+
     public void FinishedAttackingCallBack()
     {
         _onFinishedAttacking.Invoke();

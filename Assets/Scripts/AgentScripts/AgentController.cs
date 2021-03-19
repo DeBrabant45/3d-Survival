@@ -20,7 +20,6 @@ public class AgentController : MonoBehaviour, ISaveable
     [SerializeField] BuildingPlacementStorage _buildingPlacementStorage;
     [SerializeField] Vector3? _spawnPosition = null;
     [SerializeField] PlayerStats _playerStat;
-    [SerializeField] GameObject _blockObject;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -63,7 +62,6 @@ public class AgentController : MonoBehaviour, ISaveable
     public Transform BackItemSlot { get => _backItemSlot; }
     public BuildingPlacementStorage BuildingPlacementStorage { get => _buildingPlacementStorage; }
     public PlayerStats PlayerStat { get => _playerStat; }
-    public GameObject BlockObject { get => _blockObject; set => _blockObject = value; }
 
     private void OnEnable()
     {
@@ -72,6 +70,7 @@ public class AgentController : MonoBehaviour, ISaveable
         _agentAnimations = GetComponent<HumanoidAnimations>();
         _detectionSystem = GetComponent<DetectionSystem>();
         _agentAimController = GetComponent<AgentAimController>();
+        _playerStat = GetComponent<PlayerStats>();
         _currentState = movementState;
         _currentState.EnterState(this);
         AssignInputListeners();
@@ -102,7 +101,6 @@ public class AgentController : MonoBehaviour, ISaveable
         _inputFromPlayer.OnAim += HandleAimInput;
         _inputFromPlayer.OnSecondaryHeldDownAction += HandleSecondaryHeldDownInput;
         _inputFromPlayer.OnSecondaryUpAction += HandleSecondaryUpInput;
-        _playerStat = GetComponent<PlayerStats>();
     }
 
     private void HandleSecondaryUpInput()

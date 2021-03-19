@@ -16,10 +16,12 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
     [SerializeField] private Transform _attackStartPosition;
     [SerializeField] private float _attackDistance = 0.8f;
     [SerializeField] private WeaponItemSO _weaponItem;
+    [SerializeField] private float _attackRate;
     private bool _targetInRange = false;
     private bool _isDead;
     private Animator _animator;
     private MaterialHelper _materialHelper = new MaterialHelper();
+    private Collider[] _colliders;
 
     public int Health => _health;
 
@@ -31,6 +33,7 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.isStopped = true;
         _navMeshAgent.stoppingDistance = _stoppingDistance;
+        _colliders = transform.GetComponentsInChildren<Collider>();
     }
 
     private void ChasePlayer()
@@ -61,6 +64,10 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
         StopAllCoroutines();
         _materialHelper.DisableEmission(enemyModel);
         this.enabled = false;
+        foreach (var colider in _colliders)
+        {
+            colider.enabled = false;
+        }
     }
 
     private void Update()
@@ -85,11 +92,7 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
         var hittable = hitObject.GetComponent<IHittable>();
         if (hittable != null)
         {
-            Debug.Log(hitObject.gameObject.name);
-            if(hitObject.gameObject.name == "PlayerAgent")
-            {
-                hittable.GetHit(_weaponItem, hitPosition);
-            }
+            hittable.GetHit(_weaponItem, hitPosition);
         }
     }
 
