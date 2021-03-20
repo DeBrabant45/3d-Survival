@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Ranged Weapon Item", menuName = "InventoryData/RangedWeaponItemSO")]
 public class RangedWeaponItemSO : WeaponItemSO
 {
+    [Header("Weapon Ammo Settings")]
     [SerializeField] private int _maxAmmoCount;
     [SerializeField] private int _preloadedAmmoAmount;
 

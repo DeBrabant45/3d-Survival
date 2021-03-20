@@ -18,7 +18,7 @@ public class RangedAttackState : BaseState
                 controllerReference.Movement.StopMovement();
                 equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
                 controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBack;
-                controllerReference.AgentAnimations.TriggerShootAnimation();
+                controllerReference.AgentAnimations.SetTriggerForAnimation("shoot");
                 controllerReference.DetectionSystem.OnRangeAttackSuccessful += PreformShoot;
                 RemoveAmmoWhenShooting();
             }

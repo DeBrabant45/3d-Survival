@@ -24,6 +24,9 @@ MonoBehaviour:
   _maximumDamage: 2
   _criticalDamageChance: 0
   _weaponType: 2
+  _weaponImpactForce: 0
+  _attackTriggerAnimation: 
+  _blockTriggerAnimation: 
   _baseHarvestPower: 3
   _resourceBoosted: 1
   _boostedHarevestPower: 6

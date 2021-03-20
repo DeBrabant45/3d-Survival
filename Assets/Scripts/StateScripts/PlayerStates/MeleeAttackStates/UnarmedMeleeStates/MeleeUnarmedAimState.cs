@@ -7,14 +7,14 @@ public class MeleeUnarmedAimState : AimState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        controllerReference.AgentAnimations.IsMeleeUnarmedStanceAnimationActive(true);
+        controllerReference.AgentAnimations.SetBoolForAnimation("meleeUnarmedStance", true);
     }
 
     public override void HandlePrimaryInput()
     {
         if (controllerReference.PlayerStat.Stamina > 0)
         {
-            controllerReference.AgentAnimations.IsMeleeUnarmedStanceAnimationActive(false);
+            controllerReference.AgentAnimations.SetBoolForAnimation("meleeUnarmedStance", false);
             controllerReference.TransitionToState(controllerReference.meleeUnarmedAttackOne);
         }
     }
@@ -24,6 +24,6 @@ public class MeleeUnarmedAimState : AimState
         controllerReference.TransitionToState(controllerReference.movementState);
         controllerReference.AgentAimController.SetZoomOutFieldOfView();
         controllerReference.AgentAimController.AimCrossHair.enabled = false;
-        controllerReference.AgentAnimations.IsMeleeUnarmedStanceAnimationActive(false);
+        controllerReference.AgentAnimations.SetBoolForAnimation("meleeUnarmedStance", false);
     }
 }

@@ -7,7 +7,7 @@ public class FallingState : JumpState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        controllerReference.AgentAnimations.TriggerFallAnimation();
+        controllerReference.AgentAnimations.SetTriggerForAnimation("fall");
         controllerReference.Movement.SetCompletedJumpFalse();
     }
 

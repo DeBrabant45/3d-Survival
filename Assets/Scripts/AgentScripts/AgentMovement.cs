@@ -116,7 +116,7 @@ public class AgentMovement : MonoBehaviour
             _isJumping = false;
             _isJumpingCompleted = false;
             moveDirection.y = _jumpSpeed;
-            agentAnimations.TriggerJumpAnimation();
+            agentAnimations.SetTriggerForAnimation("jump");
         }
     }
 

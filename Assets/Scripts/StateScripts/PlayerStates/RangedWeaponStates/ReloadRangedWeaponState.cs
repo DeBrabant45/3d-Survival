@@ -37,7 +37,7 @@ public class ReloadRangedWeaponState : BaseState
     private void PreformWeaponReload()
     {
         controllerReference.Movement.StopMovement();
-        controllerReference.AgentAnimations.TrigggerReloadWeaponAnimation();
+        controllerReference.AgentAnimations.SetTriggerForAnimation("reload");
         controllerReference.AmmoSystem.ReloadAmmoRequest(((RangedWeaponItemSO)_equippedWeapon).MaxAmmoCount);
         itemSlotGun.ReloadAmmoCount();
     }

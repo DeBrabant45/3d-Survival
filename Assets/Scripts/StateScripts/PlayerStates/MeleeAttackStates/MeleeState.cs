@@ -20,11 +20,12 @@ public abstract class MeleeState : BaseState
     {
         if (controllerReference.InventorySystem.WeaponEquipped)
         {
-            controllerReference.AgentAnimations.TriggerMeleeWeaponAnimation();
+            var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
+            controllerReference.AgentAnimations.SetTriggerForAnimation(((WeaponItemSO)equippedItem).AttackTriggerAnimation);
         }
         else
         {
-            controllerReference.AgentAnimations.TriggerMeleeUnarmedAnimation();
+            controllerReference.AgentAnimations.SetTriggerForAnimation("meleeUnarmedAttack");
         }
     }
 

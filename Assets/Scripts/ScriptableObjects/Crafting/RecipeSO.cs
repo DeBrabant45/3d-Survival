@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Recipe Data", menuName = "CraftingData/RecipeSO")]
 public class RecipeSO : ScriptableObject, IInventoryItem 
 {
+    [Header("Item Recipe Info Settings")]
     [SerializeField] private string _recipeName;
     [SerializeField] private ItemSO _outCome;
     [SerializeField] [Range(1, 100)] private int _outComeQty = 1;

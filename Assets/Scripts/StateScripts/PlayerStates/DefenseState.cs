@@ -8,8 +8,7 @@ public class DefenseState : BaseState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-
-        controllerReference.AgentAnimations.IsMeleeWeaponDefenseAnimationActive(true);
+        controllerReference.AgentAnimations.SetBoolForAnimation("meleeWeaponDefense", true);
         controllerReference.PlayerStat.IsBlocking = true;
         controllerReference.PlayerStat.OnBlockSuccessful += BlockReaction;
     }
@@ -17,7 +16,7 @@ public class DefenseState : BaseState
     private void BlockReaction()
     {
         controllerReference.Movement.StopMovement();
-        controllerReference.AgentAnimations.TriggerBlockReact();
+        controllerReference.AgentAnimations.SetTriggerForAnimation("meleeWeaponBlockReact");
     }
 
     public override void HandleMovement(Vector2 input)
@@ -30,7 +29,7 @@ public class DefenseState : BaseState
     {
         controllerReference.PlayerStat.IsBlocking = false;
         controllerReference.TransitionToState(controllerReference.meleeWeaponAimState);
-        controllerReference.AgentAnimations.IsMeleeWeaponDefenseAnimationActive(false);
+        controllerReference.AgentAnimations.SetBoolForAnimation("meleeWeaponDefense", false);
     }
 
     public override void Update()

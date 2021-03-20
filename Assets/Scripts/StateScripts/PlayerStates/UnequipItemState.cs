@@ -7,7 +7,7 @@ public class UnequipItemState : BaseState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        controllerReference.AgentAnimations.TrigggerUnequipWeaponAnimation();
+        controllerReference.AgentAnimations.SetTriggerForAnimation("unequipItem");
         controllerReference.AgentAnimations.OnAnimationFunctionTrigger += UnequipItem;
     }
 

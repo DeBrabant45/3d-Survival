@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Tool Item Data", menuName = "InventoryData/ToolItemSO")]
 public class ToolItemSO : WeaponItemSO
 {
+    [Header("Weapon Harvest Settings")]
     [SerializeField] private int _baseHarvestPower = 3;
     [SerializeField] private ResourceType _resourceBoosted;
     [SerializeField] private int _boostedHarevestPower = 6;

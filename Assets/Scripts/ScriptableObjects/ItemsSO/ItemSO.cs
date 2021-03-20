@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract class ItemSO : ScriptableObject, ISerializationCallbackReceiver
 {
+    [Header("Item Basic Info Settings")]
     [SerializeField] private string _iD;
     [SerializeField] private string _itemName;
     [SerializeField] private Sprite _imageSprite;

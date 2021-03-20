@@ -24,3 +24,5 @@ MonoBehaviour:
   _criticalDamageChance: 0.2
   _weaponType: 2
   _weaponImpactForce: 0
+  _attackTriggerAnimation: OneHandedAttack
+  _blockTriggerAnimation: 

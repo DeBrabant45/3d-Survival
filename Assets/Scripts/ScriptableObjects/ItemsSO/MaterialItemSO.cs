@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Material Item Data", menuName = "InventoryData/MaterialItemSO")]
 public class MaterialItemSO : ItemSO
 {
+    [Header("Item Resource Settings")]
     [SerializeField] private ResourceType resourceType;
 
     public ResourceType ResourceType { get => resourceType; }

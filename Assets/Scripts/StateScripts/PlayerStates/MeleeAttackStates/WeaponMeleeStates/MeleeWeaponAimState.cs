@@ -7,14 +7,14 @@ public class MeleeWeaponAimState : AimState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        controllerReference.AgentAnimations.IsMeleeWeaponStanceAnimationActive(true);
+        controllerReference.AgentAnimations.SetBoolForAnimation("meleeWeaponStance", true);
     }
 
     public override void HandlePrimaryInput()
     {
         if (controllerReference.PlayerStat.Stamina > 0)
         {
-            controllerReference.AgentAnimations.IsMeleeWeaponStanceAnimationActive(false);
+            controllerReference.AgentAnimations.SetBoolForAnimation("meleeWeaponStance", false);
             controllerReference.TransitionToState(controllerReference.meleeWeaponAttackOne);
         }
     }
@@ -27,6 +27,6 @@ public class MeleeWeaponAimState : AimState
     public override void HandleEquipItemInput()
     {
         base.HandleEquipItemInput();
-        controllerReference.AgentAnimations.IsMeleeWeaponStanceAnimationActive(false);
+        controllerReference.AgentAnimations.SetBoolForAnimation("meleeWeaponStance", false);
     }
 }

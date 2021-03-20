@@ -19,84 +19,19 @@ public class HumanoidAnimations : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    public void TriggerLandingAnimation()
+    public void SetTriggerForAnimation(string name)
     {
-        _animator.SetTrigger("land");
+        _animator.SetTrigger(name);
     }
 
-    public void ResetTriggerLandingAnimation()
+    public void ResetTriggerForAnimation(string name)
     {
-        _animator.ResetTrigger("land");
+        _animator.ResetTrigger(name);
     }
-
-    public void TriggerJumpAnimation()
-    {
-        _animator.SetTrigger("jump");
-    }
-
-    public void TriggerFallAnimation()
-    {
-        _animator.SetTrigger("fall");
-    }    
     
-    public void ResetTriggerFallAnimation()
+    public void SetBoolForAnimation(string name, bool value)
     {
-        _animator.ResetTrigger("fall");
-    }
-
-    public void SetMovementFloat(float value)
-    {
-        _animator.SetFloat("move", value);
-    }
-
-    public void TriggerMeleeWeaponAnimation()
-    {
-        _animator.SetTrigger("meleeWeaponAttack");
-    }      
-    
-    public void TriggerMeleeUnarmedAnimation()
-    {
-        _animator.SetTrigger("meleeUnarmedAttack");
-    }    
-      
-    public void TriggerShootAnimation()
-    {
-        _animator.SetTrigger("shoot");
-    }
-
-    public void TrigggerReloadWeaponAnimation()
-    {
-        _animator.SetTrigger("reloadWeapon");
-    }       
-    
-    public void TrigggerEquipWeaponAnimation()
-    {
-        _animator.SetTrigger("equipItem");
-    }      
-    
-    public void TrigggerUnequipWeaponAnimation()
-    {
-        _animator.SetTrigger("unequipItem");
-    }   
-
-    public void IsMeleeWeaponStanceAnimationActive(bool value)
-    {
-        _animator.SetBool("meleeWeaponStance", value);
-    }    
-    
-    public void IsMeleeUnarmedStanceAnimationActive(bool value)
-    {
-        _animator.SetBool("meleeUnarmedStance", value);
-    }
-
-    public void IsMeleeWeaponDefenseAnimationActive(bool value)
-    {
-        _animator.SetBool("meleeWeaponDefense", value);
-    }
-
-    public void TriggerBlockReact()
-    {
-        _animator.SetTrigger("meleeWeaponBlockReact");
+        _animator.SetBool(name, value);
     }
 
     public void FinishedAttackingCallBack()

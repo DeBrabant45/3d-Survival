@@ -12,7 +12,7 @@ public class JumpState : BaseState
         base.EnterState(controller);
         _landingTrigger = false;
         _delay = 0.2f;
-        controllerReference.AgentAnimations.ResetTriggerLandingAnimation();
+        controllerReference.AgentAnimations.ResetTriggerForAnimation("land");
         controllerReference.Movement.HandleJump();
     }
 
@@ -35,11 +35,11 @@ public class JumpState : BaseState
             if (_landingTrigger == false)
             {
                 _landingTrigger = true;
-                controllerReference.AgentAnimations.TriggerLandingAnimation();
+                controllerReference.AgentAnimations.SetTriggerForAnimation("land");
             }
             if (controllerReference.Movement.HasCompletedJumping())
             {
-                controllerReference.AgentAnimations.ResetTriggerFallAnimation();
+                controllerReference.AgentAnimations.ResetTriggerForAnimation("fall");
                 controllerReference.TransitionToState(controllerReference.movementState);
             }
         }

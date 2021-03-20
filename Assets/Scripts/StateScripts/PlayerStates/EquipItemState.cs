@@ -7,7 +7,7 @@ public class EquipItemState : BaseState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        controllerReference.AgentAnimations.TrigggerEquipWeaponAnimation();
+        controllerReference.AgentAnimations.SetTriggerForAnimation("equipItem");
         controllerReference.AgentAnimations.OnAnimationFunctionTrigger += EquipItem;
     }
 
