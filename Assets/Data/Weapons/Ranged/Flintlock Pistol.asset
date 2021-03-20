@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed04f04bdf337c44865d7af74e5d356, type: 3}
+  m_Name: Flintlock Pistol
+  m_EditorClassIdentifier: 
+  _iD: aa1a13f867994611a51516c93932ffe5
+  _itemName: Flintlock Pistol
+  _imageSprite: {fileID: 1798063235238416368, guid: 0e3986646a6245a4eacbf7e97abd98b7,
+    type: 3}
+  _model: {fileID: 6750997205959635715, guid: 5964e813a6596794c95e4523e4c28596, type: 3}
+  _isStackable: 0
+  _stackLimit: 1
+  _itemType: 2
+  _minimalDamage: 1
+  _maximumDamage: 2
+  _criticalDamageChance: 0.2
+  _weaponType: 1
+  _weaponImpactForce: 100
+  _maxAmmoCount: 1
+  _preloadedAmmoAmount: 1
