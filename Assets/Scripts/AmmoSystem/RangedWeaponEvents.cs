@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class RangedWeaponEvents : MonoBehaviour
 {
     public static RangedWeaponEvents current;
-    public event Action onRangedWeaponEquipped;
+    public event Action<RangedWeaponItemSO> onRangedWeaponEquipped;
     public event Action onRangedWeaponUnequipped;
     public event Action onInventoryHasChanged;
     public event Action<int> onRangedWeaponAmmoAmmountChange;
@@ -22,9 +22,9 @@ public class RangedWeaponEvents : MonoBehaviour
         onRangedWeaponAmmoAmmountChange?.Invoke(amount);
     }    
 
-    public void RangedWeaponEquipped()
+    public void RangedWeaponEquipped(RangedWeaponItemSO rangedWeapon)
     {
-        onRangedWeaponEquipped?.Invoke();
+        onRangedWeaponEquipped?.Invoke(rangedWeapon);
     }
 
     public void RangedWeaponUnequipped()

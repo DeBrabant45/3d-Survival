@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class AmmoSystem : MonoBehaviour
 {
-    [SerializeField] private AmmoItemSO _ammoItem;
     private Action<AmmoItemSO, int> _onAmmoItemRequest;
     private Func<string, int, bool> _onAmmoAvailability;
     private Func<string, int> _onAmmoCountInStorage;
@@ -15,15 +14,15 @@ public class AmmoSystem : MonoBehaviour
     public Func<string, int, bool> OnAmmoAvailability { get => _onAmmoAvailability; set => _onAmmoAvailability = value; }
     public Func<string, int> OnAmmoCountInStorage { get => _onAmmoCountInStorage; set => _onAmmoCountInStorage = value; }
     public Func<ItemSO> EquippedItemRequest { get => _equippedItemRequest; set => _equippedItemRequest = value; }
-    public AmmoItemSO AmmoItem { get => _ammoItem; }
+    public AmmoItemSO AmmoItem { get; }
 
-    public bool IsAmmoAvailable()
+    public bool IsAmmoAvailable(AmmoItemSO ammoType)
     {
-        return _onAmmoAvailability.Invoke(_ammoItem.ID, 1); 
+        return _onAmmoAvailability.Invoke(ammoType.ID, 1); 
     }
 
-    public void ReloadAmmoRequest(int amount)
+    public void ReloadAmmoRequest(AmmoItemSO ammoType, int amount)
     {
-        _onAmmoItemRequest?.Invoke(_ammoItem, amount);
+        _onAmmoItemRequest?.Invoke(ammoType, amount);
     }
 }

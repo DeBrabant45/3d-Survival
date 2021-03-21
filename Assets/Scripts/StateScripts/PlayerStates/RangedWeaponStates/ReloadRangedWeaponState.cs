@@ -6,17 +6,18 @@ using UnityEngine;
 public class ReloadRangedWeaponState : BaseState
 {
     private ItemSO _equippedWeapon;
-    private GunAmmo itemSlotGun;
+    private IAmmo _rangedItemAmmo;
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
         controllerReference.AgentAnimations.OnFinishedReloading += TransitionBackAfterReloadingAnimation;
-        itemSlotGun = controllerReference.ItemSlot.GetComponentInChildren<GunAmmo>();
-        if (itemSlotGun != null)
+        _rangedItemAmmo = controllerReference.ItemSlot.GetComponentInChildren<IAmmo>();
+        if (_rangedItemAmmo != null)
         {
-            if (controllerReference.AmmoSystem.IsAmmoAvailable() && itemSlotGun.IsAmmoEmpty() == true)
+            _equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
+            if (controllerReference.AmmoSystem.IsAmmoAvailable(((RangedWeaponItemSO)_equippedWeapon).AmmoType) && _rangedItemAmmo.IsAmmoEmpty() == true)
             {
-                _equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
+                //_equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
                 PreformWeaponReload();
             }
             else if (controllerReference.AgentAimController.AimCrossHair.IsActive())
@@ -37,9 +38,9 @@ public class ReloadRangedWeaponState : BaseState
     private void PreformWeaponReload()
     {
         controllerReference.Movement.StopMovement();
-        controllerReference.AgentAnimations.SetTriggerForAnimation("reload");
-        controllerReference.AmmoSystem.ReloadAmmoRequest(((RangedWeaponItemSO)_equippedWeapon).MaxAmmoCount);
-        itemSlotGun.ReloadAmmoCount();
+        controllerReference.AgentAnimations.SetTriggerForAnimation("reloadWeapon");
+        controllerReference.AmmoSystem.ReloadAmmoRequest(((RangedWeaponItemSO)_equippedWeapon).AmmoType, ((RangedWeaponItemSO)_equippedWeapon).MaxAmmoCount);
+        _rangedItemAmmo.ReloadAmmoCount();
     }
 
     private void TransitionBackAfterReloadingAnimation()

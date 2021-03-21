@@ -7,7 +7,7 @@ public class RangedWeaponAimState : AimState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        controllerReference.AgentAimController.IsAimActive = true;
+        //controllerReference.AgentAimController.IsAimActive = true;
     }
 
     public override void HandlePrimaryInput()

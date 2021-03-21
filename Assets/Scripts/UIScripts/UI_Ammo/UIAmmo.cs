@@ -10,6 +10,7 @@ public class UIAmmo : MonoBehaviour
     [SerializeField] private Text _ammoInStorageTxt;
     [SerializeField] private Image _equippedWeaponIcon;
     [SerializeField] private AmmoSystem _ammoSystem;
+    private RangedWeaponItemSO _equippedRangedWeapon;
 
     private void Start()
     {
@@ -17,13 +18,15 @@ public class UIAmmo : MonoBehaviour
         RangedWeaponEvents.current.onRangedWeaponEquipped += ActivateAmmoPanel;
         RangedWeaponEvents.current.onRangedWeaponUnequipped += InActivateAmmoPanel;
         RangedWeaponEvents.current.onRangedWeaponAmmoAmmountChange += SetAmmoInGun;
-        RangedWeaponEvents.current.onRangedWeaponEquipped += SetEquippedWeaponIcon;
         RangedWeaponEvents.current.onInventoryHasChanged += SetStorageAmmoCount;
     }
 
-    public void ActivateAmmoPanel()
+    public void ActivateAmmoPanel(RangedWeaponItemSO equippedRangedItem)
     {
+        _equippedRangedWeapon = equippedRangedItem;
         _ammoPanel.SetActive(true);
+        SetStorageAmmoCount();
+        SetEquippedWeaponIcon();
     }
 
     public void InActivateAmmoPanel()
@@ -38,11 +41,14 @@ public class UIAmmo : MonoBehaviour
 
     public void SetStorageAmmoCount()
     {
-        _ammoInStorageTxt.text = _ammoSystem.OnAmmoCountInStorage.Invoke(_ammoSystem.AmmoItem.ID) + "";
+        if(_equippedRangedWeapon != null)
+        {
+            _ammoInStorageTxt.text = _ammoSystem.OnAmmoCountInStorage.Invoke(_equippedRangedWeapon.AmmoType.ID) + "";
+        }
     }
 
     public void SetEquippedWeaponIcon()
     {
-        _equippedWeaponIcon.sprite = _ammoSystem.EquippedItemRequest.Invoke().ImageSprite;
+        _equippedWeaponIcon.sprite = _equippedRangedWeapon.ImageSprite;
     }
 }

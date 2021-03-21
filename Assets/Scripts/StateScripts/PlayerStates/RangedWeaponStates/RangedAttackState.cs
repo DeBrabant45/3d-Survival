@@ -5,20 +5,20 @@ using UnityEngine;
 public class RangedAttackState : BaseState
 {
     private ItemSO equippedWeapon;
-    private GunAmmo itemSlotGun;
+    private IAmmo _rangedItemAmmo;
 
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        itemSlotGun = controllerReference.ItemSlot.GetComponentInChildren<GunAmmo>();
-        if(itemSlotGun != null)
+        _rangedItemAmmo = controllerReference.ItemSlot.GetComponentInChildren<IAmmo>();
+        if(_rangedItemAmmo != null)
         {
-            if(itemSlotGun.IsAmmoEmpty() == false)
+            if(_rangedItemAmmo.IsAmmoEmpty() == false)
             {
                 controllerReference.Movement.StopMovement();
                 equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
                 controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBack;
-                controllerReference.AgentAnimations.SetTriggerForAnimation("shoot");
+                controllerReference.AgentAnimations.SetTriggerForAnimation(((WeaponItemSO)equippedWeapon).AttackTriggerAnimation);
                 controllerReference.DetectionSystem.OnRangeAttackSuccessful += PreformShoot;
                 RemoveAmmoWhenShooting();
             }
@@ -35,7 +35,7 @@ public class RangedAttackState : BaseState
 
     private void RemoveAmmoWhenShooting()
     {
-        itemSlotGun.RemoveFromCurrentAmmoCount();
+        _rangedItemAmmo.RemoveFromCurrentAmmoCount();
     }
 
     private void TransitionBack()

@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 3925011529085591458}
   - component: {fileID: 3899653247850331132}
   - component: {fileID: 3907519670562859866}
+  - component: {fileID: 861819382186517572}
   m_Layer: 0
-  m_Name: Throwing@Javelin
+  m_Name: Spear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &861819382186517572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3922233062712552408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f366f7cb6ab77e46a0f4f713665caf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rangedWeapon: {fileID: 11400000, guid: 1b282e65ba387074caca4dd30c4034ad, type: 2}
+  _currentAmmoCount: 0

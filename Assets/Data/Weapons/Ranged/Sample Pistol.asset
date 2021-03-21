@@ -24,5 +24,8 @@ MonoBehaviour:
   _criticalDamageChance: 0.2
   _weaponType: 1
   _weaponImpactForce: 100
+  _attackTriggerAnimation: 
+  _blockTriggerAnimation: 
   _maxAmmoCount: 5
   _preloadedAmmoAmount: 5
+  _ammoType: {fileID: 11400000, guid: d7134412d814b2741adf3797794a3a18, type: 2}

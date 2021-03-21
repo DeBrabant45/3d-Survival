@@ -192,7 +192,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
     {
         if (itemData.GetType() == typeof(RangedWeaponItemSO))
         {
-            RangedWeaponEvents.current.RangedWeaponEquipped();
+            RangedWeaponEvents.current.RangedWeaponEquipped((RangedWeaponItemSO)itemData);
         }
     }
 
