@@ -17,7 +17,6 @@ public class ReloadRangedWeaponState : BaseState
             _equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
             if (controllerReference.AmmoSystem.IsAmmoAvailable(((RangedWeaponItemSO)_equippedWeapon).AmmoType) && _rangedItemAmmo.IsAmmoEmpty() == true)
             {
-                //_equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
                 PreformWeaponReload();
             }
             else if (controllerReference.AgentAimController.AimCrossHair.IsActive())

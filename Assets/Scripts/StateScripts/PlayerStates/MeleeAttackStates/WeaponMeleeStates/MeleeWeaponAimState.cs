@@ -12,6 +12,7 @@ public class MeleeWeaponAimState : AimState
 
     public override void HandlePrimaryInput()
     {
+        base.HandlePrimaryInput();
         if (controllerReference.PlayerStat.Stamina > 0)
         {
             controllerReference.AgentAnimations.SetBoolForAnimation("meleeWeaponStance", false);

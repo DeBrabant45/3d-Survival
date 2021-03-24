@@ -9,6 +9,7 @@ public abstract class AimState : BaseState
         base.EnterState(controller);
         controllerReference.Movement.StopMovement();
         controllerReference.AgentAimController.SetZoomInFieldOfView();
+        controllerReference.AgentAimController.IsAimActive = true;
         controllerReference.AgentAimController.AimCrossHair.enabled = true;
     }
 
@@ -17,7 +18,13 @@ public abstract class AimState : BaseState
         controllerReference.TransitionToState(controllerReference.movementState);
         controllerReference.AgentAimController.SetZoomOutFieldOfView();
         controllerReference.AgentAimController.AimCrossHair.enabled = false;
+        controllerReference.AgentAimController.IsAimActive = false;
         controllerReference.TransitionToState(controllerReference.unequipItemState);
+    }
+
+    public override void HandlePrimaryInput()
+    {
+        controllerReference.AgentAimController.IsAimActive = false;
     }
 
     public override void HandleMovement(Vector2 input)

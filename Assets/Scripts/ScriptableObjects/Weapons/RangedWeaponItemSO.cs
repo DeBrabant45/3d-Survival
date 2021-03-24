@@ -15,6 +15,8 @@ public class RangedWeaponItemSO : WeaponItemSO
     public int MaxAmmoCount { get => _maxAmmoCount; }
     public int PreloadedAmmoAmount { get => _preloadedAmmoAmount; }
     public AmmoItemSO AmmoType { get => _ammoType; }
+    public string WeaponAimAnimation { get => _weaponAimAnimation; }
+    public string ReloadAnimationTrigger { get => _reloadAnimationTrigger; }
 
     private void OnEnable()
     {
