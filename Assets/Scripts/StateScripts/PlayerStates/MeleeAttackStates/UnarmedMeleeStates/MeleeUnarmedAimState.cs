@@ -23,8 +23,7 @@ public class MeleeUnarmedAimState : AimState
     public override void HandleEquipItemInput()
     {
         controllerReference.TransitionToState(controllerReference.movementState);
-        controllerReference.AgentAimController.SetZoomOutFieldOfView();
-        controllerReference.AgentAimController.AimCrossHair.enabled = false;
+        SetAimValuesToInactive();
         controllerReference.AgentAnimations.SetBoolForAnimation("meleeUnarmedStance", false);
     }
 }

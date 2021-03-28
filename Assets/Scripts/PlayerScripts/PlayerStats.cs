@@ -11,10 +11,14 @@ public class PlayerStats : MonoBehaviour, IHittable, IBlockable
     [SerializeField] private int _healthInitialValue;
     [SerializeField] private int _staminaInitialValue;
     [SerializeField] private Transform _blockRaycastStartPosition;
+    [SerializeField] private float _staminaRegenSpeed;
+    [SerializeField] private float _staminaRegenAmount;
     private float _stamina;
     private float _health;
     private bool _isBlocking = false;
     private float _blockDistance = 0.8f;
+    private float _lastTimeSinceStaminaChange;
+    bool _stopCoroutine = false;
 
     public Action OnBlockSuccessful { get; set; }
     public Action OnTakeDamage { get; set; }
@@ -44,14 +48,6 @@ public class PlayerStats : MonoBehaviour, IHittable, IBlockable
         }
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.M))
-        {
-            OnTakeDamage?.Invoke();
-        }
-    }
-
     int IHittable.Health => (int)_health;
 
     public bool IsBlocking { get => _isBlocking; set => _isBlocking = value; }
@@ -62,6 +58,25 @@ public class PlayerStats : MonoBehaviour, IHittable, IBlockable
     {
         Health = _healthInitialValue;
         Stamina = _staminaInitialValue;
+    }
+
+    private void Update()
+    {
+        SaminaRegeneration();
+    }
+
+    private void SaminaRegeneration()
+    {
+        if (Stamina < _staminaInitialValue && Time.time > _lastTimeSinceStaminaChange)
+        {
+            StartCoroutine("StaminaRegenCoroutine");
+            _stopCoroutine = true;
+        }
+        else if (_stopCoroutine == true)
+        {
+            StopCoroutine("StaminaRegenCoroutine");
+            _stopCoroutine = false;
+        }
     }
 
     public void AddToHealth(float amount)
@@ -82,6 +97,7 @@ public class PlayerStats : MonoBehaviour, IHittable, IBlockable
     public void ReduceStamina(float amount)
     {
         Stamina -= amount;
+        _lastTimeSinceStaminaChange = Time.time;
     }
 
     public void GetHit(WeaponItemSO weapon, Vector3 hitpoint)
@@ -105,5 +121,11 @@ public class PlayerStats : MonoBehaviour, IHittable, IBlockable
             return true;
         }
         return false;
+    }
+
+    IEnumerator StaminaRegenCoroutine()
+    {
+        yield return new WaitForSeconds(_staminaRegenSpeed);
+        Stamina += _staminaRegenAmount;
     }
 }

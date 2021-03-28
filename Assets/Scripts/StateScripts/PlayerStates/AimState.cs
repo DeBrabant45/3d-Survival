@@ -21,7 +21,7 @@ public abstract class AimState : BaseState
         controllerReference.TransitionToState(controllerReference.unequipItemState);
     }
 
-    private void SetAimValuesToInactive()
+    public void SetAimValuesToInactive()
     {
         controllerReference.AgentAimController.SetZoomOutFieldOfView();
         controllerReference.AgentAimController.AimCrossHair.enabled = false;

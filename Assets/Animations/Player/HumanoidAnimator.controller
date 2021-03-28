@@ -101,7 +101,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Reloading
+  m_Name: Pistol Reloading
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -2614,7 +2614,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Standing Block React Large
+  m_Name: Player Hurt
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -2701,7 +2701,7 @@ AnimatorStateMachine:
     m_Position: {x: 20, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7149909575603319829}
-    m_Position: {x: 20, y: 90, z: 0}
+    m_Position: {x: 20, y: 170, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

@@ -190,7 +190,7 @@ public class AgentController : MonoBehaviour, ISaveable
         //Debug.Log(_previousState + " old State");
         _currentState = state;
         _currentState.EnterState(this);
-        Debug.Log(_currentState + " new State");
+        //Debug.Log(_currentState + " new State");
     }
 
     public void SaveSpawnPoint()
