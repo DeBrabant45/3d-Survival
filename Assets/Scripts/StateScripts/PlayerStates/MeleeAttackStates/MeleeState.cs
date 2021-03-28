@@ -4,11 +4,11 @@ using UnityEngine;
 
 public abstract class MeleeState : BaseState
 {
-    private bool _buttonSmash = false;
+    private bool _isComboTriggered = false;
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        _buttonSmash = false;
+        _isComboTriggered = false;
         controllerReference.Movement.StopMovement();
         TriggerCorrectAttackAnimation();
         controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBackFromAnimation;
@@ -37,7 +37,7 @@ public abstract class MeleeState : BaseState
 
     public void DetermindNextState(BaseState nextState, BaseState returnState)
     {
-        if (_buttonSmash == true && controllerReference.PlayerStat.Stamina > 0)
+        if (_isComboTriggered == true && controllerReference.PlayerStat.Stamina > 0)
         {
             controllerReference.TransitionToState(nextState);
         }
@@ -59,9 +59,9 @@ public abstract class MeleeState : BaseState
 
     public override void HandlePrimaryInput()
     {
-        if(_buttonSmash == false)
+        if(_isComboTriggered == false)
         {
-            _buttonSmash = true;
+            _isComboTriggered = true;
         }
     }
 }

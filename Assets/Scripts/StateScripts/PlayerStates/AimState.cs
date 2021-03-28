@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,18 +14,29 @@ public abstract class AimState : BaseState
         controllerReference.AgentAimController.AimCrossHair.enabled = true;
     }
 
+
     public override void HandleEquipItemInput()
     {
-        controllerReference.TransitionToState(controllerReference.movementState);
+        SetAimValuesToInactive();
+        controllerReference.TransitionToState(controllerReference.unequipItemState);
+    }
+
+    private void SetAimValuesToInactive()
+    {
         controllerReference.AgentAimController.SetZoomOutFieldOfView();
         controllerReference.AgentAimController.AimCrossHair.enabled = false;
         controllerReference.AgentAimController.IsAimActive = false;
-        controllerReference.TransitionToState(controllerReference.unequipItemState);
     }
 
     public override void HandlePrimaryInput()
     {
         controllerReference.AgentAimController.IsAimActive = false;
+    }
+
+    public override void HandleMenuInput()
+    {
+        base.HandleMenuInput();
+        controllerReference.TransitionToState(controllerReference.menuState);
     }
 
     public override void HandleMovement(Vector2 input)

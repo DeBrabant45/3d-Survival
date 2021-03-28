@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ReloadRangedWeaponState : BaseState
 {
-    private ItemSO _equippedWeapon;
+    private RangedWeaponItemSO _equippedWeapon;
     private IAmmo _rangedItemAmmo;
     public override void EnterState(AgentController controller)
     {
@@ -14,8 +14,8 @@ public class ReloadRangedWeaponState : BaseState
         _rangedItemAmmo = controllerReference.ItemSlot.GetComponentInChildren<IAmmo>();
         if (_rangedItemAmmo != null)
         {
-            _equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-            if (controllerReference.AmmoSystem.IsAmmoAvailable(((RangedWeaponItemSO)_equippedWeapon).AmmoType) && _rangedItemAmmo.IsAmmoEmpty() == true)
+            _equippedWeapon = (RangedWeaponItemSO)ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
+            if (controllerReference.AmmoSystem.IsAmmoAvailable(_equippedWeapon.AmmoType) && _rangedItemAmmo.IsAmmoEmpty() == true)
             {
                 PreformWeaponReload();
             }
@@ -37,8 +37,8 @@ public class ReloadRangedWeaponState : BaseState
     private void PreformWeaponReload()
     {
         controllerReference.Movement.StopMovement();
-        controllerReference.AgentAnimations.SetTriggerForAnimation("reloadWeapon");
-        controllerReference.AmmoSystem.ReloadAmmoRequest(((RangedWeaponItemSO)_equippedWeapon).AmmoType, ((RangedWeaponItemSO)_equippedWeapon).MaxAmmoCount);
+        controllerReference.AgentAnimations.SetTriggerForAnimation(_equippedWeapon.ReloadAnimationTrigger);
+        controllerReference.AmmoSystem.ReloadAmmoRequest(_equippedWeapon.AmmoType, (_equippedWeapon).MaxAmmoCount);
         _rangedItemAmmo.ReloadAmmoCount();
     }
 

@@ -16,7 +16,7 @@ public class MeleeWeaponAimState : AimState
         if (controllerReference.PlayerStat.Stamina > 0)
         {
             controllerReference.AgentAnimations.SetBoolForAnimation("meleeWeaponStance", false);
-            controllerReference.TransitionToState(controllerReference.meleeWeaponAttackOne);
+            controllerReference.TransitionToState(controllerReference.meleeWeaponAttackState);
         }
     }
 

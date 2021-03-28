@@ -10,16 +10,17 @@ public class RangedWeaponAimState : AimState
         base.EnterState(controller);
         _equippedWeapon = (RangedWeaponItemSO)ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
         controllerReference.AgentAnimations.SetBoolForAnimation(_equippedWeapon.WeaponAimAnimation, true);
+        controllerReference.AgentAimController.IsHandsConstraintActive = true;
     }
 
     public override void HandlePrimaryInput()
     {
-        controllerReference.AgentAnimations.SetBoolForAnimation(_equippedWeapon.WeaponAimAnimation, false);
         controllerReference.TransitionToState(controllerReference.rangedWeaponAttackState);
     }
 
     public override void HandleEquipItemInput()
     {
+        controllerReference.AgentAimController.IsHandsConstraintActive = false;
         base.HandleEquipItemInput();
         controllerReference.AgentAnimations.SetBoolForAnimation(_equippedWeapon.WeaponAimAnimation, false);
     }
@@ -28,7 +29,6 @@ public class RangedWeaponAimState : AimState
     {
         base.HandleReloadInput();
         controllerReference.AgentAimController.IsAimActive = false;
-        controllerReference.AgentAnimations.SetBoolForAnimation(_equippedWeapon.WeaponAimAnimation, false);
         controllerReference.TransitionToState(controllerReference.reloadRangedWeaponState);
     }
 }

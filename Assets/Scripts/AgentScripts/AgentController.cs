@@ -20,6 +20,7 @@ public class AgentController : MonoBehaviour, ISaveable
     [SerializeField] BuildingPlacementStorage _buildingPlacementStorage;
     [SerializeField] Vector3? _spawnPosition = null;
     [SerializeField] PlayerStats _playerStat;
+    [SerializeField] WeaponItemSO _unarmedAttack;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -31,13 +32,8 @@ public class AgentController : MonoBehaviour, ISaveable
     public readonly BaseState interactState = new InteractState();
     public readonly BaseState menuState = new MenuState();
     public readonly BaseState meleeUnarmedAim = new MeleeUnarmedAimState();
-    public readonly BaseState meleeUnarmedAttackOne = new MeleeUnarmedAttackOneState();
-    public readonly BaseState meleeUnarmedAttackTwo = new MeleeUnarmedAttackTwoState();
-    public readonly BaseState meleeUnarmedAttackThree = new MeleeUnarmedAttackThreeState();
-    public readonly BaseState meleeUnarmedAttackFour = new MeleeUnarmedAttackFourState();
-    public readonly BaseState meleeWeaponAttackOne = new MeleeWeaponAttackOneState();
-    public readonly BaseState meleeWeaponAttackTwo = new MeleeWeaponAttackTwoState();
-    public readonly BaseState meleeWeaponAttackThree = new MeleeWeaponAttackThreeState();
+    public readonly BaseState meleeUnarmedAttackState = new MeleeUnarmedAttackState();
+    public readonly BaseState meleeWeaponAttackState = new MeleeWeaponAttackState();
     public readonly BaseState meleeWeaponAimState = new MeleeWeaponAimState();
     public readonly BaseState rangedWeaponAimState = new RangedWeaponAimState();
     public readonly BaseState rangedWeaponAttackState = new RangedAttackState();
@@ -46,6 +42,7 @@ public class AgentController : MonoBehaviour, ISaveable
     public readonly BaseState unequipItemState = new UnequipItemState();
     public readonly BaseState placementState = new PlacementState();
     public readonly BaseState defenseState = new DefenseState();
+    public readonly BaseState hurtState = new HurtState();
     #endregion
 
     public PlayerInput InputFromPlayer { get => _inputFromPlayer; }
@@ -62,6 +59,7 @@ public class AgentController : MonoBehaviour, ISaveable
     public Transform BackItemSlot { get => _backItemSlot; }
     public BuildingPlacementStorage BuildingPlacementStorage { get => _buildingPlacementStorage; }
     public PlayerStats PlayerStat { get => _playerStat; }
+    public WeaponItemSO UnarmedAttack { get => _unarmedAttack; }
 
     private void OnEnable()
     {
@@ -192,7 +190,7 @@ public class AgentController : MonoBehaviour, ISaveable
         //Debug.Log(_previousState + " old State");
         _currentState = state;
         _currentState.EnterState(this);
-        //Debug.Log(_currentState + " new State");
+        Debug.Log(_currentState + " new State");
     }
 
     public void SaveSpawnPoint()

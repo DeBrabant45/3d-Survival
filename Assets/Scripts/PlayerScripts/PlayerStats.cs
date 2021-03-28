@@ -17,6 +17,7 @@ public class PlayerStats : MonoBehaviour, IHittable, IBlockable
     private float _blockDistance = 0.8f;
 
     public Action OnBlockSuccessful { get; set; }
+    public Action OnTakeDamage { get; set; }
     public UnityEvent OnDeath { get => _onDeath; }
     public float Stamina 
     { 
@@ -40,6 +41,14 @@ public class PlayerStats : MonoBehaviour, IHittable, IBlockable
                 Debug.Log("Player Has died");
                 _onDeath.Invoke();
             }
+        }
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            OnTakeDamage?.Invoke();
         }
     }
 
@@ -84,6 +93,7 @@ public class PlayerStats : MonoBehaviour, IHittable, IBlockable
         else
         {
             ReduceHealth(weapon.GetDamageValue());
+            OnTakeDamage?.Invoke();
         }
     }
 

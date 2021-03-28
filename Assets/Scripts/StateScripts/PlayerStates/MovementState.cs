@@ -58,12 +58,6 @@ public class MovementState : BaseState
         controllerReference.TransitionToState(controllerReference.interactState);
     }
 
-    public override void HandleReloadInput()
-    {
-        base.HandleReloadInput();
-        controllerReference.TransitionToState(controllerReference.reloadRangedWeaponState);
-    }
-
     public override void HandleHotBarInput(int hotbarKey)
     {
         base.HandleHotBarInput(hotbarKey);
@@ -100,7 +94,6 @@ public class MovementState : BaseState
                 _fallingDelay -= Time.deltaTime;
                 return;
             }
-            Debug.Log("I'm here");
             controllerReference.TransitionToState(controllerReference.fallingState);
         }
         else

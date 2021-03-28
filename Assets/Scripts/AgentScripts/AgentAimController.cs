@@ -13,17 +13,23 @@ public class AgentAimController : MonoBehaviour
     [SerializeField] private int _cameraZoomInFieldOfView;
     [SerializeField] private int _cameraZoomOutFieldOfView;
     [SerializeField] private Rig _playerAim;
+    [SerializeField] private MultiAimConstraint _leftHand;
+    [SerializeField] private MultiAimConstraint _rightHand;
     private bool _isAimActive = false;
+    private bool _isHandsConstraintActive = false;
     private Camera _mainCamera;
 
     public Image AimCrossHair { get => _aimCrossHair; set => _aimCrossHair = value; }
     public bool IsAimActive { get => _isAimActive; set => _isAimActive = value; }
+    public bool IsHandsConstraintActive { get => _isHandsConstraintActive; set => _isHandsConstraintActive = value; }
 
     private void Start()
     {
         _mainCamera = Camera.main;
         _aimCrossHair.enabled = false;
         _playerAim.weight = 0;
+        _leftHand.weight = 0;
+        _rightHand.weight = 0;
     }
 
     public void SetPlayerAimRigWeight()
@@ -35,6 +41,21 @@ public class AgentAimController : MonoBehaviour
         else
         {
             _playerAim.weight -= Time.deltaTime / _aimDuration;
+        }
+    }
+
+    private void SetPlayerHandsMultiConstraintWeight()
+    {
+        if (_isHandsConstraintActive == true)
+        {
+            _leftHand.weight += Time.deltaTime / _aimDuration;
+            _rightHand.weight += Time.deltaTime / _aimDuration;
+        }
+        else
+        {
+            _leftHand.weight -= Time.deltaTime / _aimDuration;
+            _rightHand.weight -= Time.deltaTime / _aimDuration;
+
         }
     }
 
@@ -56,6 +77,7 @@ public class AgentAimController : MonoBehaviour
 
     private void Update()
     {
+        SetPlayerHandsMultiConstraintWeight();
         SetPlayerAimRigWeight();
         SetCameraToMovePlayer();
     }

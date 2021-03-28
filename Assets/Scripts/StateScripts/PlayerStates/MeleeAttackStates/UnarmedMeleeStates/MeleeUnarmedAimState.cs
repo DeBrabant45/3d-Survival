@@ -12,10 +12,11 @@ public class MeleeUnarmedAimState : AimState
 
     public override void HandlePrimaryInput()
     {
+        base.HandlePrimaryInput();
         if (controllerReference.PlayerStat.Stamina > 0)
         {
             controllerReference.AgentAnimations.SetBoolForAnimation("meleeUnarmedStance", false);
-            controllerReference.TransitionToState(controllerReference.meleeUnarmedAttackOne);
+            controllerReference.TransitionToState(controllerReference.meleeUnarmedAttackState);
         }
     }
 
