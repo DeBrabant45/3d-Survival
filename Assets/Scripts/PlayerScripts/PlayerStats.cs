@@ -18,7 +18,7 @@ public class PlayerStats : MonoBehaviour, IHittable, IBlockable
     private bool _isBlocking = false;
     private float _blockDistance = 0.8f;
     private float _lastTimeSinceStaminaChange;
-    bool _stopCoroutine = false;
+    private bool _stopCoroutine = false;
 
     public Action OnBlockSuccessful { get; set; }
     public Action OnTakeDamage { get; set; }
@@ -58,14 +58,15 @@ public class PlayerStats : MonoBehaviour, IHittable, IBlockable
     {
         Health = _healthInitialValue;
         Stamina = _staminaInitialValue;
+        _onStaminaChange += StaminaRegeneration;
     }
 
     private void Update()
     {
-        SaminaRegeneration();
+        StaminaRegeneration();
     }
 
-    private void SaminaRegeneration()
+    private void StaminaRegeneration()
     {
         if (Stamina < _staminaInitialValue && Time.time > _lastTimeSinceStaminaChange)
         {
