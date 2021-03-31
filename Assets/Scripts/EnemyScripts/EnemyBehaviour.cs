@@ -90,8 +90,13 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
     public void PreformHit(Collider hitObject, Vector3 hitPosition)
     {
         var hittable = hitObject.GetComponent<IHittable>();
-        if (hittable != null)
+        var blockable = hitObject.GetComponent<IBlockable>();
+        if (hittable != null && hitObject.tag == "Player")
         {
+            if(blockable != null)
+            {
+                blockable.Attacker = this.gameObject;
+            }
             hittable.GetHit(_weaponItem, hitPosition);
         }
     }

@@ -4,25 +4,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerStats : MonoBehaviour, IHittable, IBlockable
+public class PlayerStats : MonoBehaviour, IHittable
 {
     [SerializeField] private UnityEvent _onDeath;
     [SerializeField] private UI_PlayerStats _uIPlayerStats;
     [SerializeField] private int _healthInitialValue;
     [SerializeField] private int _staminaInitialValue;
-    [SerializeField] private Transform _blockRaycastStartPosition;
     [SerializeField] private float _staminaRegenSpeed;
     [SerializeField] private float _staminaRegenAmount;
+    private BlockAttack _blockAttack;
     private float _stamina;
     private float _health;
-    private bool _isBlocking = false;
-    private float _blockDistance = 0.8f;
     private float _lastTimeSinceStaminaChange;
     private bool _stopCoroutine = false;
 
-    public Action OnBlockSuccessful { get; set; }
     public Action OnTakeDamage { get; set; }
     public UnityEvent OnDeath { get => _onDeath; }
+    int IHittable.Health => (int)_health;
+    public BlockAttack BlockAttack { get => _blockAttack; }
     public float Stamina 
     { 
         get => _stamina;
@@ -48,17 +47,11 @@ public class PlayerStats : MonoBehaviour, IHittable, IBlockable
         }
     }
 
-    int IHittable.Health => (int)_health;
-
-    public bool IsBlocking { get => _isBlocking; set => _isBlocking = value; }
-
-    public int BlockLevel => throw new NotImplementedException();
-
     private void Awake()
     {
         Health = _healthInitialValue;
         Stamina = _staminaInitialValue;
-        _onStaminaChange += StaminaRegeneration;
+        _blockAttack = GetComponent<BlockAttack>();
     }
 
     private void Update()
@@ -103,25 +96,15 @@ public class PlayerStats : MonoBehaviour, IHittable, IBlockable
 
     public void GetHit(WeaponItemSO weapon, Vector3 hitpoint)
     {
-        if(_isBlocking == true && IsBlockHitSuccessful() == true)
+        if (_blockAttack.IsBlocking == true && _blockAttack.IsBlockHitSuccessful() == true)
         {
-            OnBlockSuccessful.Invoke();
+            _blockAttack.OnBlockSuccessful.Invoke();
         }
         else
         {
             ReduceHealth(weapon.GetDamageValue());
             OnTakeDamage?.Invoke();
         }
-    }
-
-    public bool IsBlockHitSuccessful()
-    {
-        RaycastHit hit;
-        if (Physics.SphereCast(_blockRaycastStartPosition.position, 0.2f, transform.forward, out hit, _blockDistance))
-        {
-            return true;
-        }
-        return false;
     }
 
     IEnumerator StaminaRegenCoroutine()

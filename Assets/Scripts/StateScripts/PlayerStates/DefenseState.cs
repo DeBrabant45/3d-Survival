@@ -9,8 +9,8 @@ public class DefenseState : BaseState
     {
         base.EnterState(controller);
         controllerReference.AgentAnimations.SetBoolForAnimation("meleeWeaponDefense", true);
-        controllerReference.PlayerStat.IsBlocking = true;
-        controllerReference.PlayerStat.OnBlockSuccessful += BlockReaction;
+        controllerReference.PlayerStat.BlockAttack.IsBlocking = true;
+        controllerReference.PlayerStat.BlockAttack.OnBlockSuccessful += BlockReaction;
     }
 
     private void BlockReaction()
@@ -27,7 +27,7 @@ public class DefenseState : BaseState
 
     public override void HandleSecondaryUpInput()
     {
-        controllerReference.PlayerStat.IsBlocking = false;
+        controllerReference.PlayerStat.BlockAttack.IsBlocking = false;
         controllerReference.TransitionToState(controllerReference.meleeWeaponAimState);
         controllerReference.AgentAnimations.SetBoolForAnimation("meleeWeaponDefense", false);
     }
