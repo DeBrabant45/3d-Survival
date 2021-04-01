@@ -16,12 +16,15 @@ public class BlockAttack : MonoBehaviour, IBlockable
 
     public bool IsBlockHitSuccessful()
     {
-        RaycastHit hit;
-        if (Physics.SphereCast(_blockRaycastStartPosition.position, 0.2f, transform.forward, out hit, _blockDistance))
+        if(_isBlocking != false)
         {
-            if (hit.collider.gameObject == Attacker)
+            RaycastHit hit;
+            if (Physics.SphereCast(_blockRaycastStartPosition.position, 0.2f, transform.forward, out hit, _blockDistance))
             {
-                return true;
+                if (hit.collider.gameObject == Attacker)
+                {
+                    return true;
+                }
             }
         }
         return false;

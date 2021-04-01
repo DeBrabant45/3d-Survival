@@ -96,7 +96,7 @@ public class PlayerStats : MonoBehaviour, IHittable
 
     public void GetHit(WeaponItemSO weapon, Vector3 hitpoint)
     {
-        if (_blockAttack.IsBlocking == true && _blockAttack.IsBlockHitSuccessful() == true)
+        if (_blockAttack.IsBlockHitSuccessful() == true)
         {
             _blockAttack.OnBlockSuccessful.Invoke();
         }

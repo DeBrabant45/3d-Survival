@@ -12,6 +12,7 @@ public class ItemSpawnManager : MonoBehaviour
     [SerializeField] private Transform _itemSpawnerParent;
     [SerializeField] private Material _transparentMaterial;
     private GameObject _item;
+    private WeaponItemSO _equippedItem;
 
     public static ItemSpawnManager Instance { get => _instance; }
     public Material TransparentMaterial { get => _transparentMaterial; }
@@ -136,24 +137,26 @@ public class ItemSpawnManager : MonoBehaviour
     public void SwapBackItemToPlayersHand()
     {
         var item = Instantiate(_item, _playerTransform.GetComponent<AgentController>().ItemSlot);
-        item.transform.localPosition = Vector3.zero;
-        item.transform.localRotation = Quaternion.identity;
+        item.transform.localPosition = _equippedItem.EquippedPosition;
+        item.transform.localEulerAngles = _equippedItem.EquippedRotation;
         RemoveItemFromPlayersBack();
     }
 
     public void SwapHandItemToPlayersBack()
     {
         var item = Instantiate(_item, _playerTransform.GetComponent<AgentController>().BackItemSlot);
-        item.transform.localPosition = Vector3.zero;
+        item.transform.localPosition = _equippedItem.UnequippedPosition;
+        item.transform.localEulerAngles = _equippedItem.UnequippedRotation;
         RemoveItemFromPlayerHand();
     }
 
     public void CreateItemObjectOnPlayersBack(string itemID)
     {
-        var itemPrefab = ItemDataManager.Instance.GetItemPrefab(itemID);
-        var item = Instantiate(itemPrefab, _playerTransform.GetComponent<AgentController>().BackItemSlot);
-        item.transform.localPosition = Vector3.zero;
-        _item = itemPrefab;
+        _equippedItem = (WeaponItemSO)ItemDataManager.Instance.GetItemData(itemID);
+        var item = Instantiate(_equippedItem.Model, _playerTransform.GetComponent<AgentController>().BackItemSlot);
+        item.transform.localPosition = _equippedItem.UnequippedPosition;
+        item.transform.localEulerAngles = _equippedItem.UnequippedRotation;
+        _item = _equippedItem.Model;
     }
 
     public void RemoveItemFromPlayersBack()

@@ -26,3 +26,7 @@ MonoBehaviour:
   _weaponImpactForce: 0
   _attackTriggerAnimation: OneHandedAttack
   _blockTriggerAnimation: 
+  _equippedPosition: {x: 0, y: 0, z: 0}
+  _equippedRotation: {x: 0, y: 0, z: 0}
+  _unequippedPosition: {x: 0, y: 0, z: 0}
+  _unequippedRotation: {x: -89, y: 0, z: 0}

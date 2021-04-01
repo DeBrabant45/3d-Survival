@@ -27,6 +27,10 @@ MonoBehaviour:
   _weaponImpactForce: 100
   _attackTriggerAnimation: pistolShoot
   _blockTriggerAnimation: 
+  _equippedPosition: {x: -0.034, y: -0.029, z: 0.045}
+  _equippedRotation: {x: 180, y: 40, z: 20}
+  _unequippedPosition: {x: 0, y: 0.045, z: 0}
+  _unequippedRotation: {x: -90, y: -40, z: 0}
   _maxAmmoCount: 1
   _preloadedAmmoAmount: 1
   _ammoType: {fileID: 11400000, guid: d7134412d814b2741adf3797794a3a18, type: 2}
