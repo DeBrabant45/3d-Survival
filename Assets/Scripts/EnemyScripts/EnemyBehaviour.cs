@@ -13,15 +13,13 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
     [SerializeField] private int _health;
     [SerializeField] private GameObject enemyModel;
     [SerializeField, Range(0, 1)] private float _hurtFeedbackTime = 0.2f;
-    [SerializeField] private Transform _attackStartPosition;
-    [SerializeField] private float _attackDistance = 0.8f;
-    [SerializeField] private WeaponItemSO _weaponItem;
-    [SerializeField] private float _attackRate;
+    [SerializeField] private Attack _attack;
     private bool _targetInRange = false;
     private bool _isDead;
     private Animator _animator;
     private MaterialHelper _materialHelper = new MaterialHelper();
     private Collider[] _colliders;
+    private float _lastAttackTime = 0;
 
     public int Health => _health;
 
@@ -34,6 +32,7 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
         _navMeshAgent.isStopped = true;
         _navMeshAgent.stoppingDistance = _stoppingDistance;
         _colliders = transform.GetComponentsInChildren<Collider>();
+        _attack = GetComponent<Attack>();
     }
 
     private void ChasePlayer()
@@ -48,15 +47,6 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
         _animator.SetBool("walk", false);
         _navMeshAgent.isStopped = true;
         _targetInRange = false;
-    }
-
-    public void Attack()
-    {
-        RaycastHit hit;
-        if (Physics.SphereCast(_attackStartPosition.position, 0.2f, transform.forward, out hit, _attackDistance))
-        {
-            PreformHit(hit.collider, hit.point);
-        }
     }
 
     public void Death()
@@ -78,26 +68,12 @@ public class EnemyBehaviour : MonoBehaviour, IHittable
             if (_targetInRange && _navMeshAgent.velocity.sqrMagnitude == 0)
             {
                 transform.LookAt(_target.transform);
-                _animator.SetBool("attack", true);
+                if ((_lastAttackTime + _attack.AttackRate) < Time.time)
+                {
+                    _animator.SetTrigger("attack");
+                    _lastAttackTime = Time.time;
+                }
             }
-            else
-            {
-                _animator.SetBool("attack", false);
-            }
-        }
-    }
-
-    public void PreformHit(Collider hitObject, Vector3 hitPosition)
-    {
-        var hittable = hitObject.GetComponent<IHittable>();
-        var blockable = hitObject.GetComponent<IBlockable>();
-        if (hittable != null && hitObject.tag == "Player")
-        {
-            if(blockable != null)
-            {
-                blockable.Attacker = this.gameObject;
-            }
-            hittable.GetHit(_weaponItem, hitPosition);
         }
     }
 

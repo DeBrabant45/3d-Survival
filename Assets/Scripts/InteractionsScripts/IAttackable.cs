@@ -7,5 +7,5 @@ public interface IAttackable
 {
     Action OnAttackSuccessful { get; set; }
     void DetectColliderInFront();
-    void PreformAttack();
+    void PreformAttack(Collider collider, Vector3 point);
 }
