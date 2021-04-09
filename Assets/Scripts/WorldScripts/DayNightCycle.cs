@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,10 @@ public class DayNightCycle : MonoBehaviour
 
     private float _timeScale = 100f;
     public bool Pause = false;
+    public Action DayHasPassed;
+
+    public int DayNumber { get => _dayNumber; }
+    public float TimeOfDay { get => _timeOfDay; }
 
     private void Update()
     {
@@ -39,9 +44,19 @@ public class DayNightCycle : MonoBehaviour
             AdjustSunRotation();
             SunIntensity();
             AdjustSunColor();
-            MoonIntensity(); 
+            MoonIntensity();
             AdjustMoonColor();
+            IsDay();
         }
+    }
+
+    public bool IsDay()
+    {
+        if (_timeOfDay > 0.23f && _timeOfDay < 0.78f)
+        {
+            return true;
+        }
+        return false;
     }
 
     private void UpdateTimeScale()
@@ -56,6 +71,7 @@ public class DayNightCycle : MonoBehaviour
         {
             _dayNumber++;
             _timeOfDay -= 1;
+            DayHasPassed?.Invoke();
         }
         if (_dayNumber > _yearLength)
         {
