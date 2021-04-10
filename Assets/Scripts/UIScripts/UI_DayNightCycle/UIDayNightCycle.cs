@@ -9,7 +9,7 @@ public class UIDayNightCycle : MonoBehaviour
     [SerializeField] private Text _currentDayValue;
     [SerializeField] private Image _sunIcon;
     [SerializeField] private Image _moonIcon;
-    [SerializeField] private DayNightCycle _dayNightCycle;
+    [SerializeField] private TimeCycle _dayNightCycle;
 
     // Start is called before the first frame update
     void Start()
