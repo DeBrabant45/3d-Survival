@@ -19,8 +19,14 @@ MonoBehaviour:
   _isStackable: 0
   _stackLimit: 1
   _itemType: 2
-  _minimalDamage: 10
-  _maximumDamage: 20
+  _minimalDamage: 1
+  _maximumDamage: 2
   _criticalDamageChance: 0.2
   _weaponType: 2
   _weaponImpactForce: 1
+  _attackTriggerAnimation: 
+  _blockTriggerAnimation: 
+  _equippedPosition: {x: 0, y: 0, z: 0}
+  _equippedRotation: {x: 0, y: 0, z: 0}
+  _unequippedPosition: {x: 0, y: 0, z: 0}
+  _unequippedRotation: {x: 0, y: 0, z: 0}

@@ -21,5 +21,4 @@ MonoBehaviour:
   _stackLimit: 100
   _itemType: 1
   _staminaBonus: 10
-  _healthBonus: 20
-  _energyBonus: 0
+  _healthBonus: 1

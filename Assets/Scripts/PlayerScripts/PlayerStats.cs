@@ -7,7 +7,8 @@ using UnityEngine.Events;
 public class PlayerStats : MonoBehaviour, IHittable
 {
     [SerializeField] private UnityEvent _onDeath;
-    [SerializeField] private UI_PlayerStats _uIPlayerStats;
+    [SerializeField] private UIPlayerStamina _staminaUI;
+    [SerializeField] private UIPlayerHealth _healthUI;
     [SerializeField] private int _healthInitialValue;
     [SerializeField] private int _staminaInitialValue;
     [SerializeField] private float _staminaRegenSpeed;
@@ -22,13 +23,14 @@ public class PlayerStats : MonoBehaviour, IHittable
     public UnityEvent OnDeath { get => _onDeath; }
     int IHittable.Health => (int)_health;
     public BlockAttack BlockAttack { get => _blockAttack; }
+
     public float Stamina 
     { 
         get => _stamina;
         set
         {
             _stamina = Mathf.Clamp(value, 0, _staminaInitialValue);
-            _uIPlayerStats.SetStamina(_stamina / _staminaInitialValue);
+            _staminaUI.SetCurrentStamina(_stamina / _staminaInitialValue);
         }
     }
 
@@ -38,7 +40,7 @@ public class PlayerStats : MonoBehaviour, IHittable
         set
         {
             _health = Mathf.Clamp(value, 0, _healthInitialValue);
-            _uIPlayerStats.SetHealth(_health / _healthInitialValue);
+            _healthUI.SetCurrentHealth((int)_health);
             if(_health <= 0)
             {
                 Debug.Log("Player Has died");
@@ -49,6 +51,7 @@ public class PlayerStats : MonoBehaviour, IHittable
 
     private void Awake()
     {
+        _healthUI.SetHealthInitialValue(_healthInitialValue);
         Health = _healthInitialValue;
         Stamina = _staminaInitialValue;
         _blockAttack = GetComponent<BlockAttack>();
@@ -57,6 +60,10 @@ public class PlayerStats : MonoBehaviour, IHittable
     private void Update()
     {
         StaminaRegeneration();
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            ReduceHealth(1);
+        }
     }
 
     private void StaminaRegeneration()
