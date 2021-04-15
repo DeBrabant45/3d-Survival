@@ -19,10 +19,13 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] bool _isPlayerInSightRange;
     [SerializeField] bool _isPlayerAttackRange;
 
+    private Animator _animator;
+
     private void Awake()
     {
         _player = GameObject.Find("PlayerAgent").transform;
         _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -42,6 +45,8 @@ public class EnemyAI : MonoBehaviour
         {
             AttackPlayer();
         }
+        _animator.SetFloat("move", _agent.velocity.magnitude);
+        Debug.Log(_agent.velocity.magnitude);
     }
 
     private void Patroling()
