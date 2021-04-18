@@ -11,7 +11,7 @@ public class ReloadRangedWeaponState : BaseState
     {
         base.EnterState(controller);
         controllerReference.AgentAnimations.OnFinishedReloading += TransitionBackAfterReloadingAnimation;
-        _rangedItemAmmo = controllerReference.ItemSlot.GetComponentInChildren<IAmmo>();
+        _rangedItemAmmo = controllerReference.ItemSlotTransform.GetComponentInChildren<IAmmo>();
         if (_rangedItemAmmo != null)
         {
             _equippedWeapon = (RangedWeaponItemSO)ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);

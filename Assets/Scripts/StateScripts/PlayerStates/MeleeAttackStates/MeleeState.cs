@@ -15,7 +15,7 @@ public abstract class MeleeState : BaseState, IAttackable
         _isComboTriggered = false;
         controllerReference.Movement.StopMovement();
         SetWeaponInHand();
-        controllerReference.ItemSlotClass.DamageCollider.OnCollisionSuccessful += PreformAttack;
+        controllerReference.ItemSlot.DamageCollider.OnCollisionSuccessful += PreformAttack;
         controllerReference.AgentAnimations.SetTriggerForAnimation(_equippedItem.AttackTriggerAnimation);
         controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBackFromAnimation;
         controllerReference.PlayerStat.ReduceStamina(10);
@@ -45,7 +45,7 @@ public abstract class MeleeState : BaseState, IAttackable
     public virtual void TransitionBackFromAnimation()
     {
         controllerReference.AgentAnimations.OnFinishedAttacking -= TransitionBackFromAnimation;
-        controllerReference.ItemSlotClass.DamageCollider.OnCollisionSuccessful -= PreformAttack;
+        controllerReference.ItemSlot.DamageCollider.OnCollisionSuccessful -= PreformAttack;
     }
 
     public void DetermindNextState(BaseState nextState, BaseState returnState)

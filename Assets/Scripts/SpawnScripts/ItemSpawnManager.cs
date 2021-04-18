@@ -128,7 +128,7 @@ public class ItemSpawnManager : MonoBehaviour
 
     public void RemoveItemFromPlayerHand()
     {
-        foreach (Transform child in _playerTransform.GetComponent<AgentController>().ItemSlot)
+        foreach (Transform child in _playerTransform.GetComponent<AgentController>().ItemSlotTransform)
         {
             Destroy(child.gameObject);
         }
@@ -136,7 +136,7 @@ public class ItemSpawnManager : MonoBehaviour
 
     public void SwapBackItemToPlayersHand()
     {
-        var item = Instantiate(_item, _playerTransform.GetComponent<AgentController>().ItemSlot);
+        var item = Instantiate(_item, _playerTransform.GetComponent<AgentController>().ItemSlotTransform);
         item.transform.localPosition = _equippedItem.EquippedPosition;
         item.transform.localEulerAngles = _equippedItem.EquippedRotation;
         RemoveItemFromPlayersBack();
@@ -144,7 +144,7 @@ public class ItemSpawnManager : MonoBehaviour
 
     public void SwapHandItemToPlayersBack()
     {
-        var item = Instantiate(_item, _playerTransform.GetComponent<AgentController>().BackItemSlot);
+        var item = Instantiate(_item, _playerTransform.GetComponent<AgentController>().BackItemSlotTransform);
         item.transform.localPosition = _equippedItem.UnequippedPosition;
         item.transform.localEulerAngles = _equippedItem.UnequippedRotation;
         RemoveItemFromPlayerHand();
@@ -153,7 +153,7 @@ public class ItemSpawnManager : MonoBehaviour
     public void CreateItemObjectOnPlayersBack(string itemID)
     {
         _equippedItem = (WeaponItemSO)ItemDataManager.Instance.GetItemData(itemID);
-        var item = Instantiate(_equippedItem.Model, _playerTransform.GetComponent<AgentController>().BackItemSlot);
+        var item = Instantiate(_equippedItem.Model, _playerTransform.GetComponent<AgentController>().BackItemSlotTransform);
         item.transform.localPosition = _equippedItem.UnequippedPosition;
         item.transform.localEulerAngles = _equippedItem.UnequippedRotation;
         _item = _equippedItem.Model;
@@ -161,7 +161,7 @@ public class ItemSpawnManager : MonoBehaviour
 
     public void RemoveItemFromPlayersBack()
     {
-        foreach (Transform child in _playerTransform.GetComponent<AgentController>().BackItemSlot)
+        foreach (Transform child in _playerTransform.GetComponent<AgentController>().BackItemSlotTransform)
         {
             Destroy(child.gameObject);
         }

@@ -10,7 +10,7 @@ public class RangedAttackState : BaseState
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-        _rangedItemAmmo = controllerReference.ItemSlot.GetComponentInChildren<IAmmo>();
+        _rangedItemAmmo = controllerReference.ItemSlotTransform.GetComponentInChildren<IAmmo>();
         if(_rangedItemAmmo != null)
         {
             if(_rangedItemAmmo.IsAmmoEmpty() == false)

@@ -6,23 +6,22 @@ using UnityEngine;
 
 public class AgentController : MonoBehaviour, ISaveable
 {
-    [SerializeField] AgentMovement _movement;
-    [SerializeField] AgentAimController _agentAimController;
-    [SerializeField] PlayerInput _inputFromPlayer;
-    [SerializeField] HumanoidAnimations _agentAnimations;
     [SerializeField] InventorySystem _inventorySystem;
-    [SerializeField] DetectionSystem _detectionSystem;
     [SerializeField] GameManager _gameManager;
     [SerializeField] CraftingSystem _craftingSystem;
-    [SerializeField] Transform _itemSlot;
-    [SerializeField] Transform _backItemSlot;
+    [SerializeField] Transform _itemSlotTransform;
+    [SerializeField] Transform _backItemSlotTransform;
     [SerializeField] AmmoSystem _ammoSystem;
     [SerializeField] BuildingPlacementStorage _buildingPlacementStorage;
     [SerializeField] Vector3? _spawnPosition = null;
-    [SerializeField] PlayerStats _playerStat;
     [SerializeField] WeaponItemSO _unarmedAttack;
-    [SerializeField] NPCMeleeAttack _attack;
-    [SerializeField] ItemSlot _itemSlotClass;
+    private AgentMovement _movement;
+    private AgentAimController _agentAimController;
+    private PlayerInput _inputFromPlayer;
+    private HumanoidAnimations _agentAnimations;
+    private DetectionSystem _detectionSystem;
+    private ItemSlot _itemSlot;
+    private PlayerStats _playerStat;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -55,15 +54,14 @@ public class AgentController : MonoBehaviour, ISaveable
     public GameManager GameManager { get => _gameManager; }
     public BaseState PreviousState { get => _previousState; }
     public CraftingSystem CraftingSystem { get => _craftingSystem; }
-    public Transform ItemSlot { get => _itemSlot; }
+    public Transform ItemSlotTransform { get => _itemSlotTransform; }
     public AmmoSystem AmmoSystem { get => _ammoSystem; }
     public AgentAimController AgentAimController { get => _agentAimController; }
-    public Transform BackItemSlot { get => _backItemSlot; }
+    public Transform BackItemSlotTransform { get => _backItemSlotTransform; }
     public BuildingPlacementStorage BuildingPlacementStorage { get => _buildingPlacementStorage; }
     public PlayerStats PlayerStat { get => _playerStat; }
     public WeaponItemSO UnarmedAttack { get => _unarmedAttack; }
-    public NPCMeleeAttack Attack { get => _attack; set => _attack = value; }
-    public ItemSlot ItemSlotClass { get => _itemSlotClass; set => _itemSlotClass = value; }
+    public ItemSlot ItemSlot { get => _itemSlot; set => _itemSlot = value; }
 
     private void OnEnable()
     {
@@ -73,8 +71,7 @@ public class AgentController : MonoBehaviour, ISaveable
         _detectionSystem = GetComponent<DetectionSystem>();
         _agentAimController = GetComponent<AgentAimController>();
         _playerStat = GetComponent<PlayerStats>();
-        _attack = GetComponent<NPCMeleeAttack>();
-        _itemSlotClass = GetComponent<ItemSlot>();
+        _itemSlot = GetComponent<ItemSlot>();
         _currentState = movementState;
         _currentState.EnterState(this);
         AssignInputListeners();
