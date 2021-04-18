@@ -15,12 +15,12 @@ public class MeleeUnarmedAttackState : MeleeState
         DetermindNextState(controllerReference.meleeUnarmedAttackState, controllerReference.meleeUnarmedAim);
     }
 
-    public override void PreformHit(Collider hitObject, Vector3 hitPosition)
+    public override void PreformAttack(Collider hitObject)
     {
         var hittable = hitObject.GetComponent<IHittable>();
         if (hittable != null)
         {
-            hittable.GetHit(controllerReference.UnarmedAttack, hitPosition);
+            hittable.GetHit(controllerReference.UnarmedAttack);
         }
     }
 }

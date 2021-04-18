@@ -1,38 +1,51 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MeleeState : BaseState
+public abstract class MeleeState : BaseState, IAttackable
 {
     private bool _isComboTriggered = false;
+    private WeaponItemSO _equippedItem;
+    public WeaponItemSO EquippedWeapon { get => _equippedItem; }
+
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
         _isComboTriggered = false;
         controllerReference.Movement.StopMovement();
-        TriggerCorrectAttackAnimation();
+        SetWeaponInHand();
+        controllerReference.ItemSlotClass.DamageCollider.OnCollisionSuccessful += PreformAttack;
+        controllerReference.AgentAnimations.SetTriggerForAnimation(_equippedItem.AttackTriggerAnimation);
         controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBackFromAnimation;
-        controllerReference.DetectionSystem.OnAttackSuccessful += PreformHit;
         controllerReference.PlayerStat.ReduceStamina(10);
     }
 
-    private void TriggerCorrectAttackAnimation()
+    public virtual void PreformAttack(Collider hitObject)
+    {
+        var hittable = hitObject.GetComponent<IHittable>();
+        if (hittable != null && hitObject.gameObject != controllerReference.gameObject) 
+        {
+            hittable.GetHit(_equippedItem);
+        }
+    }
+
+    private void SetWeaponInHand()
     {
         if (controllerReference.InventorySystem.WeaponEquipped)
         {
-            var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-            controllerReference.AgentAnimations.SetTriggerForAnimation(((WeaponItemSO)equippedItem).AttackTriggerAnimation);
+            _equippedItem = ((WeaponItemSO)ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID));
         }
         else
         {
-            controllerReference.AgentAnimations.SetTriggerForAnimation("meleeUnarmedAttack");
+            _equippedItem = controllerReference.UnarmedAttack;
         }
     }
 
     public virtual void TransitionBackFromAnimation()
     {
         controllerReference.AgentAnimations.OnFinishedAttacking -= TransitionBackFromAnimation;
-        controllerReference.DetectionSystem.OnAttackSuccessful -= PreformHit;
+        controllerReference.ItemSlotClass.DamageCollider.OnCollisionSuccessful -= PreformAttack;
     }
 
     public void DetermindNextState(BaseState nextState, BaseState returnState)
@@ -47,15 +60,6 @@ public abstract class MeleeState : BaseState
         }
     }
 
-    public virtual void PreformHit(Collider hitObject, Vector3 hitPosition)
-    {
-        var hittable = hitObject.GetComponent<IHittable>();
-        if (hittable != null)
-        {
-            var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-            hittable.GetHit((WeaponItemSO)equippedItem, hitPosition);
-        }
-    }
 
     public override void HandlePrimaryInput()
     {

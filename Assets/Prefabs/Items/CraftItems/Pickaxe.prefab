@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7301311340721538822}
   - component: {fileID: 3922633702256344063}
   - component: {fileID: 8679966789418969893}
+  - component: {fileID: 3210422862197258828}
+  - component: {fileID: 786858151155829716}
   m_Layer: 0
   m_Name: Pickaxe
   m_TagString: Untagged
@@ -179,3 +181,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &3210422862197258828
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3338056403643584291}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.62149453, y: 0.09619096, z: 0.14}
+  m_Center: {x: -0.0015891343, y: -0.000000115483985, z: 0.66}
+--- !u!114 &786858151155829716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3338056403643584291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5e494bc711d8c40adc0d99d4abc977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -60,10 +60,6 @@ public class PlayerStats : MonoBehaviour, IHittable
     private void Update()
     {
         StaminaRegeneration();
-        if(Input.GetKeyDown(KeyCode.G))
-        {
-            ReduceHealth(1);
-        }
     }
 
     private void StaminaRegeneration()
@@ -101,7 +97,13 @@ public class PlayerStats : MonoBehaviour, IHittable
         _lastTimeSinceStaminaChange = Time.time;
     }
 
-    public void GetHit(WeaponItemSO weapon, Vector3 hitpoint)
+    IEnumerator StaminaRegenCoroutine()
+    {
+        yield return new WaitForSeconds(_staminaRegenSpeed);
+        Stamina += _staminaRegenAmount;
+    }
+
+    public void GetHit(WeaponItemSO weapon)
     {
         if (_blockAttack.IsBlockHitSuccessful() == true)
         {
@@ -112,11 +114,5 @@ public class PlayerStats : MonoBehaviour, IHittable
             ReduceHealth(weapon.GetDamageValue());
             OnTakeDamage?.Invoke();
         }
-    }
-
-    IEnumerator StaminaRegenCoroutine()
-    {
-        yield return new WaitForSeconds(_staminaRegenSpeed);
-        Stamina += _staminaRegenAmount;
     }
 }

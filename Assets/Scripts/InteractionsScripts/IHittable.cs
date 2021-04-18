@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IHittable 
 {
     int Health { get; }
-    void GetHit(WeaponItemSO weapon, Vector3 hitpoint);
+    void GetHit(WeaponItemSO weapon);
 }

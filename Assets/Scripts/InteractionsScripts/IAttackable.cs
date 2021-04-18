@@ -5,7 +5,6 @@ using UnityEngine;
 
 public interface IAttackable
 {
-    Action OnAttackSuccessful { get; set; }
-    void DetectColliderInFront();
-    void PreformAttack(Collider collider, Vector3 point);
+    public WeaponItemSO EquippedWeapon { get; }
+    void PreformAttack(Collider collider);
 }

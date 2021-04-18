@@ -35,25 +35,27 @@ public class ResourceNode : MonoBehaviour, IHittable
         }
     }
 
-    public void GetHit(WeaponItemSO weapon, Vector3 hitpoint)
-    {
-        int resourceCountToSpawn = 1;
-        if(weapon.GetType().Equals(typeof(ToolItemSO)))
-        {
-            resourceCountToSpawn = ((ToolItemSO)weapon).GetResourceHarvested(_itemToSpawn.ResourceType);
-        }
-        ItemSpawnManager.Instance.CreateItemInPlace(hitpoint, _itemToSpawn, resourceCountToSpawn);
-        _audioSource.Play();
-        _health--;
-        if(_health <= 0)
-        {
-            StartCoroutine(DestroyObject(_audioSource.clip.length));
-        }
-    }
-
     private IEnumerator DestroyObject(float time)
     {
         yield return new WaitForSeconds(time);
         Destroy(gameObject);
+    }
+
+    public void GetHit(WeaponItemSO weapon)
+    {
+        int resourceCountToSpawn = 1;
+        if (weapon.GetType().Equals(typeof(ToolItemSO)))
+        {
+            resourceCountToSpawn = ((ToolItemSO)weapon).GetResourceHarvested(_itemToSpawn.ResourceType);
+        }
+        var randomSpawnRange = UnityEngine.Random.Range(0.5f, 0.7f);
+        var spawnPosition = new Vector3(transform.position.x + randomSpawnRange, transform.position.y + randomSpawnRange, transform.position.z);
+        ItemSpawnManager.Instance.CreateItemInPlace(spawnPosition, _itemToSpawn, resourceCountToSpawn);
+        _audioSource.Play();
+        _health--;
+        if (_health <= 0)
+        {
+            StartCoroutine(DestroyObject(_audioSource.clip.length));
+        }
     }
 }

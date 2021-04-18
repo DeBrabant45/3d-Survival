@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Target : MonoBehaviour
+public class Target : MonoBehaviour, IHittable
 {
-    public float health = 6f;
+    public int health = 6;
 
-    public void TakeDamage(float amount)
+    public int Health => throw new System.NotImplementedException();
+
+    public void TakeDamage(int amount)
     {
         //Debug.Log(amount);
         health -= amount;
@@ -20,5 +22,20 @@ public class Target : MonoBehaviour
     public void Die()
     {
         Destroy(gameObject);
+    }
+
+    public void GetHit(WeaponItemSO weapon, Vector3 hitpoint)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void GetHit(WeaponItemSO weapon)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void GetAttacked(int amount)
+    {
+        TakeDamage(amount);
     }
 }

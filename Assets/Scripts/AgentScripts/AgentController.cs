@@ -21,6 +21,8 @@ public class AgentController : MonoBehaviour, ISaveable
     [SerializeField] Vector3? _spawnPosition = null;
     [SerializeField] PlayerStats _playerStat;
     [SerializeField] WeaponItemSO _unarmedAttack;
+    [SerializeField] NPCMeleeAttack _attack;
+    [SerializeField] ItemSlot _itemSlotClass;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -60,6 +62,8 @@ public class AgentController : MonoBehaviour, ISaveable
     public BuildingPlacementStorage BuildingPlacementStorage { get => _buildingPlacementStorage; }
     public PlayerStats PlayerStat { get => _playerStat; }
     public WeaponItemSO UnarmedAttack { get => _unarmedAttack; }
+    public NPCMeleeAttack Attack { get => _attack; set => _attack = value; }
+    public ItemSlot ItemSlotClass { get => _itemSlotClass; set => _itemSlotClass = value; }
 
     private void OnEnable()
     {
@@ -69,6 +73,8 @@ public class AgentController : MonoBehaviour, ISaveable
         _detectionSystem = GetComponent<DetectionSystem>();
         _agentAimController = GetComponent<AgentAimController>();
         _playerStat = GetComponent<PlayerStats>();
+        _attack = GetComponent<NPCMeleeAttack>();
+        _itemSlotClass = GetComponent<ItemSlot>();
         _currentState = movementState;
         _currentState.EnterState(this);
         AssignInputListeners();

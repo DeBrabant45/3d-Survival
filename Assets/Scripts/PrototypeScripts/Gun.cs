@@ -25,7 +25,7 @@ public class Gun : MonoBehaviour
             var target = hit.transform.GetComponent<Target>();
             if(target != null)
             {
-                target.TakeDamage(dmg);
+                //target.TakeDamage(dmg);
             }
         }
 
