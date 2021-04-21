@@ -67,6 +67,7 @@ public class EnemyNPC : MonoBehaviour, IHittable
             _isDead = true;
             _animator.SetBool("IsDead", true);
             this.enabled = false;
+            _animator.SetFloat("move", 0f);
         }
         _animator.SetFloat("move", _agent.velocity.magnitude);
     }

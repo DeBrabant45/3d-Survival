@@ -22,7 +22,7 @@ public class NPCMeleeAttack : MonoBehaviour, IAttackable
     {
         var hittable = hitObject.GetComponent<IHittable>();
         var blockable = hitObject.GetComponent<IBlockable>();
-        if (hittable != null && hitObject.gameObject != this.gameObject)
+        if (hittable != null && hitObject.tag != gameObject.tag)
         {
             if (blockable != null)
             {

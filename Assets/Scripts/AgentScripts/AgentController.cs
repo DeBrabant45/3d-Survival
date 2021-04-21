@@ -61,7 +61,7 @@ public class AgentController : MonoBehaviour, ISaveable
     public BuildingPlacementStorage BuildingPlacementStorage { get => _buildingPlacementStorage; }
     public PlayerStats PlayerStat { get => _playerStat; }
     public WeaponItemSO UnarmedAttack { get => _unarmedAttack; }
-    public ItemSlot ItemSlot { get => _itemSlot; set => _itemSlot = value; }
+    public ItemSlot ItemSlot { get => _itemSlot; }
 
     private void OnEnable()
     {

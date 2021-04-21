@@ -47,18 +47,17 @@ public class RangedAttackState : BaseState
 
     public void PreformShoot(Collider hitObject, Vector3 hitPosition, RaycastHit hit)
     {
-        var target = hitObject.transform.GetComponent<Target>();
+        var target = hitObject.transform.GetComponent<IHittable>();
         AddDamageToTarget(target, equippedWeapon);
         AddWeaponImpactForce(hit, equippedWeapon);
         CreateWeaponImpactEffect(hit);
     }
 
-    private static void AddDamageToTarget(Target target, ItemSO equippedItem)
+    private static void AddDamageToTarget(IHittable target, ItemSO equippedItem)
     {
         if (target != null)
         {
-            Debug.Log(target.transform.name);
-            target.TakeDamage(((WeaponItemSO)equippedItem).MaximumDamage);
+            target.GetHit(((WeaponItemSO)equippedItem));
         }
     }
 

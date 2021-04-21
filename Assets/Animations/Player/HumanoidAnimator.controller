@@ -1616,7 +1616,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: MeleeWeaponBlock
     m_StateMachine: {fileID: 1261362988706534167}
-    m_Mask: {fileID: 31900000, guid: 95741ca073793b944aa78cf91626262c, type: 2}
+    m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -2614,7 +2614,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player Hurt
+  m_Name: Block React
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
