@@ -14,6 +14,7 @@ public class WeaponItemSO : ItemSO
     [SerializeField] float _weaponImpactForce;
 
     [Header("Weapon Animation Settings")]
+    [SerializeField] string _attackStance;
     [SerializeField] string _attackTriggerAnimation;
     [SerializeField] string _blockTriggerAnimation;
 
@@ -28,6 +29,7 @@ public class WeaponItemSO : ItemSO
     public WeaponType WeaponTypeSO { get => _weaponType; protected set => _weaponType = value; }
     public int MaximumDamage { get => _maximumDamage; }
     public float WeaponImpactForce { get => _weaponImpactForce; }
+    public string AttackStance { get => _attackStance; }
     public string AttackTriggerAnimation { get => _attackTriggerAnimation; }
     public string BlockTriggerAnimation { get => _blockTriggerAnimation; }
     public Vector3 EquippedPosition { get => _equippedPosition; }

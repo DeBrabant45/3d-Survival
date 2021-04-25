@@ -11,11 +11,12 @@ public class ItemSpawnManager : MonoBehaviour
     [SerializeField] private string _pickableLayerMask;
     [SerializeField] private Transform _itemSpawnerParent;
     [SerializeField] private Material _transparentMaterial;
-    private GameObject _item;
     private WeaponItemSO _equippedItem;
+    private bool _isWeaponOnBackAndInHand = false;
 
     public static ItemSpawnManager Instance { get => _instance; }
     public Material TransparentMaterial { get => _transparentMaterial; }
+    public bool IsWeaponOnBackAndInHand { get => _isWeaponOnBackAndInHand; }
 
     //Refactor this from a lazy loader
     private void Awake()
@@ -136,7 +137,7 @@ public class ItemSpawnManager : MonoBehaviour
 
     public void SwapBackItemToPlayersHand()
     {
-        var item = Instantiate(_item, _playerTransform.GetComponent<AgentController>().ItemSlotTransform);
+        var item = Instantiate(_equippedItem.Model, _playerTransform.GetComponent<AgentController>().ItemSlotTransform);
         item.transform.localPosition = _equippedItem.EquippedPosition;
         item.transform.localEulerAngles = _equippedItem.EquippedRotation;
         RemoveItemFromPlayersBack();
@@ -144,19 +145,34 @@ public class ItemSpawnManager : MonoBehaviour
 
     public void SwapHandItemToPlayersBack()
     {
-        var item = Instantiate(_item, _playerTransform.GetComponent<AgentController>().BackItemSlotTransform);
-        item.transform.localPosition = _equippedItem.UnequippedPosition;
-        item.transform.localEulerAngles = _equippedItem.UnequippedRotation;
-        RemoveItemFromPlayerHand();
+        if(_isWeaponOnBackAndInHand == false)
+        {
+            var item = Instantiate(_equippedItem.Model, _playerTransform.GetComponent<AgentController>().BackItemSlotTransform);
+            item.transform.localPosition = _equippedItem.UnequippedPosition;
+            item.transform.localEulerAngles = _equippedItem.UnequippedRotation;
+            RemoveItemFromPlayerHand();
+        }
+        else
+        {
+            RemoveItemFromPlayerHand();
+            _isWeaponOnBackAndInHand = false;
+        }
     }
 
     public void CreateItemObjectOnPlayersBack(string itemID)
     {
+        if (_playerTransform.GetComponentInChildren<AgentController>().ItemSlotTransform.GetComponentInChildren<DamageCollider>() != null)
+        {
+            _isWeaponOnBackAndInHand = true;
+        }
+        else
+        {
+            _isWeaponOnBackAndInHand = false;
+        }
         _equippedItem = (WeaponItemSO)ItemDataManager.Instance.GetItemData(itemID);
         var item = Instantiate(_equippedItem.Model, _playerTransform.GetComponent<AgentController>().BackItemSlotTransform);
         item.transform.localPosition = _equippedItem.UnequippedPosition;
         item.transform.localEulerAngles = _equippedItem.UnequippedRotation;
-        _item = _equippedItem.Model;
     }
 
     public void RemoveItemFromPlayersBack()
