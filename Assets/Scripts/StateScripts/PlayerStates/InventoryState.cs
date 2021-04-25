@@ -24,14 +24,18 @@ public class InventoryState : BaseState
         controllerReference.InventorySystem.ToggleInventory();
         controllerReference.CraftingSystem.ToggleCraftingUI();
         controllerReference.GameManager.AudioManager.StartAllMapSounds();
-        controllerReference.TransitionToState(controllerReference.movementState);
-    }
-
-    public override void HandleMenuInput()
-    {
-        base.HandleMenuInput();
-        DisableInventoryUI();
-        controllerReference.TransitionToState(controllerReference.menuState);
+        if(controllerReference.PreviousState == controllerReference.meleeWeaponAttackStanceState)
+        {
+            controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
+        }
+        else if(controllerReference.PreviousState == controllerReference.rangedWeaponAttackStanceState)
+        {
+            controllerReference.TransitionToState(controllerReference.rangedWeaponAttackStanceState);
+        }
+        else
+        {
+            controllerReference.TransitionToState(controllerReference.movementState);
+        }
     }
 
     private void DisableInventoryUI()
@@ -41,6 +45,7 @@ public class InventoryState : BaseState
         Cursor.visible = false;
         controllerReference.InventorySystem.ToggleInventory();
         controllerReference.CraftingSystem.ToggleCraftingUI(true);
+        controllerReference.GameManager.AudioManager.StartAllMapSounds();
     }
 
     public override void HandlePlacementInput()

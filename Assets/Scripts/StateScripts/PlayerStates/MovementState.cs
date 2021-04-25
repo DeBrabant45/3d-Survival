@@ -27,7 +27,7 @@ public class MovementState : BaseState
         }
         else
         {
-            controllerReference.TransitionToState(controllerReference.meleeUnarmedAim);
+            controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
         }
     }
 

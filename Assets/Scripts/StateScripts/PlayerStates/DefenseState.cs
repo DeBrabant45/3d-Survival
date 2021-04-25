@@ -28,7 +28,7 @@ public class DefenseState : BaseState
     public override void HandleSecondaryUpInput()
     {
         controllerReference.PlayerStat.BlockAttack.IsBlocking = false;
-        controllerReference.TransitionToState(controllerReference.meleeWeaponAimState);
+        controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
         controllerReference.AgentAnimations.SetBoolForAnimation("meleeWeaponDefense", false);
     }
 

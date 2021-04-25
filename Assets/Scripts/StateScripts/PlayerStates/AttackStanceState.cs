@@ -3,22 +3,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AimState : BaseState
+public abstract class AttackStanceState : BaseState
 {
+    protected WeaponItemSO equippedItem;
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
         controllerReference.Movement.StopMovement();
+        SetAimValuesToActive();
+        if (ItemSpawnManager.Instance.IsWeaponOnBackAndInHand)
+        {
+            HandleEquipItemInput();
+        }
+        else
+        {
+            SetWeaponInHand();
+            controllerReference.AgentAnimations.SetBoolForAnimation(equippedItem.AttackStance, true);
+        }
+    }
+
+    private void SetAimValuesToActive()
+    {
         controllerReference.AgentAimController.SetZoomInFieldOfView();
         controllerReference.AgentAimController.IsAimActive = true;
         controllerReference.AgentAimController.AimCrossHair.enabled = true;
     }
 
-
-    public override void HandleEquipItemInput()
+    private void SetWeaponInHand()
     {
+        if (controllerReference.InventorySystem.WeaponEquipped)
+        {
+            equippedItem = ((WeaponItemSO)ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID));
+        }
+        else
+        {
+            equippedItem = controllerReference.UnarmedAttack;
+        }
+    }
+
+    public override void HandleEquipItemInput() 
+    {
+        controllerReference.AgentAnimations.SetBoolForAnimation(equippedItem.AttackStance, false);
         SetAimValuesToInactive();
-        controllerReference.TransitionToState(controllerReference.unequipItemState);
+        if(controllerReference.InventorySystem.WeaponEquipped)
+        {
+            controllerReference.TransitionToState(controllerReference.unequipItemState);
+        }
+        else
+        {
+            controllerReference.TransitionToState(controllerReference.movementState);
+        }
     }
 
     public void SetAimValuesToInactive()
@@ -28,9 +62,9 @@ public abstract class AimState : BaseState
         controllerReference.AgentAimController.IsAimActive = false;
     }
 
-    public override void HandlePrimaryInput()
+    public override void HandleInventoryInput()
     {
-        controllerReference.AgentAimController.IsAimActive = false;
+        controllerReference.TransitionToState(controllerReference.inventoryState);
     }
 
     public override void HandleMenuInput()

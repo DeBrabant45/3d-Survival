@@ -12,7 +12,7 @@ public class MeleeUnarmedAttackState : MeleeState
     public override void TransitionBackFromAnimation()
     {
         base.TransitionBackFromAnimation();
-        DetermindNextState(controllerReference.meleeUnarmedAttackState, controllerReference.meleeUnarmedAim);
+        DetermindNextState(controllerReference.meleeUnarmedAttackState, controllerReference.meleeWeaponAttackStanceState);
     }
 
     public override void PreformAttack(Collider hitObject)

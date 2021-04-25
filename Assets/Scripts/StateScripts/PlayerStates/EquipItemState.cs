@@ -18,11 +18,11 @@ public class EquipItemState : BaseState
         var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
         if (((WeaponItemSO)equippedItem).WeaponTypeSO == WeaponType.Melee)
         {
-            controllerReference.TransitionToState(controllerReference.meleeWeaponAimState);
+            controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
         }
         else
         {
-            controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
+            controllerReference.TransitionToState(controllerReference.rangedWeaponAttackStanceState);
         }
     }
 

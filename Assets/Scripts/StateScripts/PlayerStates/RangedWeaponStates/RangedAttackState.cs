@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RangedAttackState : BaseState
 {
-    private ItemSO equippedWeapon;
+    private RangedWeaponItemSO equippedWeapon;
     private IAmmo _rangedItemAmmo;
 
     public override void EnterState(AgentController controller)
@@ -16,9 +16,9 @@ public class RangedAttackState : BaseState
             if(_rangedItemAmmo.IsAmmoEmpty() == false)
             {
                 controllerReference.Movement.StopMovement();
-                equippedWeapon = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
+                equippedWeapon = (RangedWeaponItemSO)ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
                 controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBack;
-                controllerReference.AgentAnimations.SetTriggerForAnimation(((WeaponItemSO)equippedWeapon).AttackTriggerAnimation);
+                controllerReference.AgentAnimations.SetTriggerForAnimation(equippedWeapon.AttackTriggerAnimation);
                 controllerReference.DetectionSystem.OnRangeAttackSuccessful += PreformShoot;
                 RemoveAmmoWhenShooting();
             }
@@ -33,6 +33,12 @@ public class RangedAttackState : BaseState
         }
     }
 
+    public override void HandleSecondaryUpInput()
+    {
+        controllerReference.AgentAimController.IsHandsConstraintActive = false;
+        controllerReference.AgentAnimations.SetBoolForAnimation(equippedWeapon.WeaponAimAnimation, false);
+    }
+
     private void RemoveAmmoWhenShooting()
     {
         _rangedItemAmmo.RemoveFromCurrentAmmoCount();
@@ -42,7 +48,14 @@ public class RangedAttackState : BaseState
     {
         controllerReference.AgentAnimations.OnFinishedAttacking -= TransitionBack;
         controllerReference.DetectionSystem.OnRangeAttackSuccessful -= PreformShoot;
-        controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
+        if (controllerReference.AgentAimController.IsHandsConstraintActive == true)
+        {
+            controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
+        }
+        else
+        {
+            controllerReference.TransitionToState(controllerReference.rangedWeaponAttackStanceState);
+        }
     }
 
     public void PreformShoot(Collider hitObject, Vector3 hitPosition, RaycastHit hit)

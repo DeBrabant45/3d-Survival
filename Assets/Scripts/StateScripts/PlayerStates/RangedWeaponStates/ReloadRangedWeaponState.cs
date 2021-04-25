@@ -19,19 +19,25 @@ public class ReloadRangedWeaponState : BaseState
             {
                 PreformWeaponReload();
             }
-            else if (controllerReference.AgentAimController.AimCrossHair.IsActive())
+            else if (controllerReference.AgentAimController.IsHandsConstraintActive == true)
             {
                 controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
             }
-            else
+            else 
             {
-                controllerReference.TransitionToState(controllerReference.PreviousState);
+                controllerReference.TransitionToState(controllerReference.rangedWeaponAttackStanceState);
             }
         }
         else
         {
             controllerReference.TransitionToState(controllerReference.PreviousState);
         }
+    }
+
+    public override void HandleSecondaryUpInput()
+    {
+        controllerReference.AgentAimController.IsHandsConstraintActive = false;
+        controllerReference.AgentAnimations.SetBoolForAnimation(_equippedWeapon.WeaponAimAnimation, false);
     }
 
     private void PreformWeaponReload()
@@ -45,13 +51,13 @@ public class ReloadRangedWeaponState : BaseState
     private void TransitionBackAfterReloadingAnimation()
     {
         controllerReference.AgentAnimations.OnFinishedReloading -= TransitionBackAfterReloadingAnimation;
-        if(controllerReference.AgentAimController.AimCrossHair.IsActive())
+        if(controllerReference.AgentAimController.IsHandsConstraintActive == true)
         {
             controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
         }
         else
         {
-            controllerReference.TransitionToState(controllerReference.PreviousState);
+            controllerReference.TransitionToState(controllerReference.rangedWeaponAttackStanceState);
         }
     }
 }

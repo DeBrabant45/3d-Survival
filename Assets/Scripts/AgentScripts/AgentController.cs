@@ -32,18 +32,21 @@ public class AgentController : MonoBehaviour, ISaveable
     public readonly BaseState inventoryState = new InventoryState();
     public readonly BaseState interactState = new InteractState();
     public readonly BaseState menuState = new MenuState();
-    public readonly BaseState meleeUnarmedAim = new MeleeUnarmedAimState();
+    // Attack States
     public readonly BaseState meleeUnarmedAttackState = new MeleeUnarmedAttackState();
     public readonly BaseState meleeWeaponAttackState = new MeleeWeaponAttackState();
-    public readonly BaseState meleeWeaponAimState = new MeleeWeaponAimState();
-    public readonly BaseState rangedWeaponAimState = new RangedWeaponAimState();
     public readonly BaseState rangedWeaponAttackState = new RangedAttackState();
+    // Attack Stances
+    public readonly BaseState meleeWeaponAttackStanceState = new MeleeWeaponAttackStanceState();
+    public readonly BaseState rangedWeaponAttackStanceState = new RangedWeaponAttackStanceState();
+    //
     public readonly BaseState reloadRangedWeaponState = new ReloadRangedWeaponState();
     public readonly BaseState equipItemState = new EquipItemState();
     public readonly BaseState unequipItemState = new UnequipItemState();
     public readonly BaseState placementState = new PlacementState();
     public readonly BaseState defenseState = new DefenseState();
     public readonly BaseState hurtState = new HurtState();
+    public BaseState rangedWeaponAimState;
     #endregion
 
     public PlayerInput InputFromPlayer { get => _inputFromPlayer; }
@@ -193,7 +196,7 @@ public class AgentController : MonoBehaviour, ISaveable
         //Debug.Log(_previousState + " old State");
         _currentState = state;
         _currentState.EnterState(this);
-        //Debug.Log(_currentState + " new State");
+        Debug.Log(_currentState + " new State");
     }
 
     public void SaveSpawnPoint()
