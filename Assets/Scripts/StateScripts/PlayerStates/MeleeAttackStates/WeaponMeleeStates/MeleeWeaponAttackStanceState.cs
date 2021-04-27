@@ -16,6 +16,6 @@ public class MeleeWeaponAttackStanceState : AttackStanceState
 
     public override void HandleSecondaryHeldDownInput()
     {
-        controllerReference.TransitionToState(controllerReference.defenseState);
+        controllerReference.TransitionToState(controllerReference.blockStanceState);
     }
 }

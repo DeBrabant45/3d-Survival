@@ -44,7 +44,8 @@ public class AgentController : MonoBehaviour, ISaveable
     public readonly BaseState equipItemState = new EquipItemState();
     public readonly BaseState unequipItemState = new UnequipItemState();
     public readonly BaseState placementState = new PlacementState();
-    public readonly BaseState defenseState = new DefenseState();
+    public readonly BaseState blockStanceState = new BlockStanceState();
+    public readonly BaseState blockReactionState = new BlockReactionState();
     public readonly BaseState hurtState = new HurtState();
     public BaseState rangedWeaponAimState;
     #endregion

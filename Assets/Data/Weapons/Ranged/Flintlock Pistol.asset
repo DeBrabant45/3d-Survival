@@ -25,9 +25,10 @@ MonoBehaviour:
   _criticalDamageChance: 0.2
   _weaponType: 1
   _weaponImpactForce: 100
-  _attackStance: meleeWeaponStance
+  _attackStanceAnimation: meleeWeaponStance
   _attackTriggerAnimation: pistolShoot
-  _blockTriggerAnimation: 
+  _blockStanceAnimation: 
+  _blockReactionAnimation: 
   _equippedPosition: {x: -0.034, y: -0.029, z: 0.045}
   _equippedRotation: {x: 180, y: 40, z: 20}
   _unequippedPosition: {x: 0, y: 0.045, z: 0}

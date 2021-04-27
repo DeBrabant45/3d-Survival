@@ -25,8 +25,14 @@ MonoBehaviour:
   _criticalDamageChance: 0
   _weaponType: 2
   _weaponImpactForce: 0
+  _attackStanceAnimation: meleeWeaponStance
   _attackTriggerAnimation: OneHandedAttack
-  _blockTriggerAnimation: 
+  _blockStanceAnimation: meleeBlockStance
+  _blockReactionAnimation: meleeWeaponBlockReact
+  _equippedPosition: {x: 0, y: 0, z: 0}
+  _equippedRotation: {x: 0, y: 0, z: 0}
+  _unequippedPosition: {x: 0, y: 0, z: 0}
+  _unequippedRotation: {x: 0, y: 0, z: 0}
   _baseHarvestPower: 3
   _resourceBoosted: 1
   _boostedHarevestPower: 6
