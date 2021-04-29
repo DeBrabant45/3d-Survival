@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class HurtState : BaseState
 {
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         controllerReference.Movement.StopMovement();
         controllerReference.AgentAnimations.SetTriggerForAnimation("hurtPlayer"); 
         controllerReference.AgentAnimations.OnAnimationFunctionTrigger += ReturnBackToState;

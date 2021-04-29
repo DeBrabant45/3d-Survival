@@ -7,9 +7,9 @@ public class JumpState : BaseState
     public bool _landingTrigger = false;
     public float _delay = 0;
 
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         _landingTrigger = false;
         _delay = 0.2f;
         controllerReference.AgentAnimations.ResetTriggerForAnimation("land");

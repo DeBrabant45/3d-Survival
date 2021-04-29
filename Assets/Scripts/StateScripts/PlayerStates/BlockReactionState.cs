@@ -5,13 +5,11 @@ using UnityEngine;
 
 public class BlockReactionState : BaseState
 {
-    protected WeaponItemSO equippedItem;
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
-        equippedItem = ((WeaponItemSO)ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID));
+        base.EnterState(controller, weapon);
         controllerReference.Movement.StopMovement();
-        controllerReference.AgentAnimations.SetTriggerForAnimation(equippedItem.BlockReactionAnimation);
+        controllerReference.AgentAnimations.SetTriggerForAnimation(WeaponItem.BlockReactionAnimation);
         controllerReference.AgentAnimations.OnAnimationFunctionTrigger += TransitionBack;
     }
 

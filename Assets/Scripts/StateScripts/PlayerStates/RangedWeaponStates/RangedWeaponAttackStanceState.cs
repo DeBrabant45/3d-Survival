@@ -6,7 +6,7 @@ public class RangedWeaponAttackStanceState : AttackStanceState
 {
     public override void HandleSecondaryHeldDownInput()
     {
-        controllerReference.TransitionToState(controllerReference.rangedWeaponAimState = new RangedWeaponAimState((RangedWeaponItemSO)equippedItem));
+        controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
     }
 
     public override void HandleReloadInput()

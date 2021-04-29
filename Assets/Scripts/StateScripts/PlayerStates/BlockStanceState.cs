@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class BlockStanceState : BaseState
 {
-    protected WeaponItemSO equippedItem;
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
-        equippedItem = ((WeaponItemSO)ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID));
-        controllerReference.AgentAnimations.SetBoolForAnimation(equippedItem.BlockStanceAnimation, true);
+        base.EnterState(controller, weapon);
+        controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.BlockStanceAnimation, true);
         controllerReference.PlayerStat.BlockAttack.IsBlocking = true;
         controllerReference.PlayerStat.BlockAttack.OnBlockSuccessful += BlockReaction;
     }
@@ -18,7 +16,7 @@ public class BlockStanceState : BaseState
     private void BlockReaction()
     {
         controllerReference.PlayerStat.BlockAttack.OnBlockSuccessful -= BlockReaction;
-        controllerReference.AgentAnimations.SetBoolForAnimation(equippedItem.BlockStanceAnimation, false);
+        controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.BlockStanceAnimation, false);
         controllerReference.TransitionToState(controllerReference.blockReactionState);
     }
 
@@ -32,7 +30,7 @@ public class BlockStanceState : BaseState
     {
         controllerReference.PlayerStat.BlockAttack.IsBlocking = false;
         controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
-        controllerReference.AgentAnimations.SetBoolForAnimation(equippedItem.BlockStanceAnimation, false);
+        controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.BlockStanceAnimation, false);
     }
 
     public override void Update()

@@ -5,10 +5,10 @@ using UnityEngine;
 
 public abstract class AttackStanceState : BaseState
 {
-    protected WeaponItemSO equippedItem;
-    public override void EnterState(AgentController controller)
+    private WeaponItemSO _pastItem;
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         controllerReference.Movement.StopMovement();
         SetAimValuesToActive();
         if (ItemSpawnManager.Instance.IsWeaponOnBackAndInHand)
@@ -17,8 +17,8 @@ public abstract class AttackStanceState : BaseState
         }
         else
         {
-            SetWeaponInHand();
-            controllerReference.AgentAnimations.SetBoolForAnimation(equippedItem.AttackStance, true);
+            _pastItem = weapon;
+            controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.AttackStance, true);
         }
     }
 
@@ -29,23 +29,11 @@ public abstract class AttackStanceState : BaseState
         controllerReference.AgentAimController.AimCrossHair.enabled = true;
     }
 
-    private void SetWeaponInHand()
-    {
-        if (controllerReference.InventorySystem.WeaponEquipped)
-        {
-            equippedItem = ((WeaponItemSO)ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID));
-        }
-        else
-        {
-            equippedItem = controllerReference.UnarmedAttack;
-        }
-    }
-
     public override void HandleEquipItemInput() 
     {
-        controllerReference.AgentAnimations.SetBoolForAnimation(equippedItem.AttackStance, false);
+        controllerReference.AgentAnimations.SetBoolForAnimation(_pastItem.AttackStance, false);
         SetAimValuesToInactive();
-        if(controllerReference.InventorySystem.WeaponEquipped)
+        if(controllerReference.InventorySystem.WeaponEquipped || _pastItem != controllerReference.UnarmedAttack)
         {
             controllerReference.TransitionToState(controllerReference.unequipItemState);
         }

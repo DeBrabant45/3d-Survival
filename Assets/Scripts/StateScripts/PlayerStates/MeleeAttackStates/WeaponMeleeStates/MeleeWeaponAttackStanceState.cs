@@ -9,7 +9,7 @@ public class MeleeWeaponAttackStanceState : AttackStanceState
         controllerReference.AgentAimController.IsAimActive = false;
         if (controllerReference.PlayerStat.Stamina > 0)
         {
-            controllerReference.AgentAnimations.SetBoolForAnimation(equippedItem.AttackStance, false);
+            controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.AttackStance, false);
             controllerReference.TransitionToState(controllerReference.meleeWeaponAttackState);
         }
     }

@@ -18,6 +18,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
     private InventorySystemData _inventoryData;
     private Action _onInventoryStateChanged;
     private Action _onStructureUse;
+    private Action _onEquippedItemChanged;
     private DraggableItem _draggableItem;
 
     public int PlayerStorageSize { get => _playerStorageSize; }
@@ -26,6 +27,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
     public string EquippedWeaponID { get => _inventoryData.EquippedItemID; }
     public Action OnStructureUse { get => _onStructureUse; set => _onStructureUse = value; }
     public StructureItemSO SelectedStructureData { get => _selectedStructureData; set => _selectedStructureData = value; }
+    public Action OnEquippedItemChange { get => _onEquippedItemChanged; set => _onEquippedItemChanged = value; }
 
     private void Awake()
     {
@@ -147,6 +149,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
                     ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
                     RangeWeaponEventUnequip(itemData);
+                    _onEquippedItemChanged?.Invoke();
                     return;
                 }
                 else
@@ -155,6 +158,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
                     ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
                     RangeWeaponEventUnequip(itemData);
+                    _onEquippedItemChanged?.Invoke();
                 }
             }
             //Adds newly equipped item 
@@ -162,6 +166,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
             ToggleEquippedSelectedItemUI();
             ItemSpawnManager.Instance.CreateItemObjectOnPlayersBack(itemData.ID);
             RangedWeaponEvent(itemData);
+            _onEquippedItemChanged?.Invoke();
         }
     }
 

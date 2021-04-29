@@ -6,10 +6,12 @@ using UnityEngine;
 public abstract class BaseState
 {
     protected AgentController controllerReference;
+    protected WeaponItemSO WeaponItem;
 
-    public virtual void EnterState(AgentController controller)
+    public virtual void EnterState(AgentController controller, WeaponItemSO weapon)
     {
         this.controllerReference = controller;
+        this.WeaponItem = weapon;
     }
 
     public virtual void HandleMovement(Vector2 input) { }

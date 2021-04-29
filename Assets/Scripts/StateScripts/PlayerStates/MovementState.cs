@@ -7,9 +7,9 @@ public class MovementState : BaseState
     protected float _defaultFallingDelay = 0.2f;
     protected float _fallingDelay = 0;
 
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         _fallingDelay = _defaultFallingDelay;
     }
 

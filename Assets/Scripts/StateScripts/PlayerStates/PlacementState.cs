@@ -6,10 +6,9 @@ using UnityEngine;
 public class PlacementState : MovementState
 {
     private PlacementHelper _placementHelper;
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        Debug.Log("Entering Placement state");
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         CreateStructureToPlace();
     }
 

@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class MeleeWeaponAttackState : MeleeState
 {
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
     }
 
     public override void TransitionBackFromAnimation()

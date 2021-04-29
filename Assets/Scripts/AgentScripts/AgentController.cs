@@ -15,6 +15,7 @@ public class AgentController : MonoBehaviour, ISaveable
     [SerializeField] BuildingPlacementStorage _buildingPlacementStorage;
     [SerializeField] Vector3? _spawnPosition = null;
     [SerializeField] WeaponItemSO _unarmedAttack;
+    private WeaponItemSO _equippedItem;
     private AgentMovement _movement;
     private AgentAimController _agentAimController;
     private PlayerInput _inputFromPlayer;
@@ -47,7 +48,7 @@ public class AgentController : MonoBehaviour, ISaveable
     public readonly BaseState blockStanceState = new BlockStanceState();
     public readonly BaseState blockReactionState = new BlockReactionState();
     public readonly BaseState hurtState = new HurtState();
-    public BaseState rangedWeaponAimState;
+    public BaseState rangedWeaponAimState = new RangedWeaponAimState();
     #endregion
 
     public PlayerInput InputFromPlayer { get => _inputFromPlayer; }
@@ -66,6 +67,7 @@ public class AgentController : MonoBehaviour, ISaveable
     public PlayerStats PlayerStat { get => _playerStat; }
     public WeaponItemSO UnarmedAttack { get => _unarmedAttack; }
     public ItemSlot ItemSlot { get => _itemSlot; }
+    public WeaponItemSO EquippedItem { get => _equippedItem; }
 
     private void OnEnable()
     {
@@ -77,7 +79,7 @@ public class AgentController : MonoBehaviour, ISaveable
         _playerStat = GetComponent<PlayerStats>();
         _itemSlot = GetComponent<ItemSlot>();
         _currentState = movementState;
-        _currentState.EnterState(this);
+        _currentState.EnterState(this, EquippedItem);
         AssignInputListeners();
     }
 
@@ -92,6 +94,8 @@ public class AgentController : MonoBehaviour, ISaveable
         _ammoSystem.OnAmmoCountInStorage += _inventorySystem.ItemAmountInStorage;
         _ammoSystem.EquippedItemRequest += _inventorySystem.EquippedItem;
         _inventorySystem.OnStructureUse += HandlePlacementInput;
+        _inventorySystem.OnEquippedItemChange += HandleEquippedItem;
+        _equippedItem = _unarmedAttack;
     }
 
     private void AssignInputListeners()
@@ -106,6 +110,18 @@ public class AgentController : MonoBehaviour, ISaveable
         _inputFromPlayer.OnAim += HandleAimInput;
         _inputFromPlayer.OnSecondaryHeldDownAction += HandleSecondaryHeldDownInput;
         _inputFromPlayer.OnSecondaryUpAction += HandleSecondaryUpInput;
+    }
+
+    private void HandleEquippedItem()
+    {
+        if (_inventorySystem.WeaponEquipped == false)
+        {
+            _equippedItem = _unarmedAttack;
+        }
+        else
+        {
+            _equippedItem = (WeaponItemSO)ItemDataManager.Instance.GetItemData(_inventorySystem.EquippedWeaponID);
+        }
     }
 
     private void HandleSecondaryUpInput()
@@ -196,8 +212,8 @@ public class AgentController : MonoBehaviour, ISaveable
         _previousState = _currentState;
         //Debug.Log(_previousState + " old State");
         _currentState = state;
-        _currentState.EnterState(this);
-        Debug.Log(_currentState + " new State");
+        _currentState.EnterState(this, EquippedItem);
+        //Debug.Log(_currentState + " new State");
     }
 
     public void SaveSpawnPoint()

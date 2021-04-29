@@ -4,17 +4,10 @@ using UnityEngine;
 
 public class RangedWeaponAimState : BaseState
 {
-    private RangedWeaponItemSO _equippedWeapon;
-
-    public RangedWeaponAimState(RangedWeaponItemSO rangedWeapon)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        _equippedWeapon = rangedWeapon;
-    }
-    
-    public override void EnterState(AgentController controller)
-    {
-        base.EnterState(controller);
-        controllerReference.AgentAnimations.SetBoolForAnimation(_equippedWeapon.WeaponAimAnimation, true);
+        base.EnterState(controller, weapon);
+        controllerReference.AgentAnimations.SetBoolForAnimation(((RangedWeaponItemSO)WeaponItem).WeaponAimAnimation, true);
         controllerReference.AgentAimController.IsHandsConstraintActive = true;
     }
 
@@ -26,7 +19,7 @@ public class RangedWeaponAimState : BaseState
     public override void HandleSecondaryUpInput()
     {
         controllerReference.AgentAimController.IsHandsConstraintActive = false;
-        controllerReference.AgentAnimations.SetBoolForAnimation(_equippedWeapon.WeaponAimAnimation, false);
+        controllerReference.AgentAnimations.SetBoolForAnimation(((RangedWeaponItemSO)WeaponItem).WeaponAimAnimation, false);
         controllerReference.TransitionToState(controllerReference.rangedWeaponAttackStanceState);
     }
 

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class InventoryState : BaseState
 {
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         controllerReference.InventorySystem.ToggleInventory();
         controllerReference.GameManager.AudioManager.PauseAllMapSounds();
         controllerReference.CraftingSystem.ToggleCraftingUI();

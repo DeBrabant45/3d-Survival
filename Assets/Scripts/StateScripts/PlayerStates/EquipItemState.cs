@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EquipItemState : BaseState
 {
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         controllerReference.AgentAnimations.SetTriggerForAnimation("equipItem");
         controllerReference.AgentAnimations.OnAnimationFunctionTrigger += EquipItem;
     }
@@ -15,8 +15,7 @@ public class EquipItemState : BaseState
     {
         ItemSpawnManager.Instance.SwapBackItemToPlayersHand();
         controllerReference.AgentAnimations.OnAnimationFunctionTrigger -= EquipItem;
-        var equippedItem = ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-        if (((WeaponItemSO)equippedItem).WeaponTypeSO == WeaponType.Melee)
+        if (controllerReference.EquippedItem.WeaponTypeSO == WeaponType.Melee)
         {
             controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
         }

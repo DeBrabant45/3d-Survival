@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class InteractState : BaseState
 {
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         var usableStructure = controllerReference.DetectionSystem.UsableCollider;
         if(usableStructure != null)
         {

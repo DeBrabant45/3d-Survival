@@ -6,17 +6,15 @@ using UnityEngine;
 public abstract class MeleeState : BaseState, IAttackable
 {
     private bool _isComboTriggered = false;
-    private WeaponItemSO _equippedItem;
-    public WeaponItemSO EquippedWeapon { get => _equippedItem; }
+    public WeaponItemSO EquippedWeapon { get => WeaponItem; }
 
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         _isComboTriggered = false;
         controllerReference.Movement.StopMovement();
-        SetWeaponInHand();
         controllerReference.ItemSlot.DamageCollider.OnCollisionSuccessful += PreformAttack;
-        controllerReference.AgentAnimations.SetTriggerForAnimation(_equippedItem.AttackTriggerAnimation);
+        controllerReference.AgentAnimations.SetTriggerForAnimation(WeaponItem.AttackTriggerAnimation);
         controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBackFromAnimation;
         controllerReference.PlayerStat.ReduceStamina(10);
     }
@@ -26,19 +24,7 @@ public abstract class MeleeState : BaseState, IAttackable
         var hittable = hitObject.GetComponent<IHittable>();
         if (hittable != null && hitObject.gameObject != controllerReference.gameObject) 
         {
-            hittable.GetHit(_equippedItem);
-        }
-    }
-
-    private void SetWeaponInHand()
-    {
-        if (controllerReference.InventorySystem.WeaponEquipped)
-        {
-            _equippedItem = ((WeaponItemSO)ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID));
-        }
-        else
-        {
-            _equippedItem = controllerReference.UnarmedAttack;
+            hittable.GetHit(WeaponItem);
         }
     }
 
@@ -59,7 +45,6 @@ public abstract class MeleeState : BaseState, IAttackable
             controllerReference.TransitionToState(returnState);
         }
     }
-
 
     public override void HandlePrimaryInput()
     {

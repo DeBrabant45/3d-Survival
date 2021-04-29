@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MenuState : BaseState
 {
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         controllerReference.GameManager.ToggleGameMenu();
         controllerReference.GameManager.AudioManager.PauseAllMapSounds();
         Cursor.lockState = CursorLockMode.Confined;

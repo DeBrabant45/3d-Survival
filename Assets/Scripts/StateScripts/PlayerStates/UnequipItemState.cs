@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class UnequipItemState : BaseState
 {
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         controllerReference.AgentAnimations.SetTriggerForAnimation("unequipItem");
         controllerReference.AgentAnimations.OnAnimationFunctionTrigger += UnequipItem;
     }

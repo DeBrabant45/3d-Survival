@@ -5,17 +5,15 @@ using UnityEngine;
 
 public class ReloadRangedWeaponState : BaseState
 {
-    private RangedWeaponItemSO _equippedWeapon;
     private IAmmo _rangedItemAmmo;
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         controllerReference.AgentAnimations.OnFinishedReloading += TransitionBackAfterReloadingAnimation;
         _rangedItemAmmo = controllerReference.ItemSlotTransform.GetComponentInChildren<IAmmo>();
         if (_rangedItemAmmo != null)
         {
-            _equippedWeapon = (RangedWeaponItemSO)ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
-            if (controllerReference.AmmoSystem.IsAmmoAvailable(_equippedWeapon.AmmoType) && _rangedItemAmmo.IsAmmoEmpty() == true)
+            if (controllerReference.AmmoSystem.IsAmmoAvailable(((RangedWeaponItemSO)WeaponItem).AmmoType) && _rangedItemAmmo.IsAmmoEmpty() == true)
             {
                 PreformWeaponReload();
             }
@@ -37,14 +35,14 @@ public class ReloadRangedWeaponState : BaseState
     public override void HandleSecondaryUpInput()
     {
         controllerReference.AgentAimController.IsHandsConstraintActive = false;
-        controllerReference.AgentAnimations.SetBoolForAnimation(_equippedWeapon.WeaponAimAnimation, false);
+        controllerReference.AgentAnimations.SetBoolForAnimation(((RangedWeaponItemSO)WeaponItem).WeaponAimAnimation, false);
     }
 
     private void PreformWeaponReload()
     {
         controllerReference.Movement.StopMovement();
-        controllerReference.AgentAnimations.SetTriggerForAnimation(_equippedWeapon.ReloadAnimationTrigger);
-        controllerReference.AmmoSystem.ReloadAmmoRequest(_equippedWeapon.AmmoType, (_equippedWeapon).MaxAmmoCount);
+        controllerReference.AgentAnimations.SetTriggerForAnimation(((RangedWeaponItemSO)WeaponItem).ReloadAnimationTrigger);
+        controllerReference.AmmoSystem.ReloadAmmoRequest(((RangedWeaponItemSO)WeaponItem).AmmoType, (((RangedWeaponItemSO)WeaponItem)).MaxAmmoCount);
         _rangedItemAmmo.ReloadAmmoCount();
     }
 

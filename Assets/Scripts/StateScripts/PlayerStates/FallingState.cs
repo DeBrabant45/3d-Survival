@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class FallingState : JumpState
 {
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         controllerReference.AgentAnimations.SetTriggerForAnimation("fall");
         controllerReference.Movement.SetCompletedJumpFalse();
     }

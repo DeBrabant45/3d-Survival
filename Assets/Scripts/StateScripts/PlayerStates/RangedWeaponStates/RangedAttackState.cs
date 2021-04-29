@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class RangedAttackState : BaseState
 {
-    private RangedWeaponItemSO equippedWeapon;
     private IAmmo _rangedItemAmmo;
 
-    public override void EnterState(AgentController controller)
+    public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
-        base.EnterState(controller);
+        base.EnterState(controller, weapon);
         _rangedItemAmmo = controllerReference.ItemSlotTransform.GetComponentInChildren<IAmmo>();
         if(_rangedItemAmmo != null)
         {
             if(_rangedItemAmmo.IsAmmoEmpty() == false)
             {
                 controllerReference.Movement.StopMovement();
-                equippedWeapon = (RangedWeaponItemSO)ItemDataManager.Instance.GetItemData(controllerReference.InventorySystem.EquippedWeaponID);
                 controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBack;
-                controllerReference.AgentAnimations.SetTriggerForAnimation(equippedWeapon.AttackTriggerAnimation);
+                controllerReference.AgentAnimations.SetTriggerForAnimation(WeaponItem.AttackTriggerAnimation);
                 controllerReference.DetectionSystem.OnRangeAttackSuccessful += PreformShoot;
                 RemoveAmmoWhenShooting();
             }
@@ -36,7 +34,7 @@ public class RangedAttackState : BaseState
     public override void HandleSecondaryUpInput()
     {
         controllerReference.AgentAimController.IsHandsConstraintActive = false;
-        controllerReference.AgentAnimations.SetBoolForAnimation(equippedWeapon.WeaponAimAnimation, false);
+        controllerReference.AgentAnimations.SetBoolForAnimation(((RangedWeaponItemSO)WeaponItem).WeaponAimAnimation, false);
     }
 
     private void RemoveAmmoWhenShooting()
@@ -61,8 +59,8 @@ public class RangedAttackState : BaseState
     public void PreformShoot(Collider hitObject, Vector3 hitPosition, RaycastHit hit)
     {
         var target = hitObject.transform.GetComponent<IHittable>();
-        AddDamageToTarget(target, equippedWeapon);
-        AddWeaponImpactForce(hit, equippedWeapon);
+        AddDamageToTarget(target, WeaponItem);
+        AddWeaponImpactForce(hit, WeaponItem);
         CreateWeaponImpactEffect(hit);
     }
 
