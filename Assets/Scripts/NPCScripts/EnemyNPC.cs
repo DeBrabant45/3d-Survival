@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class EnemyNPC : MonoBehaviour, IHittable
 {
+    [SerializeField] private int _health;
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Transform _player;
     [SerializeField] private LayerMask _isGround;
@@ -21,18 +22,11 @@ public class EnemyNPC : MonoBehaviour, IHittable
     [SerializeField] bool _isPlayerAttackRange;
 
     private NPCMeleeAttack _meleeAttack;
-    private float _lastAttackTime = 0;
-
-    //Life Pool
-    [SerializeField] private int _health;
-    //Die Hurt
-    [SerializeField] private GameObject enemyModel;
-    [SerializeField, Range(0, 1)] private float _hurtFeedbackTime = 0.2f;
-    private MaterialHelper _materialHelper = new MaterialHelper();
-    private Collider[] _colliders;
-    private bool _isDead = false;
-
     private Animator _animator;
+    private HurtEmissions _hurtEmissions;
+    private AgentColliders _agentColliders;
+    private float _lastAttackTime = 0;
+    private bool _isDead = false;
 
     public int Health => throw new NotImplementedException();
 
@@ -42,7 +36,8 @@ public class EnemyNPC : MonoBehaviour, IHittable
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _meleeAttack = GetComponent<NPCMeleeAttack>();
-        _colliders = transform.GetComponentsInChildren<Collider>();
+        _hurtEmissions = GetComponent<HurtEmissions>();
+        _agentColliders = GetComponent<AgentColliders>();
     }
 
     private void Update()
@@ -122,21 +117,10 @@ public class EnemyNPC : MonoBehaviour, IHittable
         }
     }
 
-    private IEnumerator HurtCoroutine()
-    {
-        _materialHelper.EnableEmission(enemyModel, Color.red);
-        yield return new WaitForSeconds(_hurtFeedbackTime);
-        _materialHelper.DisableEmission(enemyModel);
-    }
-
     public void Death()
     {
-        StopAllCoroutines();
-        _materialHelper.DisableEmission(enemyModel);
-        foreach (var colider in _colliders)
-        {
-            colider.enabled = false;
-        }
+        _hurtEmissions.DisablePlayerEmissions();
+        _agentColliders.DisableColliders();
     }
 
     public void ReduceHealth(int amount)
@@ -147,6 +131,6 @@ public class EnemyNPC : MonoBehaviour, IHittable
     public void GetHit(WeaponItemSO weapon)
     {
         ReduceHealth(weapon.GetDamageValue());
-        StartCoroutine(HurtCoroutine());
+        _hurtEmissions.StartHurtCoroutine();
     }
 }

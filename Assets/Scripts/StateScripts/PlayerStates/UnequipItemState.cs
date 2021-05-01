@@ -13,7 +13,7 @@ public class UnequipItemState : BaseState
 
     public void UnequipItem()
     {
-        ItemSpawnManager.Instance.SwapHandItemToPlayersBack();
+        ItemSpawnManager.Instance.SwapHandItemToPlayersBack(controllerReference.InventorySystem.WeaponEquipped);
         controllerReference.AgentAnimations.OnAnimationFunctionTrigger -= UnequipItem;
         controllerReference.TransitionToState(controllerReference.movementState);
     }

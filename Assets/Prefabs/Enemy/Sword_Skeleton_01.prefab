@@ -1314,6 +1314,8 @@ GameObject:
   - component: {fileID: 138488544}
   - component: {fileID: 3266119904459078454}
   - component: {fileID: 7504262784264280459}
+  - component: {fileID: 1298768405}
+  - component: {fileID: 8695884444059406442}
   m_Layer: 0
   m_Name: Sword_Skeleton_01
   m_TagString: Skeleton
@@ -1405,6 +1407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22011b09acef079499065c1b89463fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: 3
   _agent: {fileID: 0}
   _player: {fileID: 0}
   _isGround:
@@ -1420,9 +1423,6 @@ MonoBehaviour:
   _attackRange: 0.8
   _isPlayerInSightRange: 0
   _isPlayerAttackRange: 0
-  _health: 3
-  enemyModel: {fileID: 4858971004745870300}
-  _hurtFeedbackTime: 0.2
 --- !u!54 &2973465861106468850
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1497,6 +1497,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponSound: {fileID: 240353835679000987}
   _itemSlot: {fileID: 4796670916582692813}
+--- !u!114 &1298768405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4858971004745883446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c6911b825c16049ab3f6349e467fc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _agentModel: {fileID: 4858971004745870300}
+  _hurtFeedbackTime: 0.2
+--- !u!114 &8695884444059406442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4858971004745883446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3201a034c90b2ea4aa3ad505513a4a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4858971004746039746
 GameObject:
   m_ObjectHideFlags: 0
@@ -2108,24 +2134,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -7021399061792475833, guid: 7abe7e2a2c857824693687c0d0291fcb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7abe7e2a2c857824693687c0d0291fcb, type: 3}
---- !u!1 &797970731949263356 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6522044585065854801, guid: 7abe7e2a2c857824693687c0d0291fcb,
-    type: 3}
-  m_PrefabInstance: {fileID: 5877200647113326253}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &4416254422811180015 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7843490605862405442, guid: 7abe7e2a2c857824693687c0d0291fcb,
-    type: 3}
-  m_PrefabInstance: {fileID: 5877200647113326253}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &240353835679000987 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5964430927096321846, guid: 7abe7e2a2c857824693687c0d0291fcb,
-    type: 3}
-  m_PrefabInstance: {fileID: 5877200647113326253}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5223214644568846509 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1868031575917481472, guid: 7abe7e2a2c857824693687c0d0291fcb,
@@ -2138,3 +2146,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5e494bc711d8c40adc0d99d4abc977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &240353835679000987 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5964430927096321846, guid: 7abe7e2a2c857824693687c0d0291fcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5877200647113326253}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4416254422811180015 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7843490605862405442, guid: 7abe7e2a2c857824693687c0d0291fcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5877200647113326253}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &797970731949263356 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6522044585065854801, guid: 7abe7e2a2c857824693687c0d0291fcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5877200647113326253}
+  m_PrefabAsset: {fileID: 0}

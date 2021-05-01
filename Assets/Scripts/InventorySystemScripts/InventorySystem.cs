@@ -148,7 +148,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
                     //Removes equipped item if user clicks use on already equipped item 
                     ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
-                    RangeWeaponEventUnequip(itemData);
+                    RangedWeaponEvents.current.RangedWeaponUnequipped();
                     _onEquippedItemChanged?.Invoke();
                     return;
                 }
@@ -157,7 +157,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
                     //Removes old equipped item if user equips another item
                     ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
-                    RangeWeaponEventUnequip(itemData);
+                    RangedWeaponEvents.current.RangedWeaponUnequipped();
                     _onEquippedItemChanged?.Invoke();
                 }
             }
@@ -183,14 +183,6 @@ public class InventorySystem : MonoBehaviour, ISaveable
             UpdateUI(ui_id, _inventoryData.GetItemCountFor(ui_id));
         }
         OnInventoryStateChanged.Invoke();
-    }
-
-    private static void RangeWeaponEventUnequip(ItemSO itemData)
-    {
-        if (itemData.GetType() == typeof(RangedWeaponItemSO))
-        {
-            RangedWeaponEvents.current.RangedWeaponUnequipped();
-        }
     }
 
     private void RangedWeaponEvent(ItemSO itemData)

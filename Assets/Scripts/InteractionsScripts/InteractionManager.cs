@@ -10,7 +10,10 @@ public class InteractionManager : MonoBehaviour
 
     private void Start()
     {
-        _playerController = FindObjectOfType<AgentController>();
+        if(_playerController == null)
+        {
+            _playerController = FindObjectOfType<AgentController>();
+        }
     }
 
     public bool UseItem(ItemSO itemData)
@@ -27,13 +30,11 @@ public class InteractionManager : MonoBehaviour
                 return true;
             case ItemType.Weapon:
                 WeaponItemSO weaponData = (WeaponItemSO)itemData;
-                Debug.Log("Equiping weapon");
                 return false;
             default:
                 Debug.Log("Can't use an item of type " + itemType.ToString());
                 return false;
         }
-        //return false;
     }
 
     public bool EquipItem(ItemSO itemData)

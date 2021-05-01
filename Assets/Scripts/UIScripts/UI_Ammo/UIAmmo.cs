@@ -31,7 +31,10 @@ public class UIAmmo : MonoBehaviour
 
     public void InActivateAmmoPanel()
     {
-        _ammoPanel.SetActive(false);
+        if(_ammoPanel.activeSelf == true)
+        {
+            _ammoPanel.SetActive(false);
+        }
     }
 
     public void SetAmmoInGun(int ammoCount)

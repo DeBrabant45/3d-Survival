@@ -143,9 +143,9 @@ public class ItemSpawnManager : MonoBehaviour
         RemoveItemFromPlayersBack();
     }
 
-    public void SwapHandItemToPlayersBack()
+    public void SwapHandItemToPlayersBack(bool isWeaponEquipped)
     {
-        if(_isWeaponOnBackAndInHand == false)
+        if(_isWeaponOnBackAndInHand == false && isWeaponEquipped == true)
         {
             var item = Instantiate(_equippedItem.Model, _playerTransform.GetComponent<AgentController>().BackItemSlotTransform);
             item.transform.localPosition = _equippedItem.UnequippedPosition;

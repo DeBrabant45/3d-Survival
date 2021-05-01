@@ -11,13 +11,16 @@ public abstract class AttackStanceState : BaseState
         base.EnterState(controller, weapon);
         controllerReference.Movement.StopMovement();
         SetAimValuesToActive();
-        if (ItemSpawnManager.Instance.IsWeaponOnBackAndInHand)
+        if (ItemSpawnManager.Instance.IsWeaponOnBackAndInHand || controllerReference.InventorySystem.WeaponEquipped == false)
         {
             HandleEquipItemInput();
         }
         else
         {
-            _pastItem = weapon;
+            if(_pastItem != weapon)
+            {
+                _pastItem = weapon;
+            }
             controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.AttackStance, true);
         }
     }

@@ -13,13 +13,16 @@ public class PlayerStats : MonoBehaviour, IHittable
     [SerializeField] private int _staminaInitialValue;
     [SerializeField] private float _staminaRegenSpeed;
     [SerializeField] private float _staminaRegenAmount;
+
     private BlockAttack _blockAttack;
+    private Action _onTakeDamage;
     private float _stamina;
     private float _health;
     private float _lastTimeSinceStaminaChange;
     private bool _stopCoroutine = false;
+    private HurtEmissions _hurtEmissions;
 
-    public Action OnTakeDamage { get; set; }
+    public Action OnTakeDamage { get => _onTakeDamage; set => _onTakeDamage = value; }
     public UnityEvent OnDeath { get => _onDeath; }
     int IHittable.Health => (int)_health;
     public BlockAttack BlockAttack { get => _blockAttack; }
@@ -43,7 +46,6 @@ public class PlayerStats : MonoBehaviour, IHittable
             _healthUI.SetCurrentHealth((int)_health);
             if(_health <= 0)
             {
-                Debug.Log("Player Has died");
                 _onDeath.Invoke();
             }
         }
@@ -55,6 +57,7 @@ public class PlayerStats : MonoBehaviour, IHittable
         Health = _healthInitialValue;
         Stamina = _staminaInitialValue;
         _blockAttack = GetComponent<BlockAttack>();
+        _hurtEmissions = GetComponent<HurtEmissions>();
     }
 
     private void Update()
@@ -112,7 +115,8 @@ public class PlayerStats : MonoBehaviour, IHittable
         else
         {
             ReduceHealth(weapon.GetDamageValue());
-            OnTakeDamage?.Invoke();
+            _hurtEmissions.StartHurtCoroutine();
+            _onTakeDamage?.Invoke();
         }
     }
 }
