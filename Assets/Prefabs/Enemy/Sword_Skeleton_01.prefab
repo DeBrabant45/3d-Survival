@@ -1316,6 +1316,8 @@ GameObject:
   - component: {fileID: 7504262784264280459}
   - component: {fileID: 1298768405}
   - component: {fileID: 8695884444059406442}
+  - component: {fileID: 1981717963}
+  - component: {fileID: 7953421228535290946}
   m_Layer: 0
   m_Name: Sword_Skeleton_01
   m_TagString: Skeleton
@@ -1407,7 +1409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22011b09acef079499065c1b89463fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 3
   _agent: {fileID: 0}
   _player: {fileID: 0}
   _isGround:
@@ -1521,6 +1522,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3201a034c90b2ea4aa3ad505513a4a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1981717963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4858971004745883446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb17820e1709cd46a7e31d64483de3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthInitialValue: 3
+--- !u!114 &7953421228535290946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4858971004745883446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9bc2522ef64c3047ade36afa3b87688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4858971004746039746
@@ -2146,9 +2172,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5e494bc711d8c40adc0d99d4abc977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!82 &240353835679000987 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5964430927096321846, guid: 7abe7e2a2c857824693687c0d0291fcb,
+--- !u!1 &797970731949263356 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6522044585065854801, guid: 7abe7e2a2c857824693687c0d0291fcb,
     type: 3}
   m_PrefabInstance: {fileID: 5877200647113326253}
   m_PrefabAsset: {fileID: 0}
@@ -2158,9 +2184,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5877200647113326253}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &797970731949263356 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6522044585065854801, guid: 7abe7e2a2c857824693687c0d0291fcb,
+--- !u!82 &240353835679000987 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5964430927096321846, guid: 7abe7e2a2c857824693687c0d0291fcb,
     type: 3}
   m_PrefabInstance: {fileID: 5877200647113326253}
   m_PrefabAsset: {fileID: 0}

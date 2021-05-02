@@ -4,28 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyNPC : MonoBehaviour, IHittable
+public class EnemyNPC : MonoBehaviour
 {
-    [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Transform _player;
     [SerializeField] private LayerMask _isGround;
     [SerializeField] private LayerMask _isPlayer;
     [SerializeField] private Vector3 _walkPoint;
     [SerializeField] private bool _isWalkPointSet;
     [SerializeField] private float _walkPointRange;
-    private float _lastTimeMoved = 0f;
-
     [SerializeField] float _sightRange;
     [SerializeField] float _attackRange;
     [SerializeField] bool _isPlayerInSightRange;
     [SerializeField] bool _isPlayerAttackRange;
 
+    private NavMeshAgent _agent;
     private NPCMeleeAttack _meleeAttack;
     private Animator _animator;
     private HurtEmissions _hurtEmissions;
     private AgentColliders _agentColliders;
     private AgentHealth _agentHealth;
     private float _lastAttackTime = 0;
+    private float _lastTimeMoved = 0f;
 
     private void Awake()
     {
@@ -113,12 +112,6 @@ public class EnemyNPC : MonoBehaviour, IHittable
     {
         _hurtEmissions.DisablePlayerEmissions();
         _agentColliders.DisableColliders();
-    }
-
-    public void GetHit(WeaponItemSO weapon)
-    {
-        _agentHealth.ReduceHealth(weapon.GetDamageValue());
-        _hurtEmissions.StartHurtCoroutine();
     }
 
     private void Death()

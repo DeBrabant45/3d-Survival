@@ -7,7 +7,7 @@ public class MeleeWeaponAttackStanceState : AttackStanceState
     public override void HandlePrimaryInput()
     {
         controllerReference.AgentAimController.IsAimActive = false;
-        if (controllerReference.PlayerStat.AgentStamina.Stamina > 0)
+        if (controllerReference.AgentStamina.Stamina > 0)
         {
             controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.AttackStance, false);
             controllerReference.TransitionToState(controllerReference.meleeWeaponAttackState);

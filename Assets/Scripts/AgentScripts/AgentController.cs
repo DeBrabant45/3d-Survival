@@ -3,26 +3,31 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AgentController : MonoBehaviour, ISaveable
 {
-    [SerializeField] InventorySystem _inventorySystem;
-    [SerializeField] GameManager _gameManager;
-    [SerializeField] CraftingSystem _craftingSystem;
-    [SerializeField] Transform _itemSlotTransform;
-    [SerializeField] Transform _backItemSlotTransform;
-    [SerializeField] AmmoSystem _ammoSystem;
-    [SerializeField] BuildingPlacementStorage _buildingPlacementStorage;
-    [SerializeField] Vector3? _spawnPosition = null;
-    [SerializeField] WeaponItemSO _unarmedAttack;
+    [SerializeField] private InventorySystem _inventorySystem;
+    [SerializeField] private GameManager _gameManager;
+    [SerializeField] private CraftingSystem _craftingSystem;
+    [SerializeField] private Transform _itemSlotTransform;
+    [SerializeField] private Transform _backItemSlotTransform;
+    [SerializeField] private AmmoSystem _ammoSystem;
+    [SerializeField] private BuildingPlacementStorage _buildingPlacementStorage;
+    [SerializeField] private Vector3? _spawnPosition = null;
+    [SerializeField] private WeaponItemSO _unarmedAttack;
+    [SerializeField] private UnityEvent _onDeath;
+
     private WeaponItemSO _equippedItem;
     private AgentMovement _movement;
     private AgentAimController _agentAimController;
     private PlayerInput _inputFromPlayer;
     private HumanoidAnimations _agentAnimations;
     private DetectionSystem _detectionSystem;
+    private BlockAttack _blockAttack;
     private ItemSlot _itemSlot;
-    private PlayerStats _playerStat;
+    private AgentHealth _agentHealth;
+    private AgentStamina _agentStamina;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -48,7 +53,7 @@ public class AgentController : MonoBehaviour, ISaveable
     public readonly BaseState blockStanceState = new BlockStanceState();
     public readonly BaseState blockReactionState = new BlockReactionState();
     public readonly BaseState hurtState = new HurtState();
-    public BaseState rangedWeaponAimState = new RangedWeaponAimState();
+    public readonly BaseState rangedWeaponAimState = new RangedWeaponAimState();
     #endregion
 
     public PlayerInput InputFromPlayer { get => _inputFromPlayer; }
@@ -64,10 +69,12 @@ public class AgentController : MonoBehaviour, ISaveable
     public AgentAimController AgentAimController { get => _agentAimController; }
     public Transform BackItemSlotTransform { get => _backItemSlotTransform; }
     public BuildingPlacementStorage BuildingPlacementStorage { get => _buildingPlacementStorage; }
-    public PlayerStats PlayerStat { get => _playerStat; }
     public WeaponItemSO UnarmedAttack { get => _unarmedAttack; }
     public ItemSlot ItemSlot { get => _itemSlot; }
     public WeaponItemSO EquippedItem { get => _equippedItem; }
+    public BlockAttack BlockAttack { get => _blockAttack; }
+    public AgentHealth AgentHealth { get => _agentHealth; }
+    public AgentStamina AgentStamina { get => _agentStamina; }
 
     private void OnEnable()
     {
@@ -76,8 +83,10 @@ public class AgentController : MonoBehaviour, ISaveable
         _agentAnimations = GetComponent<HumanoidAnimations>();
         _detectionSystem = GetComponent<DetectionSystem>();
         _agentAimController = GetComponent<AgentAimController>();
-        _playerStat = GetComponent<PlayerStats>();
         _itemSlot = GetComponent<ItemSlot>();
+        _blockAttack = GetComponent<BlockAttack>();
+        _agentHealth = GetComponent<AgentHealth>();
+        _agentStamina = GetComponent<AgentStamina>();
         _currentState = movementState;
         _currentState.EnterState(this, EquippedItem);
         AssignInputListeners();
@@ -95,6 +104,7 @@ public class AgentController : MonoBehaviour, ISaveable
         _ammoSystem.EquippedItemRequest += _inventorySystem.EquippedItem;
         _inventorySystem.OnStructureUse += HandlePlacementInput;
         _inventorySystem.OnEquippedItemChange += HandleEquippedItem;
+        _agentHealth.OnHealthAmountEmpty += Death;
         _equippedItem = _unarmedAttack;
     }
 
@@ -240,8 +250,8 @@ public class AgentController : MonoBehaviour, ISaveable
         var playerData = new PlayerData
         {
             PlayerPosition = positionData,
-            Health = _playerStat.AgentHealth.Health,
-            Stamina = _playerStat.AgentStamina.Stamina,
+            Health = _agentHealth.Health,
+            Stamina = _agentStamina.Stamina,
         };
 
         return JsonConvert.SerializeObject(playerData);
@@ -252,7 +262,12 @@ public class AgentController : MonoBehaviour, ISaveable
         var playerData = JsonConvert.DeserializeObject<PlayerData>(jsonData);
         _spawnPosition = new Vector3(playerData.PlayerPosition.x, playerData.PlayerPosition.y, playerData.PlayerPosition.z);
         RespawnPlayer();
-        _playerStat.AgentHealth.Health = playerData.Health;
-        _playerStat.AgentStamina.Stamina = playerData.Stamina;
+        _agentHealth.Health = playerData.Health;
+        _agentStamina.Stamina = playerData.Stamina;
+    }
+
+    private void Death()
+    {
+        _onDeath.Invoke();
     }
 }

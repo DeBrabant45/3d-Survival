@@ -49,8 +49,8 @@ public class PlayerSleepManager : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(_timeModifier);
             Debug.Log("Slept "  + i + "/" + seconds + "hours");
-            _playerController.PlayerStat.AgentHealth.AddToHealth(20);
-            _playerController.PlayerStat.AgentStamina.AddToStamina(10);
+            _playerController.AgentHealth.AddToHealth(20);
+            _playerController.AgentStamina.AddToStamina(10);
         }
         ItemSpawnManager.Instance.RespawnItems();
         _playerSleepUI.ToggleAllButtons();

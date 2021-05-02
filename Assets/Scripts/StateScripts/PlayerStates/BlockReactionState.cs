@@ -16,7 +16,7 @@ public class BlockReactionState : BaseState
     private void TransitionBack()
     {
         controllerReference.AgentAnimations.OnAnimationFunctionTrigger -= TransitionBack;
-        if(controllerReference.PlayerStat.BlockAttack.IsBlocking == false)
+        if(controllerReference.BlockAttack.IsBlocking == false)
         {
             controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
         }
@@ -28,6 +28,6 @@ public class BlockReactionState : BaseState
 
     public override void HandleSecondaryUpInput()
     {
-        controllerReference.PlayerStat.BlockAttack.IsBlocking = false;
+        controllerReference.BlockAttack.IsBlocking = false;
     }
 }

@@ -9,13 +9,13 @@ public class BlockStanceState : BaseState
     {
         base.EnterState(controller, weapon);
         controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.BlockStanceAnimation, true);
-        controllerReference.PlayerStat.BlockAttack.IsBlocking = true;
-        controllerReference.PlayerStat.BlockAttack.OnBlockSuccessful += BlockReaction;
+        controllerReference.BlockAttack.IsBlocking = true;
+        controllerReference.BlockAttack.OnBlockSuccessful += BlockReaction;
     }
 
     private void BlockReaction()
     {
-        controllerReference.PlayerStat.BlockAttack.OnBlockSuccessful -= BlockReaction;
+        controllerReference.BlockAttack.OnBlockSuccessful -= BlockReaction;
         controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.BlockStanceAnimation, false);
         controllerReference.TransitionToState(controllerReference.blockReactionState);
     }
@@ -28,7 +28,7 @@ public class BlockStanceState : BaseState
 
     public override void HandleSecondaryUpInput()
     {
-        controllerReference.PlayerStat.BlockAttack.IsBlocking = false;
+        controllerReference.BlockAttack.IsBlocking = false;
         controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
         controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.BlockStanceAnimation, false);
     }
