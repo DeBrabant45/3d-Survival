@@ -9,6 +9,13 @@ public class UIPlayerHealth : MonoBehaviour
     [SerializeField] private List<Image> _healthObjectContainer;
     [SerializeField] private Sprite _emptyHeart;
     [SerializeField] private Sprite _fullHeart;
+    [SerializeField] private AgentHealth _agentHealth;
+
+    private void Awake()
+    {
+        SetHealthInitialValue(_agentHealth.HealthInitialValue);
+        _agentHealth.HealthValue += SetCurrentHealth;
+    }
 
     public void SetCurrentHealth(int amount)
     {

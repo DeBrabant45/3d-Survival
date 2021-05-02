@@ -6,7 +6,6 @@ using UnityEngine.AI;
 
 public class EnemyNPC : MonoBehaviour, IHittable
 {
-    [SerializeField] private int _health;
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private Transform _player;
     [SerializeField] private LayerMask _isGround;
@@ -25,10 +24,8 @@ public class EnemyNPC : MonoBehaviour, IHittable
     private Animator _animator;
     private HurtEmissions _hurtEmissions;
     private AgentColliders _agentColliders;
+    private AgentHealth _agentHealth;
     private float _lastAttackTime = 0;
-    private bool _isDead = false;
-
-    public int Health => throw new NotImplementedException();
 
     private void Awake()
     {
@@ -38,6 +35,8 @@ public class EnemyNPC : MonoBehaviour, IHittable
         _meleeAttack = GetComponent<NPCMeleeAttack>();
         _hurtEmissions = GetComponent<HurtEmissions>();
         _agentColliders = GetComponent<AgentColliders>();
+        _agentHealth = GetComponent<AgentHealth>();
+        _agentHealth.OnHealthAmountEmpty += Death;
     }
 
     private void Update()
@@ -56,13 +55,6 @@ public class EnemyNPC : MonoBehaviour, IHittable
         if (_isPlayerInSightRange && _isPlayerAttackRange)
         {
             AttackPlayer();
-        }
-        if (_health <= 0 && _isDead == false)
-        {
-            _isDead = true;
-            _animator.SetBool("IsDead", true);
-            this.enabled = false;
-            _animator.SetFloat("move", 0f);
         }
         _animator.SetFloat("move", _agent.velocity.magnitude);
     }
@@ -117,20 +109,22 @@ public class EnemyNPC : MonoBehaviour, IHittable
         }
     }
 
-    public void Death()
+    public void DisableDeadBody()
     {
         _hurtEmissions.DisablePlayerEmissions();
         _agentColliders.DisableColliders();
     }
 
-    public void ReduceHealth(int amount)
-    {
-        _health -= amount;
-    }
-
     public void GetHit(WeaponItemSO weapon)
     {
-        ReduceHealth(weapon.GetDamageValue());
+        _agentHealth.ReduceHealth(weapon.GetDamageValue());
         _hurtEmissions.StartHurtCoroutine();
+    }
+
+    private void Death()
+    {
+        _animator.SetBool("IsDead", true);
+        this.enabled = false;
+        _animator.SetFloat("move", 0f);
     }
 }

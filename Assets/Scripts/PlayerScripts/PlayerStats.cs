@@ -1,109 +1,28 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerStats : MonoBehaviour, IHittable
 {
     [SerializeField] private UnityEvent _onDeath;
-    [SerializeField] private UIPlayerStamina _staminaUI;
-    [SerializeField] private UIPlayerHealth _healthUI;
-    [SerializeField] private int _healthInitialValue;
-    [SerializeField] private int _staminaInitialValue;
-    [SerializeField] private float _staminaRegenSpeed;
-    [SerializeField] private float _staminaRegenAmount;
 
     private BlockAttack _blockAttack;
-    private Action _onTakeDamage;
-    private float _stamina;
-    private float _health;
-    private float _lastTimeSinceStaminaChange;
-    private bool _stopCoroutine = false;
     private HurtEmissions _hurtEmissions;
+    private AgentHealth _agentHealth;
+    private AgentStamina _agentStamina;
 
-    public Action OnTakeDamage { get => _onTakeDamage; set => _onTakeDamage = value; }
-    public UnityEvent OnDeath { get => _onDeath; }
-    int IHittable.Health => (int)_health;
     public BlockAttack BlockAttack { get => _blockAttack; }
-
-    public float Stamina 
-    { 
-        get => _stamina;
-        set
-        {
-            _stamina = Mathf.Clamp(value, 0, _staminaInitialValue);
-            _staminaUI.SetCurrentStamina(_stamina / _staminaInitialValue);
-        }
-    }
-
-    public float Health 
-    { 
-        get => _health;
-        set
-        {
-            _health = Mathf.Clamp(value, 0, _healthInitialValue);
-            _healthUI.SetCurrentHealth((int)_health);
-            if(_health <= 0)
-            {
-                _onDeath.Invoke();
-            }
-        }
-    }
+    public AgentHealth AgentHealth { get => _agentHealth; }
+    public AgentStamina AgentStamina { get => _agentStamina; }
 
     private void Awake()
     {
-        _healthUI.SetHealthInitialValue(_healthInitialValue);
-        Health = _healthInitialValue;
-        Stamina = _staminaInitialValue;
         _blockAttack = GetComponent<BlockAttack>();
         _hurtEmissions = GetComponent<HurtEmissions>();
-    }
-
-    private void Update()
-    {
-        StaminaRegeneration();
-    }
-
-    private void StaminaRegeneration()
-    {
-        if (Stamina < _staminaInitialValue && Time.time > _lastTimeSinceStaminaChange)
-        {
-            StartCoroutine("StaminaRegenCoroutine");
-            _stopCoroutine = true;
-        }
-        else if (_stopCoroutine == true)
-        {
-            StopCoroutine("StaminaRegenCoroutine");
-            _stopCoroutine = false;
-        }
-    }
-
-    public void AddToHealth(float amount)
-    {
-        Health += amount;
-    }
-
-    public void ReduceHealth(float amount)
-    {
-        Health -= amount;
-    }
-
-    public void AddToStamina(float amount)
-    {
-        Stamina += amount;
-    }
-
-    public void ReduceStamina(float amount)
-    {
-        Stamina -= amount;
-        _lastTimeSinceStaminaChange = Time.time;
-    }
-
-    IEnumerator StaminaRegenCoroutine()
-    {
-        yield return new WaitForSeconds(_staminaRegenSpeed);
-        Stamina += _staminaRegenAmount;
+        _agentHealth = GetComponent<AgentHealth>();
+        _agentStamina = GetComponent<AgentStamina>();
+        _agentHealth.OnHealthAmountEmpty += Death;
     }
 
     public void GetHit(WeaponItemSO weapon)
@@ -114,9 +33,13 @@ public class PlayerStats : MonoBehaviour, IHittable
         }
         else
         {
-            ReduceHealth(weapon.GetDamageValue());
+            _agentHealth.ReduceHealth(weapon.GetDamageValue());
             _hurtEmissions.StartHurtCoroutine();
-            _onTakeDamage?.Invoke();
         }
+    }
+
+    private void Death()
+    {
+        _onDeath.Invoke();
     }
 }

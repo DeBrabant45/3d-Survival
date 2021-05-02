@@ -25,8 +25,8 @@ public class InteractionManager : MonoBehaviour
                 throw new System.Exception("Item can't have itemtype of NONE");
             case ItemType.Food:
                 FoodItemSO foodData = (FoodItemSO)itemData;
-                _playerController.PlayerStat.AddToHealth(foodData.HealthBonus);
-                _playerController.PlayerStat.AddToStamina(foodData.StaminaBonus);
+                _playerController.PlayerStat.AgentHealth.AddToHealth(foodData.HealthBonus);
+                _playerController.PlayerStat.AgentStamina.AddToStamina(foodData.StaminaBonus);
                 return true;
             case ItemType.Weapon:
                 WeaponItemSO weaponData = (WeaponItemSO)itemData;

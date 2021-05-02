@@ -240,8 +240,8 @@ public class AgentController : MonoBehaviour, ISaveable
         var playerData = new PlayerData
         {
             PlayerPosition = positionData,
-            Health = _playerStat.Health,
-            Stamina = _playerStat.Stamina,
+            Health = _playerStat.AgentHealth.Health,
+            Stamina = _playerStat.AgentStamina.Stamina,
         };
 
         return JsonConvert.SerializeObject(playerData);
@@ -252,7 +252,7 @@ public class AgentController : MonoBehaviour, ISaveable
         var playerData = JsonConvert.DeserializeObject<PlayerData>(jsonData);
         _spawnPosition = new Vector3(playerData.PlayerPosition.x, playerData.PlayerPosition.y, playerData.PlayerPosition.z);
         RespawnPlayer();
-        _playerStat.Health = playerData.Health;
-        _playerStat.Stamina = playerData.Stamina;
+        _playerStat.AgentHealth.Health = playerData.Health;
+        _playerStat.AgentStamina.Stamina = playerData.Stamina;
     }
 }

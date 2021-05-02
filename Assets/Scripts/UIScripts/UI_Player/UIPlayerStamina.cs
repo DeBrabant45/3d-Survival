@@ -6,6 +6,12 @@ using UnityEngine.UI;
 public class UIPlayerStamina : MonoBehaviour
 {
     [SerializeField] private Image _staminaBar;
+    [SerializeField] private AgentStamina _agentStamina;
+
+    private void Awake()
+    {
+        _agentStamina.StaminaValue += SetCurrentStamina;
+    }
 
     public void SetCurrentStamina(float amount)
     {
