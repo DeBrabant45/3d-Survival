@@ -29,10 +29,10 @@ MonoBehaviour:
   _attackTriggerAnimation: OneHandedAttack
   _blockStanceAnimation: meleeBlockStance
   _blockReactionAnimation: meleeWeaponBlockReact
-  _equippedPosition: {x: 0, y: 0, z: 0}
+  _equippedPosition: {x: 0, y: 0, z: -0.155}
   _equippedRotation: {x: 0, y: 0, z: 0}
   _unequippedPosition: {x: 0, y: 0, z: 0}
-  _unequippedRotation: {x: 0, y: 0, z: 0}
+  _unequippedRotation: {x: -89, y: 0, z: 0}
   _baseHarvestPower: 3
   _resourceBoosted: 1
   _boostedHarevestPower: 6
