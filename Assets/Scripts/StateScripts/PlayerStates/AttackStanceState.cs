@@ -11,7 +11,7 @@ public abstract class AttackStanceState : BaseState
         base.EnterState(controller, weapon);
         controllerReference.Movement.StopMovement();
         SetAimValuesToActive();
-        if (ItemSpawnManager.Instance.IsWeaponOnBackAndInHand || controllerReference.InventorySystem.WeaponEquipped == false)
+        if (ItemSpawnManager.Instance.IsWeaponOnBackAndInHand || (_pastItem != weapon && _pastItem != null))
         {
             HandleEquipItemInput();
         }
@@ -36,14 +36,15 @@ public abstract class AttackStanceState : BaseState
     {
         controllerReference.AgentAnimations.SetBoolForAnimation(_pastItem.AttackStance, false);
         SetAimValuesToInactive();
-        if(controllerReference.InventorySystem.WeaponEquipped || _pastItem != controllerReference.UnarmedAttack)
-        {
-            controllerReference.TransitionToState(controllerReference.unequipItemState);
-        }
-        else
+        if(_pastItem == controllerReference.UnarmedAttack)
         {
             controllerReference.TransitionToState(controllerReference.movementState);
         }
+        else
+        {
+            controllerReference.TransitionToState(controllerReference.unequipItemState);
+        }
+        _pastItem = null;
     }
 
     public void SetAimValuesToInactive()
