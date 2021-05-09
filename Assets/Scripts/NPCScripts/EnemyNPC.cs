@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyNPC : MonoBehaviour
+public class EnemyNPC : MonoBehaviour, IEnemy
 {
+    [SerializeField] private int _emenyID;
     [SerializeField] private Transform _player;
     [SerializeField] private LayerMask _isGround;
     [SerializeField] private LayerMask _isPlayer;
@@ -25,6 +26,8 @@ public class EnemyNPC : MonoBehaviour
     private AgentHealth _agentHealth;
     private float _lastAttackTime = 0;
     private float _lastTimeMoved = 0f;
+
+    public int EnemyID { get => _emenyID; }
 
     private void Awake()
     {
@@ -119,5 +122,6 @@ public class EnemyNPC : MonoBehaviour
         _animator.SetBool("IsDead", true);
         this.enabled = false;
         _animator.SetFloat("move", 0f);
+        QuestEvents.Instance.EmenyDefeated(this);
     }
 }
