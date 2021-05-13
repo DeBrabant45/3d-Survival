@@ -10,6 +10,9 @@ public class NPC : MonoBehaviour, IUsable
     [SerializeField] private DialogueSystem _dialogueSystem;
     [SerializeField] private GameObject _quests;
     [SerializeField] private string _questType;
+
+    [SerializeField] private GameObject _activeQuests;
+    [SerializeField] private GameObject _completedQuests;
     private Quest _quest;
 
     public bool IsQuestAssigned { get; set; }
@@ -35,16 +38,23 @@ public class NPC : MonoBehaviour, IUsable
     private void AssignQuest()
     {
         IsQuestAssigned = true;
-        _quest = (Quest)_quests.AddComponent(Type.GetType(_questType));
+        _quest = (Quest)_activeQuests.AddComponent(Type.GetType(_questType));
+    }
+
+    private void CompletedQuest()
+    {
+        _quest.GiveReward();
+        IsGivenQuestCompleted = true;
+        IsQuestAssigned = false;
+        Destroy((Quest)_activeQuests.GetComponent(Type.GetType(_questType)));
+        _quest = (Quest)_completedQuests.AddComponent(Type.GetType(_questType));
     }
 
     private void CheckCurrentQuest()
     {
         if(_quest.IsCompleted)
         {
-            _quest.GiveReward();
-            IsGivenQuestCompleted = true;
-            IsQuestAssigned = false;
+            CompletedQuest();
             _dialogueSystem.AddNewDialogue(new string[] { "Thank you" }, _characterName);
         }
         else
