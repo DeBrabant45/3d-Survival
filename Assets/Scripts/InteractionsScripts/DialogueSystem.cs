@@ -25,6 +25,5 @@ public class DialogueSystem : MonoBehaviour
             _dialogueLines.Add(line);
         }
         _onDialogueTrigger?.Invoke();
-        Debug.Log(_dialogueLines.Count);
     }
 }

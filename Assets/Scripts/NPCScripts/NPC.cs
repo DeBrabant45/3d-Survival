@@ -5,61 +5,22 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour, IUsable
 {
-    [SerializeField] private string[] _dialogue;
-    [SerializeField] private string _characterName;
-    [SerializeField] private DialogueSystem _dialogueSystem;
-    [SerializeField] private GameObject _quests;
-    [SerializeField] private string _questType;
+    [SerializeField] protected string _characterName;
+    [SerializeField] protected string[] _introduceDialogue;
+    [SerializeField] protected string[] _returingDialogue;
+    [SerializeField] protected DialogueSystem _dialogueSystem;
+    protected bool IsFirstTimeMeeting = true;
 
-    [SerializeField] private GameObject _activeQuests;
-    [SerializeField] private GameObject _completedQuests;
-    private Quest _quest;
-
-    public bool IsQuestAssigned { get; set; }
-    public bool IsGivenQuestCompleted { get; set; }
-
-    public void Use()
+    public virtual void Use()
     {
-        if(IsQuestAssigned == false && IsGivenQuestCompleted == false)
+        if(IsFirstTimeMeeting != false)
         {
-            _dialogueSystem.AddNewDialogue(_dialogue, _characterName);
-            AssignQuest();
-        }
-        else if(IsQuestAssigned && IsGivenQuestCompleted == false)
-        {
-            CheckCurrentQuest();
+            _dialogueSystem.AddNewDialogue(_introduceDialogue, _characterName);
+            IsFirstTimeMeeting = false;
         }
         else
         {
-            _dialogueSystem.AddNewDialogue(new string[] { "Dude I have more work anytime you want" }, _characterName);
-        }
-    }
-
-    private void AssignQuest()
-    {
-        IsQuestAssigned = true;
-        _quest = (Quest)_activeQuests.AddComponent(Type.GetType(_questType));
-    }
-
-    private void CompletedQuest()
-    {
-        _quest.GiveReward();
-        IsGivenQuestCompleted = true;
-        IsQuestAssigned = false;
-        Destroy((Quest)_activeQuests.GetComponent(Type.GetType(_questType)));
-        _quest = (Quest)_completedQuests.AddComponent(Type.GetType(_questType));
-    }
-
-    private void CheckCurrentQuest()
-    {
-        if(_quest.IsCompleted)
-        {
-            CompletedQuest();
-            _dialogueSystem.AddNewDialogue(new string[] { "Thank you" }, _characterName);
-        }
-        else
-        {
-            _dialogueSystem.AddNewDialogue(new string[] { "Get Back at it" }, _characterName);
+            _dialogueSystem.AddNewDialogue(_returingDialogue, _characterName);
         }
     }
 }

@@ -6,17 +6,16 @@ public class Defeater : Quest
 {
     [SerializeField] private string _questName;
     [SerializeField] private string _questDescription;
-    [SerializeField] private IEnemy enemy;
-    [SerializeField] private int _enemyID;
+    [SerializeField] private int enemyID;
     [SerializeField] private int _currentDefeatedAmount;
     [SerializeField] private int _requiredAmount;
-    private DefeatGoal _defeatGoal;
+    [SerializeField] private DefeatGoal _defeatGoal;
 
-    void Start()
+    void OnEnable()
     {
-        QuestName = _questName;
+        Title = _questName;
         Description = _questDescription;
-        _defeatGoal = new DefeatGoal(this, enemy.EnemyID, _questDescription, false, _currentDefeatedAmount, _requiredAmount);
+        _defeatGoal = new DefeatGoal(this, enemyID, _questDescription, false, 0, _requiredAmount);
         Goals.Add(_defeatGoal);
         Goals.ForEach(goal => goal.Init());
     }

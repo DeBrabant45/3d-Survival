@@ -24,31 +24,61 @@ public class UIQuestLog : MonoBehaviour
     void Start()
     {
         _questLogPanel.SetActive(false);
-        _activeQuestBtn.onClick.AddListener(SetActiveQuestInfo);
-        _completedQuestsBtn.onClick.AddListener(SetCompletedQuestInfo);
+        _activeQuestBtn.onClick.AddListener(() => SetQuestInfoPanel(_activeQuests));
+        _completedQuestsBtn.onClick.AddListener(() => SetQuestInfoPanel(_completedQuests));
     }
-
-    private void SetActiveQuestInfo()
+    
+    private void SetQuestInfoPanel(GameObject questPanel)
     {
         DestroyPanelChildObjects();
-        var quests = _activeQuests.GetComponents<Quest>();
-        if (quests != null)
+        var quests = questPanel.GetComponents<Quest>();
+        if(quests.Length > 0)
         {
+            SetQuest(quests[0]);
             CreateButtons(quests);
+        }
+        else
+        {
+            SetQuest(null);
         }
     }
 
-    private void SetCompletedQuestInfo()
+    private void CreateButtons(Quest[] quests)
     {
-        DestroyPanelChildObjects();
-        var quests = _completedQuests.GetComponents<Quest>();
-        if(quests != null)
+        foreach (var quest in quests)
         {
-            CreateButtons(quests);
+            var btn = _questPickerBtnPrefab;
+            btn.GetComponentInChildren<Text>().text = quest.Title;
+            var newBtn = Instantiate(btn, _questPickerPanel);
+            newBtn.onClick.AddListener(() => SetQuest(quest));
         }
     }
 
-    void Update()
+    private void SetQuest(Quest quest)
+    {
+        if (quest != null)
+        {
+            _questTitle.text = quest.Title;
+            _questGiverName.text = quest.QuestGiverName;
+            _questDescription.text = quest.Description;
+        }
+        else
+        {
+            _questTitle.text = "";
+            _questGiverName.text = "";
+            _questDescription.text = "";
+        }
+    }
+
+    private void DestroyPanelChildObjects()
+    {
+        foreach (Transform questBtn in _questPickerPanel)
+        {
+            Destroy(questBtn.gameObject);
+        }
+    }
+
+    private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Q))
         {
@@ -56,25 +86,9 @@ public class UIQuestLog : MonoBehaviour
         }
     }
 
-    public void ActivateQuestPanel()
-    {
-        _questLogPanel.SetActive(true);
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
-        SetActiveQuestInfo();
-    }
-
-    public void DeativateQuestPanel()
-    {
-        DestroyPanelChildObjects();
-        _questLogPanel.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
     public void ToggleQuestLogPanel()
     {
-        if(_questLogPanel.activeSelf == false)
+        if (_questLogPanel.activeSelf == false)
         {
             ActivateQuestPanel();
         }
@@ -84,28 +98,19 @@ public class UIQuestLog : MonoBehaviour
         }
     }
 
-    public void CreateButtons(Quest[] quests)
+    private void ActivateQuestPanel()
     {
-        foreach (var quest in quests)
-        {
-            var btn = _questPickerBtnPrefab;
-            btn.GetComponentInChildren<Text>().text = quest.QuestName;
-            var newBtn = Instantiate(btn, _questPickerPanel);
-            newBtn.onClick.AddListener(() => SetQuest(quest));
-        }
+        _questLogPanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+        SetQuestInfoPanel(_activeQuests);
     }
 
-    private void SetQuest(Quest quest)
+    private void DeativateQuestPanel()
     {
-        _questTitle.text = quest.QuestName;
-        _questDescription.text = quest.Description;
-    }
-
-    private void DestroyPanelChildObjects()
-    {
-        foreach (Transform questBtn in _questPickerPanel)
-        {
-            Destroy(questBtn.gameObject);
-        }
+        DestroyPanelChildObjects();
+        _questLogPanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }
