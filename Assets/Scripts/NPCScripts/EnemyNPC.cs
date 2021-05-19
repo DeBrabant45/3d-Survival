@@ -122,6 +122,6 @@ public class EnemyNPC : MonoBehaviour, IEnemy
         _animator.SetBool("IsDead", true);
         this.enabled = false;
         _animator.SetFloat("move", 0f);
-        QuestEvents.Instance.EmenyDefeated(this);
+        QuestEvents.Instance.EnemyDefeated(this);
     }
 }

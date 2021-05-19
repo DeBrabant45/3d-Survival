@@ -22,7 +22,7 @@ public class QuestEvents : MonoBehaviour
         }
     }
 
-    public void EmenyDefeated(IEnemy enemy) //Change to int of enemy 
+    public void EnemyDefeated(IEnemy enemy)
     {
         _onEnemyDefeated?.Invoke(enemy);
     }

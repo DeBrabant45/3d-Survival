@@ -15,6 +15,7 @@ public class SkeletonDefeaterTwo : Quest
     {
         Title = _questName;
         Description = _questDescription;
+        OnceCompletedInfo = "Return back to " + QuestGiverName + " to claim your reward";
         _defeatGoal = new DefeatGoal(this, _enemyID, _questDescription, false, _currentDefeatedAmount, _requiredAmount);
         Goals.Add(_defeatGoal);
         Goals.ForEach(goal => goal.Init());

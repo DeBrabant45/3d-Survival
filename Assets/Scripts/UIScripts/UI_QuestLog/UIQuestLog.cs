@@ -10,6 +10,7 @@ public class UIQuestLog : MonoBehaviour
     [SerializeField] private GameObject _activeQuests;
     [SerializeField] private GameObject _completedQuests;
     [SerializeField] private GameObject _questLogPanel;
+    [SerializeField] private GameObject _completedQuestCheckMark;
 
     [SerializeField] private Transform _questPickerPanel;
 
@@ -20,10 +21,12 @@ public class UIQuestLog : MonoBehaviour
     [SerializeField] private Text _questTitle;
     [SerializeField] private Text _questGiverName;
     [SerializeField] private Text _questDescription;
+    [SerializeField] private Text _completedQuestTxt;
 
     void Start()
     {
         _questLogPanel.SetActive(false);
+        _completedQuestCheckMark.SetActive(false);
         _activeQuestBtn.onClick.AddListener(() => SetQuestInfoPanel(_activeQuests));
         _completedQuestsBtn.onClick.AddListener(() => SetQuestInfoPanel(_completedQuests));
     }
@@ -67,6 +70,22 @@ public class UIQuestLog : MonoBehaviour
             _questTitle.text = "";
             _questGiverName.text = "";
             _questDescription.text = "";
+        }
+        SetCompletedQuestInfo(quest);
+    }
+
+    private void SetCompletedQuestInfo(Quest quest)
+    {
+        if(quest != null && quest.IsCompleted)
+        {
+            _questDescription.color = Color.grey;
+            _completedQuestCheckMark.SetActive(true);
+            _completedQuestTxt.text = quest.OnceCompletedInfo;
+        }
+        else
+        {
+            _questDescription.color = Color.black;
+            _completedQuestCheckMark.SetActive(false);
         }
     }
 
