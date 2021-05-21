@@ -113,7 +113,7 @@ public class ItemSpawnManager : MonoBehaviour
         }
     }
 
-    private void CreateItemInPlace(Vector3 spawnPosition, ItemSO itemToSpawn, int count)
+    public void CreateItemInPlace(Vector3 spawnPosition, ItemSO itemToSpawn, int count)
     {
         var itemGameObject = Instantiate(itemToSpawn.Model, spawnPosition, Quaternion.identity, _itemSpawnerParent);
         PrepareItemGameObject(itemToSpawn.ID, count, itemGameObject);

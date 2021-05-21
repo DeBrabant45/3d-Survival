@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d504cfc0b57b8d64e923631a089043c3, type: 3}
+  m_Name: RedEyedSkull
+  m_EditorClassIdentifier: 
+  _iD: abf313a5a6e34ef295e0ddcb066f75f9
+  _itemName: Red Eyed Skull
+  _imageSprite: {fileID: 21300000, guid: ead9c2ba7fea2564db24eea11c49181f, type: 3}
+  _model: {fileID: 594816570266398365, guid: 9993ec930d7c7fc40ab748192ceca87a, type: 3}
+  _isStackable: 0
+  _stackLimit: 1
+  _itemType: 6

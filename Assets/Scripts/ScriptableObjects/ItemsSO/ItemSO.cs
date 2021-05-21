@@ -59,5 +59,6 @@ public enum ItemType
     Weapon,
     Material,
     Structure,
-    Ammo
+    Ammo,
+    Collectable
 }

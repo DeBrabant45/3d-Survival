@@ -17,6 +17,9 @@ public class EnemyNPC : MonoBehaviour, IEnemy
     [SerializeField] float _attackRange;
     [SerializeField] bool _isPlayerInSightRange;
     [SerializeField] bool _isPlayerAttackRange;
+    [SerializeField] ParticleSystem _defeatSmoke;
+    [SerializeField] GameObject[] _eyes;
+    [SerializeField] ItemSO _defeatedItemDrop;
 
     private NavMeshAgent _agent;
     private NPCMeleeAttack _meleeAttack;
@@ -111,10 +114,11 @@ public class EnemyNPC : MonoBehaviour, IEnemy
         }
     }
 
-    public void DisableDeadBody()
+    private void DisableDeadBody()
     {
         _hurtEmissions.DisablePlayerEmissions();
         _agentColliders.DisableColliders();
+        DisableEyesParticals();
     }
 
     private void Death()
@@ -123,5 +127,24 @@ public class EnemyNPC : MonoBehaviour, IEnemy
         this.enabled = false;
         _animator.SetFloat("move", 0f);
         QuestEvents.Instance.EnemyDefeated(this);
+    }
+
+    private void DisableEyesParticals()
+    {
+        foreach(var eye in _eyes)
+        {
+            eye.SetActive(false);
+        }
+    }
+
+    private void PlayDefeatSmoke()
+    {
+        _defeatSmoke.Play();
+        ItemSpawnManager.Instance.CreateItemInPlace(this.transform.position, _defeatedItemDrop, 1);
+    }
+
+    private void DestroyGameObject()
+    {
+        Destroy(this.gameObject);
     }
 }
