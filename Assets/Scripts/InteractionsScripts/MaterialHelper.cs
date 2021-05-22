@@ -12,16 +12,12 @@ public class MaterialHelper
         {
             foreach (Transform child in objectToModify.transform)
             {
-                if(child.gameObject.activeSelf)
+                if (child.gameObject.activeSelf && child.GetComponent<Renderer>() != null)
                 {
                     PrepareRendererToSwapMaterials(child.gameObject, currentColliderMaterailsList, selectionMaterial);
                 }
             }
         }
-        //else
-        //{
-        //    PrepareRendererToSwapMaterials(objectToModify, currentColliderMaterailsList, selectionMaterial);
-        //}
     }
 
     public void PrepareRendererToSwapMaterials(GameObject objectToModify, List<Material[]> currentColliderMaterailsList, Material selectionMaterial)
@@ -48,19 +44,20 @@ public class MaterialHelper
         if (currentColliderMaterailsList.Count > 1)
         {
             for (int i = 0; i < currentColliderMaterailsList.Count; i++)
-            {
-                if(objectToModify.transform.GetChild(i).gameObject.activeSelf)
+            { 
+                if (objectToModify.transform.childCount > 1)
                 {
-                    var childRenderer = objectToModify.transform.GetChild(i).GetComponent<Renderer>();
-                    childRenderer.materials = currentColliderMaterailsList[i];
+                    for (int j = 0; j < objectToModify.transform.childCount; j++)
+                    {
+                        var child = objectToModify.transform.GetChild(j).GetComponent<Renderer>();
+                        if (child != null)
+                        {
+                            child.materials = currentColliderMaterailsList[i];
+                        }
+                    }
                 }
             }
         }
-        //else
-        //{
-        //    var renderer = objectToModify.GetComponent<Renderer>();
-        //    renderer.materials = currentColliderMaterailsList[0];
-        //}
     }
 
     public void EnableEmission(GameObject gameObject, Color color)
