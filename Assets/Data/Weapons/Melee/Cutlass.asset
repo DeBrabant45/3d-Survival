@@ -32,3 +32,8 @@ MonoBehaviour:
   _equippedRotation: {x: 90, y: 0, z: 0}
   _unequippedPosition: {x: 0, y: 0, z: 0}
   _unequippedRotation: {x: 0, y: 0, z: 0}
+  _soundClips:
+  - {fileID: 8300000, guid: f8455c300a4a7f84383eed2c01caa332, type: 3}
+  - {fileID: 8300000, guid: 6836912bddfc1b246aed45affcb28fce, type: 3}
+  - {fileID: 8300000, guid: f8455c300a4a7f84383eed2c01caa332, type: 3}
+  _isSoundRandom: 0

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -4393378174538107060}
   - component: {fileID: -6567436760777208690}
   - component: {fileID: -3545193530522171726}
+  - component: {fileID: 7220468010846754890}
   m_Layer: 0
   m_Name: MusketPistol_01
   m_TagString: Untagged
@@ -110,7 +111,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b33ab078f2284754c91d26bf86985b62, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -222,6 +223,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5e494bc711d8c40adc0d99d4abc977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7220468010846754890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707458085168461146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd761c04fd4eda48b3af8e6a62bc93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weapon: {fileID: 11400000, guid: 75690266cc2932a4480ba2bacd878079, type: 2}
 --- !u!1001 &2426381588356686223
 PrefabInstance:
   m_ObjectHideFlags: 0

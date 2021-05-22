@@ -33,6 +33,9 @@ MonoBehaviour:
   _equippedRotation: {x: 0, y: 0, z: 0}
   _unequippedPosition: {x: 0, y: 0, z: 0}
   _unequippedRotation: {x: -89, y: 0, z: 0}
+  _soundClips:
+  - {fileID: 8300000, guid: f8455c300a4a7f84383eed2c01caa332, type: 3}
+  _isSoundRandom: 0
   _baseHarvestPower: 3
   _resourceBoosted: 2
   _boostedHarevestPower: 6

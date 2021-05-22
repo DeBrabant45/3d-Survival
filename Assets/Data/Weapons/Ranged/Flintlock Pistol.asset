@@ -33,6 +33,9 @@ MonoBehaviour:
   _equippedRotation: {x: 180, y: 40, z: 20}
   _unequippedPosition: {x: 0, y: 0.045, z: 0}
   _unequippedRotation: {x: -90, y: -40, z: 0}
+  _soundClips:
+  - {fileID: 8300000, guid: b33ab078f2284754c91d26bf86985b62, type: 3}
+  _isSoundRandom: 0
   _maxAmmoCount: 1
   _preloadedAmmoAmount: 1
   _ammoType: {fileID: 11400000, guid: d7134412d814b2741adf3797794a3a18, type: 2}

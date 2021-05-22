@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8679966789418969893}
   - component: {fileID: 3210422862197258828}
   - component: {fileID: 786858151155829716}
+  - component: {fileID: -1838358009815463585}
   m_Layer: 0
   m_Name: Pickaxe
   m_TagString: Untagged
@@ -95,9 +96,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 378b5ebc035f5524eba7cc84e90c29f3, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -206,3 +207,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5e494bc711d8c40adc0d99d4abc977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1838358009815463585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3338056403643584291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd761c04fd4eda48b3af8e6a62bc93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weapon: {fileID: 11400000, guid: 09412f47e293e62489fd529cf4679e6b, type: 2}

@@ -5,29 +5,41 @@ using UnityEngine;
 
 public class ItemSlotWeaponSound : MonoBehaviour
 {
-    [SerializeField] private AudioSource _weaponSound;
     [SerializeField] private GameObject _itemSlot;
+    private WeaponSound _audioSound;
 
+    private void Start()
+    {
+        _audioSound = this.GetComponent<WeaponSound>();
+    }
 
     private void Update()
     {
-        AddWeaponSound();    
+        if(_audioSound == null)
+        {
+            AddWeaponSound();
+        }
     }
 
     private void AddWeaponSound()
     {
-        if(_weaponSound == null)
+        var itemSlotChildSound = _itemSlot.GetComponentInChildren<WeaponSound>();
+        if (itemSlotChildSound != null)
         {
-            var weaponSound = _itemSlot.GetComponentInChildren<AudioSource>();
-            if (weaponSound != null)
-            {
-                _weaponSound = weaponSound;
-            }
+            _audioSound = itemSlotChildSound;
         }
     }
 
     public void PlayWeaponSound()
     {
-        _weaponSound.PlayOneShot(_weaponSound.clip);
+        if(_audioSound.IsSoundRandom)
+        {
+            _audioSound.PlayRandomSound();
+        }
+        else
+        {
+            _audioSound.PlaySoundInOrder();
+        }
+
     }
 }

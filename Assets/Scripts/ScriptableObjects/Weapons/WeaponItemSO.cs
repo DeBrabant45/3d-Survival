@@ -27,6 +27,10 @@ public class WeaponItemSO : ItemSO
     [SerializeField] Vector3 _unequippedPosition;
     [SerializeField] Vector3 _unequippedRotation;
 
+    [Header("Weapon Sounds")]
+    [SerializeField] private AudioClip[] _soundClips;
+    [SerializeField] private bool _isSoundRandom;
+
     public WeaponType WeaponTypeSO { get => _weaponType; protected set => _weaponType = value; }
     public int MaximumDamage { get => _maximumDamage; }
     public float WeaponImpactForce { get => _weaponImpactForce; }
@@ -38,6 +42,8 @@ public class WeaponItemSO : ItemSO
     public Vector3 EquippedRotation { get => _equippedRotation; }
     public Vector3 UnequippedPosition { get => _unequippedPosition; }
     public Vector3 UnequippedRotation { get => _unequippedRotation; }
+    public AudioClip[] SoundClips { get => _soundClips; }
+    public bool IsSoundRandom { get => _isSoundRandom; }
 
     public override bool IsUsable()
     {

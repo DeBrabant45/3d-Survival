@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5964430927096321846}
   - component: {fileID: -7021399061792475833}
   - component: {fileID: 1868031575917481472}
+  - component: {fileID: 8218142137077819488}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -98,9 +99,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 378b5ebc035f5524eba7cc84e90c29f3, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -209,4 +210,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5e494bc711d8c40adc0d99d4abc977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponItem: {fileID: 11400000, guid: e6bab691476b6834cacc8cf9871440e6, type: 2}
+--- !u!114 &8218142137077819488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6522044585065854801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd761c04fd4eda48b3af8e6a62bc93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weapon: {fileID: 11400000, guid: e6bab691476b6834cacc8cf9871440e6, type: 2}

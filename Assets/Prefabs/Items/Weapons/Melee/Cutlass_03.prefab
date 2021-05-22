@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 1328690247812110469}
   - component: {fileID: 1328690247810888195}
   - component: {fileID: 1339138208780544805}
-  - component: {fileID: -4671827800851858762}
   - component: {fileID: -3042057315961027003}
+  - component: {fileID: 6980366513943284216}
+  - component: {fileID: 5583660434253485963}
   m_Layer: 0
   m_Name: Cutlass_03
   m_TagString: Untagged
@@ -98,7 +99,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43761512409882948, guid: 3fc7b21b0e09d8b4d99a1a8ec822b41f, type: 2}
---- !u!82 &-4671827800851858762
+--- !u!114 &-3042057315961027003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328690247813219093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5e494bc711d8c40adc0d99d4abc977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!82 &6980366513943284216
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,9 +121,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 378b5ebc035f5524eba7cc84e90c29f3, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -194,7 +207,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-3042057315961027003
+--- !u!114 &5583660434253485963
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -203,6 +216,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1328690247813219093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d5e494bc711d8c40adc0d99d4abc977, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dd761c04fd4eda48b3af8e6a62bc93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weapon: {fileID: 11400000, guid: f11c21ea30c88ee4cb1883f5bb524531, type: 2}
