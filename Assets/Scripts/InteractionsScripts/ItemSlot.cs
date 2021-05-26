@@ -9,6 +9,7 @@ public class ItemSlot : MonoBehaviour
     [SerializeField] DamageCollider _damageCollider;
 
     public DamageCollider DamageCollider { get => _damageCollider; set => _damageCollider = value; }
+    public GameObject ItemSlotGameObject { get => _itemSlot; }
 
     public void Update()
     {

@@ -36,6 +36,9 @@ MonoBehaviour:
   _soundClips:
   - {fileID: 8300000, guid: b33ab078f2284754c91d26bf86985b62, type: 3}
   _isSoundRandom: 0
+  _attackHitEffect: {fileID: 1546657409941744, guid: 1c20acf0e3aa50a4d90c01c68c84569c,
+    type: 3}
+  _attackBlockedEffect: {fileID: 0}
   _maxAmmoCount: 1
   _preloadedAmmoAmount: 1
   _ammoType: {fileID: 11400000, guid: d7134412d814b2741adf3797794a3a18, type: 2}

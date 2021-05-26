@@ -37,3 +37,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6836912bddfc1b246aed45affcb28fce, type: 3}
   - {fileID: 8300000, guid: f8455c300a4a7f84383eed2c01caa332, type: 3}
   _isSoundRandom: 0
+  _attackHitEffect: {fileID: 8031699067492803896, guid: 9c49837fadad4c64c8dae76355809405,
+    type: 3}

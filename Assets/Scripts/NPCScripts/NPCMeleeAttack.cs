@@ -8,6 +8,7 @@ public class NPCMeleeAttack : MonoBehaviour, IAttackable
     [SerializeField] private WeaponItemSO _weaponItem;
     [SerializeField] private float _attackRate;
     private ItemSlot _itemSlot;
+    private SpawnGameObject _spawnAttackHitEffect;
 
     public float AttackRate { get => _attackRate; }
     public WeaponItemSO EquippedWeapon { get => _weaponItem; }
@@ -16,7 +17,8 @@ public class NPCMeleeAttack : MonoBehaviour, IAttackable
     {
         _itemSlot = GetComponent<ItemSlot>();
         _itemSlot.DamageCollider.OnCollisionSuccessful += PreformAttack;
-    }
+        _spawnAttackHitEffect = new SpawnGameObject(_weaponItem.AttackHitEffect);
+    } 
 
     public void PreformAttack(Collider hitObject)
     {
@@ -28,6 +30,7 @@ public class NPCMeleeAttack : MonoBehaviour, IAttackable
             {
                 blockable.Attacker = this.gameObject;
             }
+            _spawnAttackHitEffect.CreateTemporaryObject(_itemSlot.ItemSlotGameObject.transform);
             hittable.GetHit(_weaponItem);
         }
     }

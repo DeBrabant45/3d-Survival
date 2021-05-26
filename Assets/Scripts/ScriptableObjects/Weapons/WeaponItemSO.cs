@@ -31,6 +31,10 @@ public class WeaponItemSO : ItemSO
     [SerializeField] private AudioClip[] _soundClips;
     [SerializeField] private bool _isSoundRandom;
 
+    [Header("Weapon particle effects")]
+    [SerializeField] private GameObject _attackHitEffect;
+    [SerializeField] private GameObject _attackBlockedEffect;
+
     public WeaponType WeaponTypeSO { get => _weaponType; protected set => _weaponType = value; }
     public int MaximumDamage { get => _maximumDamage; }
     public float WeaponImpactForce { get => _weaponImpactForce; }
@@ -44,6 +48,8 @@ public class WeaponItemSO : ItemSO
     public Vector3 UnequippedRotation { get => _unequippedRotation; }
     public AudioClip[] SoundClips { get => _soundClips; }
     public bool IsSoundRandom { get => _isSoundRandom; }
+    public GameObject AttackHitEffect { get => _attackHitEffect; }
+    public GameObject AttackBlockedEffect { get => _attackBlockedEffect; }
 
     public override bool IsUsable()
     {

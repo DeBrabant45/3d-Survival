@@ -5,7 +5,6 @@ using UnityEngine;
 public class RangedAttackState : BaseState
 {
     private IAmmo _rangedItemAmmo;
-
     public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
         base.EnterState(controller, weapon);
@@ -59,30 +58,32 @@ public class RangedAttackState : BaseState
     public void PreformShoot(Collider hitObject, Vector3 hitPosition, RaycastHit hit)
     {
         var target = hitObject.transform.GetComponent<IHittable>();
-        AddDamageToTarget(target, WeaponItem);
-        AddWeaponImpactForce(hit, WeaponItem);
+        AddDamageToTarget(target);
+        AddWeaponImpactForce(hit);
         CreateWeaponImpactEffect(hit);
     }
 
-    private static void AddDamageToTarget(IHittable target, ItemSO equippedItem)
+    private void AddDamageToTarget(IHittable target)
     {
         if (target != null)
         {
-            target.GetHit(((WeaponItemSO)equippedItem));
+            target.GetHit(WeaponItem);
         }
     }
 
-    private void AddWeaponImpactForce(RaycastHit hit, ItemSO equippedItem)
+    private void AddWeaponImpactForce(RaycastHit hit)
     {
         if (hit.rigidbody != null)
         {
-            hit.rigidbody.AddForce(-hit.normal * ((WeaponItemSO)equippedItem).WeaponImpactForce);
+            hit.rigidbody.AddForce(-hit.normal * WeaponItem.WeaponImpactForce);
         }
     }
 
     private void CreateWeaponImpactEffect(RaycastHit hit)
     {
-        GameObject impactEffect = GameObject.Instantiate(controllerReference.DetectionSystem.ImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-        GameObject.Destroy(impactEffect, 2f);
+        var spawnAttackHitEffect = new SpawnGameObject(WeaponItem.AttackHitEffect);
+        spawnAttackHitEffect.CreateTemporaryObject(hit.point, Quaternion.LookRotation(hit.normal), 2f);
+        //GameObject impactEffect = GameObject.Instantiate(WeaponItem.AttackHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+        //GameObject.Destroy(impactEffect, 2f);
     }
 }

@@ -24,6 +24,8 @@ public abstract class MeleeState : BaseState, IAttackable
         var hittable = hitObject.GetComponent<IHittable>();
         if (hittable != null && hitObject.gameObject != controllerReference.gameObject) 
         {
+            var spawnAttackHitEffect = new SpawnGameObject(WeaponItem.AttackHitEffect);
+            spawnAttackHitEffect.CreateTemporaryObject(controllerReference.ItemSlotTransform);
             hittable.GetHit(WeaponItem);
         }
     }
