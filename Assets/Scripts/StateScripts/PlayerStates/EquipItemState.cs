@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipItemState : BaseState
+public class EquipItemState : MovementState
 {
     public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
@@ -17,6 +17,7 @@ public class EquipItemState : BaseState
         controllerReference.AgentAnimations.OnAnimationFunctionTrigger -= EquipItem;
         if (controllerReference.EquippedItem.WeaponTypeSO == WeaponType.Melee)
         {
+            controllerReference.Movement.StopMovement();
             controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
         }
         else
@@ -24,5 +25,4 @@ public class EquipItemState : BaseState
             controllerReference.TransitionToState(controllerReference.rangedWeaponAttackStanceState);
         }
     }
-
 }

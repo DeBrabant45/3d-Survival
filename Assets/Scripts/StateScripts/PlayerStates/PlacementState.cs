@@ -39,7 +39,7 @@ public class PlacementState : MovementState
         {
             DestroyPlacedObject();
         }
-        controllerReference.TransitionToState(controllerReference.movementState);
+        controllerReference.TransitionToState(controllerReference.idleState);
     }
 
     private void DestroyPlacedObject()
@@ -50,40 +50,6 @@ public class PlacementState : MovementState
 
     public override void HandleMenuInput()
     {
-        base.HandleMenuInput();
+        controllerReference.TransitionToState(controllerReference.menuState);
     }
-
-    public override void Update()
-    {
-        HandleMovement(controllerReference.InputFromPlayer.MovementInputVector);
-        HandleCameraDirection(controllerReference.InputFromPlayer.MovementDirectionVector);
-        HandleFallingDown();
-    }
-
-    protected new void HandleFallingDown()
-    {
-        if (controllerReference.Movement.CharacterIsGrounded() == false)
-        {
-            if (_fallingDelay > 0)
-            {
-                _fallingDelay -= Time.deltaTime;
-                return;
-            }
-            DestroyPlacedObject();
-            controllerReference.TransitionToState(controllerReference.fallingState);
-        }
-        else
-        {
-            _fallingDelay = _defaultFallingDelay;
-        }
-    }
-
-    #region InputOverrides
-    public override void HandleEquipItemInput() { }
-    public override void HandleJumpInput() { }
-    public override void HandleInventoryInput() { }
-    public override void HandleReloadInput() { }
-    public override void HandleHotBarInput(int hotbarKey) { }
-    public override void HandlePlacementInput() { }
-    #endregion
 }

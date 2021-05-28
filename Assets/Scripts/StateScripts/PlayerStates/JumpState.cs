@@ -40,7 +40,7 @@ public class JumpState : BaseState
             if (controllerReference.Movement.HasCompletedJumping())
             {
                 controllerReference.AgentAnimations.ResetTriggerForAnimation("fall");
-                controllerReference.TransitionToState(controllerReference.movementState);
+                controllerReference.TransitionToState(controllerReference.PreviousState);
             }
         }
     }

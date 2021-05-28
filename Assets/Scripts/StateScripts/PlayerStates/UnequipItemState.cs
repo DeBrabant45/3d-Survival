@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnequipItemState : BaseState
+public class UnequipItemState : MovementState
 {
     public override void EnterState(AgentController controller, WeaponItemSO weapon)
     {
@@ -15,6 +15,6 @@ public class UnequipItemState : BaseState
     {
         ItemSpawnManager.Instance.SwapHandItemToPlayersBack(controllerReference.InventorySystem.WeaponEquipped);
         controllerReference.AgentAnimations.OnAnimationFunctionTrigger -= UnequipItem;
-        controllerReference.TransitionToState(controllerReference.movementState);
+        controllerReference.TransitionToState(controllerReference.idleState);
     }
 }

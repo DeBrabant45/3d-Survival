@@ -32,7 +32,7 @@ public class AgentController : MonoBehaviour, ISaveable
     private BaseState _currentState;
 
     #region StateObjects 
-    public readonly BaseState movementState = new MovementState();
+    public readonly BaseState idleState = new IdleState();
     public readonly BaseState jumpState = new JumpState();
     public readonly BaseState fallingState = new FallingState();
     public readonly BaseState inventoryState = new InventoryState();
@@ -87,7 +87,7 @@ public class AgentController : MonoBehaviour, ISaveable
         _blockAttack = GetComponent<BlockAttack>();
         _agentHealth = GetComponent<AgentHealth>();
         _agentStamina = GetComponent<AgentStamina>();
-        _currentState = movementState;
+        _currentState = idleState;
         _currentState.EnterState(this, EquippedItem);
         AssignInputListeners();
     }

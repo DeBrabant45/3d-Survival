@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AttackStanceState : BaseState
+public abstract class AttackStanceState : MovementState
 {
     private WeaponItemSO _pastItem;
     public override void EnterState(AgentController controller, WeaponItemSO weapon)
@@ -38,7 +38,7 @@ public abstract class AttackStanceState : BaseState
         SetAimValuesToInactive();
         if(_pastItem == controllerReference.UnarmedAttack)
         {
-            controllerReference.TransitionToState(controllerReference.movementState);
+            controllerReference.TransitionToState(controllerReference.idleState);
         }
         else
         {
@@ -63,19 +63,5 @@ public abstract class AttackStanceState : BaseState
     {
         base.HandleMenuInput();
         controllerReference.TransitionToState(controllerReference.menuState);
-    }
-
-    public override void HandleMovement(Vector2 input)
-    {
-        base.HandleMovement(input);
-        controllerReference.Movement.HandleMovement(input);
-    }
-
-    public override void Update()
-    {
-        base.Update();
-        controllerReference.DetectionSystem.PreformDetection(controllerReference.InputFromPlayer.MovementDirectionVector);
-        HandleMovement(controllerReference.InputFromPlayer.MovementInputVector);
-        HandleCameraDirection(controllerReference.InputFromPlayer.MovementDirectionVector);
     }
 }

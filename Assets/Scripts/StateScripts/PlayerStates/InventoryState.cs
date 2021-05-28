@@ -34,7 +34,7 @@ public class InventoryState : BaseState
         }
         else
         {
-            controllerReference.TransitionToState(controllerReference.movementState);
+            controllerReference.TransitionToState(controllerReference.idleState);
         }
     }
 

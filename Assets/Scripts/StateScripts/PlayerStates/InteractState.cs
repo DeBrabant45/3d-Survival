@@ -39,6 +39,6 @@ public class InteractState : BaseState
     public override void Update()
     {
         base.Update();
-        controllerReference.TransitionToState(controllerReference.movementState);
+        controllerReference.TransitionToState(controllerReference.idleState);
     }
 }
