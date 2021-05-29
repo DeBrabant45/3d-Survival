@@ -70,6 +70,7 @@ public class UIQuestLog : MonoBehaviour
             _questTitle.text = "";
             _questGiverName.text = "";
             _questDescription.text = "";
+            _completedQuestTxt.text = "";
         }
         SetCompletedQuestInfo(quest);
     }
