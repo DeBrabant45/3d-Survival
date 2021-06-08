@@ -28,7 +28,7 @@ public class PickableItem : MonoBehaviour, IPickable, IInventoryItem
 
     public IInventoryItem PickUp()
     {
-        InventoryEvents.Instance.ItemCollected(_dataSource);
+        InventoryEvents.Instance.ItemCollected(_dataSource, _count);
         return this;
     }
 

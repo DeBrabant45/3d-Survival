@@ -19,6 +19,7 @@ public class InteractState : BaseState
             var ipickable = resultCollider.GetComponent<IPickable>();
             var remainder = controllerReference.InventorySystem.AddToStorage(ipickable.PickUp());
             ipickable.SetCount(remainder);
+            controllerReference.InteractionSound.PlayOneShotPickupItem();
             if(remainder > 0)
             {
                 Debug.Log("Can't pick it up");

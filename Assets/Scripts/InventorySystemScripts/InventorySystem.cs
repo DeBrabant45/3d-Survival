@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Inventory;
 using System;
 using SVS.InventorySystem;
@@ -28,6 +26,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
     public Action OnStructureUse { get => _onStructureUse; set => _onStructureUse = value; }
     public StructureItemSO SelectedStructureData { get => _selectedStructureData; set => _selectedStructureData = value; }
     public Action OnEquippedItemChange { get => _onEquippedItemChanged; set => _onEquippedItemChanged = value; }
+    public Action OnItemHasBeenDropped { get; set; }
 
     private void Awake()
     {
@@ -73,6 +72,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
     {
         var selectedID = _inventoryData.SelectedItemUIID;
         ItemSpawnManager.Instance.CreateItemAtPlayersFeet(_inventoryData.GetItemIDFor(selectedID), _inventoryData.GetItemCountFor(selectedID));
+        OnItemHasBeenDropped?.Invoke();
         ClearUIElement(selectedID);
         _inventoryData.RemoveItemFromInventory(selectedID);
         OnInventoryStateChanged.Invoke();

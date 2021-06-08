@@ -112,6 +112,10 @@ public class EnemyNPC : MonoBehaviour, IEnemy
             _animator.SetTrigger(_meleeAttack.EquippedWeapon.AttackTriggerAnimation);
             _lastAttackTime = Time.time;
         }
+        else
+        {
+            //transform.RotateAround(_player.transform.position, Vector3.up, 30 * Time.deltaTime);
+        }
     }
 
     private void DisableDeadBody()

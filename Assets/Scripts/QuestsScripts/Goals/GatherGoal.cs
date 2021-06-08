@@ -22,11 +22,11 @@ public class GatherGoal : Goal
         InventoryEvents.Instance.OnItemCollected += GatherItem;
     }
 
-    private void GatherItem(ItemSO item)
+    private void GatherItem(ItemSO item, int amount)
     {
         if (item.ID == this._targetID)
         {
-            this.CurrentAmount++;
+            CurrentAmount += amount;
             EvaluateAmount();
         }
     }

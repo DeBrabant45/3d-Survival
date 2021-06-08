@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Assets.Scripts.SoundScripts;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ public class AgentController : MonoBehaviour, ISaveable
     private ItemSlot _itemSlot;
     private AgentHealth _agentHealth;
     private AgentStamina _agentStamina;
+    private PlayerInteractionSound _interactionSound;
     private BaseState _previousState;
     private BaseState _currentState;
 
@@ -75,6 +77,7 @@ public class AgentController : MonoBehaviour, ISaveable
     public BlockAttack BlockAttack { get => _blockAttack; }
     public AgentHealth AgentHealth { get => _agentHealth; }
     public AgentStamina AgentStamina { get => _agentStamina; }
+    public PlayerInteractionSound InteractionSound { get => _interactionSound; }
 
     private void OnEnable()
     {
@@ -87,6 +90,7 @@ public class AgentController : MonoBehaviour, ISaveable
         _blockAttack = GetComponent<BlockAttack>();
         _agentHealth = GetComponent<AgentHealth>();
         _agentStamina = GetComponent<AgentStamina>();
+        _interactionSound = GetComponent<PlayerInteractionSound>();
         _currentState = idleState;
         _currentState.EnterState(this, EquippedItem);
         AssignInputListeners();
@@ -106,6 +110,7 @@ public class AgentController : MonoBehaviour, ISaveable
         _inventorySystem.OnEquippedItemChange += HandleEquippedItem;
         _agentHealth.OnHealthAmountEmpty += Death;
         _equippedItem = _unarmedAttack;
+        _inventorySystem.OnItemHasBeenDropped += _interactionSound.PlayOneShotDropItem;
     }
 
     private void AssignInputListeners()
@@ -196,11 +201,6 @@ public class AgentController : MonoBehaviour, ISaveable
             return;
         }
         _currentState.Update();
-    }
-
-    private void FixedUpdate()
-    {
-        _currentState.FixedUpdate();
     }
 
     private void OnDrawGizmos()
