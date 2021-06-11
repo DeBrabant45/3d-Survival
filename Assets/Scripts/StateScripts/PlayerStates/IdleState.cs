@@ -2,57 +2,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : MovementState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-
-    public override void EnterState(AgentController controller, WeaponItemSO weapon)
+    public class IdleState : MovementState
     {
-        base.EnterState(controller, weapon);
-    }
-
-    public override void HandleEquipItemInput()
-    {
-        if (controllerReference.InventorySystem.WeaponEquipped)
+        public override void EnterState(PlayerStateMachine state, AgentController controller, WeaponItemSO weapon)
         {
-            controllerReference.TransitionToState(controllerReference.equipItemState);
+            base.EnterState(state, controller, weapon);
         }
-        else
+
+        public override void HandleEquipItemInput()
         {
-            controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
+            if (controllerReference.InventorySystem.WeaponEquipped)
+            {
+                stateMachine.TransitionToState(stateMachine.EquipItemState);
+            }
+            else
+            {
+                stateMachine.TransitionToState(stateMachine.MeleeWeaponAttackStanceState);
+            }
         }
-    }
 
-    public override void HandleInventoryInput()
-    {
-        controllerReference.TransitionToState(controllerReference.inventoryState);
-    }
+        public override void HandleInventoryInput()
+        {
+            stateMachine.TransitionToState(stateMachine.InventoryState);
+        }
 
-    public override void HandlePrimaryInput()
-    {
-        base.HandlePrimaryInput();
-    }
+        public override void HandlePrimaryInput()
+        {
+            base.HandlePrimaryInput();
+        }
 
-    public override void HandleSecondaryClickInput()
-    {
-        base.HandleSecondaryClickInput();
-        controllerReference.TransitionToState(controllerReference.interactState);
-    }
+        public override void HandleSecondaryClickInput()
+        {
+            base.HandleSecondaryClickInput();
+            stateMachine.TransitionToState(stateMachine.InteractState);
+        }
 
-    public override void HandleHotBarInput(int hotbarKey)
-    {
-        base.HandleHotBarInput(hotbarKey);
-        controllerReference.InventorySystem.HotbarShortKeyHandler(hotbarKey);
-    }
+        public override void HandleHotBarInput(int hotbarKey)
+        {
+            base.HandleHotBarInput(hotbarKey);
+            controllerReference.InventorySystem.HotbarShortKeyHandler(hotbarKey);
+        }
 
-    public override void HandleMenuInput()
-    {
-        base.HandleMenuInput();
-        controllerReference.TransitionToState(controllerReference.menuState);
-    }
+        public override void HandleMenuInput()
+        {
+            base.HandleMenuInput();
+            stateMachine.TransitionToState(stateMachine.MenuState);
+        }
 
-    public override void HandlePlacementInput()
-    {
-        base.HandlePlacementInput();
-        controllerReference.TransitionToState(controllerReference.placementState);
+        public override void HandlePlacementInput()
+        {
+            base.HandlePlacementInput();
+            stateMachine.TransitionToState(stateMachine.PlacementState);
+        }
     }
 }

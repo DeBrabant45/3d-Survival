@@ -22,7 +22,7 @@ public class PlayerInput : MonoBehaviour
     public Action OnSecondaryHeldDownAction { get; set; }
     public Action OnSecondaryUpAction { get; set; }
 
-    private void Start()
+    private void Awake()
     {
         _mainCamera = Camera.main;
         Cursor.lockState = CursorLockMode.Locked;

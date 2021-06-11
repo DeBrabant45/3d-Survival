@@ -2,45 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpState : BaseState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    public bool _landingTrigger = false;
-    public float _delay = 0;
-
-    public override void EnterState(AgentController controller, WeaponItemSO weapon)
+    public class JumpState : BaseState
     {
-        base.EnterState(controller, weapon);
-        _landingTrigger = false;
-        _delay = 0.2f;
-        controllerReference.AgentAnimations.ResetTriggerForAnimation("land");
-        controllerReference.Movement.HandleJump();
-    }
+        public bool _landingTrigger = false;
+        public float _delay = 0;
 
-    public override void HandleMenuInput()
-    {
-        base.HandleMenuInput();
-        controllerReference.TransitionToState(controllerReference.menuState);
-    }
-
-    public override void Update()
-    {
-        base.Update();
-        if(_delay > 0)
+        public override void EnterState(PlayerStateMachine state, AgentController controller, WeaponItemSO weapon)
         {
-            _delay -= Time.deltaTime;
-            return;
+            base.EnterState(state, controller, weapon);
+            _landingTrigger = false;
+            _delay = 0.2f;
+            controllerReference.AgentAnimations.ResetTriggerForAnimation("land");
+            controllerReference.Movement.HandleJump();
         }
-        if (controllerReference.Movement.CharacterIsGrounded())
+
+        public override void HandleMenuInput()
         {
-            if (_landingTrigger == false)
+            base.HandleMenuInput();
+            stateMachine.TransitionToState(stateMachine.MenuState);
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (_delay > 0)
             {
-                _landingTrigger = true;
-                controllerReference.AgentAnimations.SetTriggerForAnimation("land");
+                _delay -= Time.deltaTime;
+                return;
             }
-            if (controllerReference.Movement.HasCompletedJumping())
+            if (controllerReference.Movement.CharacterIsGrounded())
             {
-                controllerReference.AgentAnimations.ResetTriggerForAnimation("fall");
-                controllerReference.TransitionToState(controllerReference.PreviousState);
+                if (_landingTrigger == false)
+                {
+                    _landingTrigger = true;
+                    controllerReference.AgentAnimations.SetTriggerForAnimation("land");
+                }
+                if (controllerReference.Movement.HasCompletedJumping())
+                {
+                    controllerReference.AgentAnimations.ResetTriggerForAnimation("fall");
+                    stateMachine.TransitionToState(stateMachine.PreviousState);
+                }
             }
         }
     }

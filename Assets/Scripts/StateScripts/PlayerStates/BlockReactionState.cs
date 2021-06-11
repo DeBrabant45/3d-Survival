@@ -3,31 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockReactionState : BaseState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    public override void EnterState(AgentController controller, WeaponItemSO weapon)
+    public class BlockReactionState : BaseState
     {
-        base.EnterState(controller, weapon);
-        controllerReference.Movement.StopMovement();
-        controllerReference.AgentAnimations.SetTriggerForAnimation(WeaponItem.BlockReactionAnimation);
-        controllerReference.AgentAnimations.OnAnimationFunctionTrigger += TransitionBack;
-    }
-
-    private void TransitionBack()
-    {
-        controllerReference.AgentAnimations.OnAnimationFunctionTrigger -= TransitionBack;
-        if(controllerReference.BlockAttack.IsBlocking == false)
+        public override void EnterState(PlayerStateMachine state, AgentController controller, WeaponItemSO weapon)
         {
-            controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
+            base.EnterState(state, controller, weapon);
+            controllerReference.Movement.StopMovement();
+            controllerReference.AgentAnimations.SetTriggerForAnimation(WeaponItem.BlockReactionAnimation);
+            controllerReference.AgentAnimations.OnAnimationFunctionTrigger += TransitionBack;
         }
-        else
-        {
-            controllerReference.TransitionToState(controllerReference.blockStanceState);
-        }
-    }
 
-    public override void HandleSecondaryUpInput()
-    {
-        controllerReference.BlockAttack.IsBlocking = false;
+        private void TransitionBack()
+        {
+            controllerReference.AgentAnimations.OnAnimationFunctionTrigger -= TransitionBack;
+            if (controllerReference.BlockAttack.IsBlocking == false)
+            {
+                stateMachine.TransitionToState(stateMachine.MeleeWeaponAttackStanceState);
+            }
+            else
+            {
+                stateMachine.TransitionToState(stateMachine.BlockStanceState);
+            }
+        }
+
+        public override void HandleSecondaryUpInput()
+        {
+            controllerReference.BlockAttack.IsBlocking = false;
+        }
     }
 }

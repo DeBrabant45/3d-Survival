@@ -3,16 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeWeaponAttackState : MeleeState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    public override void EnterState(AgentController controller, WeaponItemSO weapon)
+    public class MeleeWeaponAttackState : MeleeState
     {
-        base.EnterState(controller, weapon);
-    }
+        public override void EnterState(PlayerStateMachine state, AgentController controller, WeaponItemSO weapon)
+        {
+            base.EnterState(state, controller, weapon);
+        }
 
-    public override void TransitionBackFromAnimation()
-    {
-        base.TransitionBackFromAnimation();
-        DetermindNextState(controllerReference.meleeWeaponAttackState, controllerReference.meleeWeaponAttackStanceState);
+        public override void TransitionBackFromAnimation()
+        {
+            base.TransitionBackFromAnimation();
+            DetermindNextState(stateMachine.MeleeWeaponAttackState, stateMachine.MeleeWeaponAttackStanceState);
+        }
     }
 }

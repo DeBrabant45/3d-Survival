@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedWeaponAttackStanceState : AttackStanceState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    public override void HandleSecondaryHeldDownInput()
+    public class RangedWeaponAttackStanceState : AttackStanceState
     {
-        controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
-    }
+        public override void HandleSecondaryHeldDownInput()
+        {
+            stateMachine.TransitionToState(stateMachine.RangedWeaponAimState);
+        }
 
-    public override void HandleReloadInput()
-    {
-        controllerReference.TransitionToState(controllerReference.reloadRangedWeaponState);
+        public override void HandleReloadInput()
+        {
+            stateMachine.TransitionToState(stateMachine.ReloadRangedWeaponState);
+        }
     }
 }

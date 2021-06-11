@@ -30,41 +30,14 @@ public class AgentController : MonoBehaviour, ISaveable
     private AgentHealth _agentHealth;
     private AgentStamina _agentStamina;
     private PlayerInteractionSound _interactionSound;
-    private BaseState _previousState;
-    private BaseState _currentState;
 
-    #region StateObjects 
-    public readonly BaseState idleState = new IdleState();
-    public readonly BaseState jumpState = new JumpState();
-    public readonly BaseState fallingState = new FallingState();
-    public readonly BaseState inventoryState = new InventoryState();
-    public readonly BaseState interactState = new InteractState();
-    public readonly BaseState menuState = new MenuState();
-    // Attack States
-    public readonly BaseState meleeUnarmedAttackState = new MeleeUnarmedAttackState();
-    public readonly BaseState meleeWeaponAttackState = new MeleeWeaponAttackState();
-    public readonly BaseState rangedWeaponAttackState = new RangedAttackState();
-    // Attack Stances
-    public readonly BaseState meleeWeaponAttackStanceState = new MeleeWeaponAttackStanceState();
-    public readonly BaseState rangedWeaponAttackStanceState = new RangedWeaponAttackStanceState();
-    //
-    public readonly BaseState reloadRangedWeaponState = new ReloadRangedWeaponState();
-    public readonly BaseState equipItemState = new EquipItemState();
-    public readonly BaseState unequipItemState = new UnequipItemState();
-    public readonly BaseState placementState = new PlacementState();
-    public readonly BaseState blockStanceState = new BlockStanceState();
-    public readonly BaseState blockReactionState = new BlockReactionState();
-    public readonly BaseState hurtState = new HurtState();
-    public readonly BaseState rangedWeaponAimState = new RangedWeaponAimState();
-    #endregion
-
+    #region Class Getters
     public PlayerInput InputFromPlayer { get => _inputFromPlayer; }
     public AgentMovement Movement { get => _movement; }
     public HumanoidAnimations AgentAnimations { get => _agentAnimations; }
     public InventorySystem InventorySystem { get => _inventorySystem; }
     public DetectionSystem DetectionSystem { get => _detectionSystem; }
     public GameManager GameManager { get => _gameManager; }
-    public BaseState PreviousState { get => _previousState; }
     public CraftingSystem CraftingSystem { get => _craftingSystem; }
     public Transform ItemSlotTransform { get => _itemSlotTransform; }
     public AmmoSystem AmmoSystem { get => _ammoSystem; }
@@ -78,8 +51,9 @@ public class AgentController : MonoBehaviour, ISaveable
     public AgentHealth AgentHealth { get => _agentHealth; }
     public AgentStamina AgentStamina { get => _agentStamina; }
     public PlayerInteractionSound InteractionSound { get => _interactionSound; }
+    #endregion
 
-    private void OnEnable()
+    private void Awake()
     {
         _movement = GetComponent<AgentMovement>();
         _inputFromPlayer = GetComponent<PlayerInput>();
@@ -91,12 +65,10 @@ public class AgentController : MonoBehaviour, ISaveable
         _agentHealth = GetComponent<AgentHealth>();
         _agentStamina = GetComponent<AgentStamina>();
         _interactionSound = GetComponent<PlayerInteractionSound>();
-        _currentState = idleState;
-        _currentState.EnterState(this, EquippedItem);
-        AssignInputListeners();
+        _equippedItem = _unarmedAttack;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         _craftingSystem.OnCheckResourceAvailability += _inventorySystem.CheckResourceAvailability;
         _craftingSystem.OnCheckInventoryIsFull += _inventorySystem.CheckInventoryIsFull;
@@ -106,25 +78,9 @@ public class AgentController : MonoBehaviour, ISaveable
         _ammoSystem.OnAmmoItemRequest += _inventorySystem.RemoveAmmoItemCount;
         _ammoSystem.OnAmmoCountInStorage += _inventorySystem.ItemAmountInStorage;
         _ammoSystem.EquippedItemRequest += _inventorySystem.EquippedItem;
-        _inventorySystem.OnStructureUse += HandlePlacementInput;
         _inventorySystem.OnEquippedItemChange += HandleEquippedItem;
         _agentHealth.OnHealthAmountEmpty += Death;
-        _equippedItem = _unarmedAttack;
         _inventorySystem.OnItemHasBeenDropped += _interactionSound.PlayOneShotDropItem;
-    }
-
-    private void AssignInputListeners()
-    {
-        _inputFromPlayer.OnJump += HandleJump;
-        _inputFromPlayer.OnHotBarKey += HandleHotBarInput;
-        _inputFromPlayer.OnToggleInventory += HandleInventoryInput;
-        _inputFromPlayer.OnPrimaryAction += HandlePrimaryInput;
-        _inputFromPlayer.OnSecondaryClickAction += HandleSecondaryClickInput;
-        _inputFromPlayer.OnMenuToggledKey += HandleMenuInput;
-        _inputFromPlayer.OnReload += HandleReloadInput;
-        _inputFromPlayer.OnAim += HandleAimInput;
-        _inputFromPlayer.OnSecondaryHeldDownAction += HandleSecondaryHeldDownInput;
-        _inputFromPlayer.OnSecondaryUpAction += HandleSecondaryUpInput;
     }
 
     private void HandleEquippedItem()
@@ -139,70 +95,6 @@ public class AgentController : MonoBehaviour, ISaveable
         }
     }
 
-    private void HandleSecondaryUpInput()
-    {
-        _currentState.HandleSecondaryUpInput();
-    }
-
-    private void HandleSecondaryHeldDownInput()
-    {
-        _currentState.HandleSecondaryHeldDownInput();
-    }
-
-    private void HandleAimInput()
-    {
-        _currentState.HandleEquipItemInput();
-    }
-
-    private void HandleMenuInput()
-    {
-        _currentState.HandleMenuInput();
-    }
-
-    private void HandleSecondaryClickInput()
-    {
-        _currentState.HandleSecondaryClickInput();
-    }
-
-    private void HandlePrimaryInput()
-    {
-        _currentState.HandlePrimaryInput();
-    }
-
-    private void HandleJump()
-    {
-        _currentState.HandleJumpInput();
-    }
-
-    private void HandleInventoryInput()
-    {
-        _currentState.HandleInventoryInput();
-    }
-
-    private void HandleHotBarInput(int hotBarKey)
-    {
-        _currentState.HandleHotBarInput(hotBarKey);
-    }
-
-    private void HandleReloadInput()
-    {
-        _currentState.HandleReloadInput();
-    }
-
-    private void HandlePlacementInput()
-    {
-        _currentState.HandlePlacementInput();
-    }
-
-    private void Update()
-    {
-        if(Time.timeScale == 0)
-        {
-            return;
-        }
-        _currentState.Update();
-    }
-
     private void OnDrawGizmos()
     {
         if(Application.isPlaying)
@@ -210,20 +102,6 @@ public class AgentController : MonoBehaviour, ISaveable
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position + _inputFromPlayer.MovementDirectionVector, _detectionSystem.DetectionRadius);
         }
-    }
-
-    private void OnDisable()
-    {
-        _inputFromPlayer.OnJump -= _currentState.HandleJumpInput;
-    }
-
-    public void TransitionToState(BaseState state)
-    {
-        _previousState = _currentState;
-        //Debug.Log(_previousState + " old State");
-        _currentState = state;
-        _currentState.EnterState(this, EquippedItem);
-        //Debug.Log(_currentState + " new State");
     }
 
     public void SaveSpawnPoint()

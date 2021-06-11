@@ -2,25 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeUnarmedAttackState : MeleeState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    public override void EnterState(AgentController controller, WeaponItemSO weapon)
+    public class MeleeUnarmedAttackState : MeleeState
     {
-        base.EnterState(controller, weapon);
-    }
-
-    public override void TransitionBackFromAnimation()
-    {
-        base.TransitionBackFromAnimation();
-        DetermindNextState(controllerReference.meleeUnarmedAttackState, controllerReference.meleeWeaponAttackStanceState);
-    }
-
-    public override void PreformAttack(Collider hitObject)
-    {
-        var hittable = hitObject.GetComponent<IHittable>();
-        if (hittable != null)
+        public override void EnterState(PlayerStateMachine state, AgentController controller, WeaponItemSO weapon)
         {
-            hittable.GetHit(controllerReference.UnarmedAttack);
+            base.EnterState(state, controller, weapon);
+        }
+
+        public override void TransitionBackFromAnimation()
+        {
+            base.TransitionBackFromAnimation();
+            DetermindNextState(stateMachine.MeleeUnarmedAttackState, stateMachine.MeleeWeaponAttackStanceState);
+        }
+
+        public override void PreformAttack(Collider hitObject)
+        {
+            var hittable = hitObject.GetComponent<IHittable>();
+            if (hittable != null)
+            {
+                hittable.GetHit(controllerReference.UnarmedAttack);
+            }
         }
     }
 }

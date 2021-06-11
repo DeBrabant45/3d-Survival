@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeWeaponAttackStanceState : AttackStanceState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    public override void HandlePrimaryInput()
+    public class MeleeWeaponAttackStanceState : AttackStanceState
     {
-        controllerReference.AgentAimController.IsAimActive = false;
-        if (controllerReference.AgentStamina.Stamina > 0)
+        public override void HandlePrimaryInput()
         {
-            controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.AttackStance, false);
-            controllerReference.TransitionToState(controllerReference.meleeWeaponAttackState);
+            controllerReference.AgentAimController.IsAimActive = false;
+            if (controllerReference.AgentStamina.Stamina > 0)
+            {
+                controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.AttackStance, false);
+                stateMachine.TransitionToState(stateMachine.MeleeWeaponAttackState);
+            }
         }
-    }
 
-    public override void HandleSecondaryHeldDownInput()
-    {
-        controllerReference.TransitionToState(controllerReference.blockStanceState);
+        public override void HandleSecondaryHeldDownInput()
+        {
+            stateMachine.TransitionToState(stateMachine.BlockStanceState);
+        }
     }
 }

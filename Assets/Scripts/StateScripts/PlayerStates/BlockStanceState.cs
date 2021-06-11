@@ -3,27 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockStanceState : MovementState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    public override void EnterState(AgentController controller, WeaponItemSO weapon)
+    public class BlockStanceState : MovementState
     {
-        base.EnterState(controller, weapon);
-        controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.BlockStanceAnimation, true);
-        controllerReference.BlockAttack.IsBlocking = true;
-        controllerReference.BlockAttack.OnBlockSuccessful += BlockReaction;
-    }
+        public override void EnterState(PlayerStateMachine state, AgentController controller, WeaponItemSO weapon)
+        {
+            base.EnterState(state, controller, weapon);
+            controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.BlockStanceAnimation, true);
+            controllerReference.BlockAttack.IsBlocking = true;
+            controllerReference.BlockAttack.OnBlockSuccessful += BlockReaction;
+        }
 
-    private void BlockReaction()
-    {
-        controllerReference.BlockAttack.OnBlockSuccessful -= BlockReaction;
-        controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.BlockStanceAnimation, false);
-        controllerReference.TransitionToState(controllerReference.blockReactionState);
-    }
+        private void BlockReaction()
+        {
+            controllerReference.BlockAttack.OnBlockSuccessful -= BlockReaction;
+            controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.BlockStanceAnimation, false);
+            stateMachine.TransitionToState(stateMachine.BlockReactionState);
+        }
 
-    public override void HandleSecondaryUpInput()
-    {
-        controllerReference.BlockAttack.IsBlocking = false;
-        controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
-        controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.BlockStanceAnimation, false);
+        public override void HandleSecondaryUpInput()
+        {
+            controllerReference.BlockAttack.IsBlocking = false;
+            stateMachine.TransitionToState(stateMachine.MeleeWeaponAttackStanceState);
+            controllerReference.AgentAnimations.SetBoolForAnimation(WeaponItem.BlockStanceAnimation, false);
+        }
     }
 }

@@ -3,56 +3,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MeleeState : BaseState, IAttackable
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    private bool _isComboTriggered = false;
-    public WeaponItemSO EquippedWeapon { get => WeaponItem; }
-
-    public override void EnterState(AgentController controller, WeaponItemSO weapon)
+    public abstract class MeleeState : BaseState, IAttackable
     {
-        base.EnterState(controller, weapon);
-        _isComboTriggered = false;
-        controllerReference.Movement.StopMovement();
-        controllerReference.ItemSlot.DamageCollider.OnCollisionSuccessful += PreformAttack;
-        controllerReference.AgentAnimations.SetTriggerForAnimation(WeaponItem.AttackTriggerAnimation);
-        controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBackFromAnimation;
-        controllerReference.AgentStamina.ReduceStamina(10);
-    }
+        private bool _isComboTriggered = false;
+        public WeaponItemSO EquippedWeapon { get => WeaponItem; }
 
-    public virtual void PreformAttack(Collider hitObject)
-    {
-        var hittable = hitObject.GetComponent<IHittable>();
-        if (hittable != null && hitObject.gameObject != controllerReference.gameObject) 
+        public override void EnterState(PlayerStateMachine state, AgentController controller, WeaponItemSO weapon)
         {
-            var spawnAttackHitEffect = new SpawnGameObject(WeaponItem.AttackHitEffect);
-            spawnAttackHitEffect.CreateTemporaryObject(controllerReference.ItemSlotTransform);
-            hittable.GetHit(WeaponItem);
+            base.EnterState(state, controller, weapon);
+            _isComboTriggered = false;
+            controllerReference.Movement.StopMovement();
+            controllerReference.ItemSlot.DamageCollider.OnCollisionSuccessful += PreformAttack;
+            controllerReference.AgentAnimations.SetTriggerForAnimation(WeaponItem.AttackTriggerAnimation);
+            controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBackFromAnimation;
+            controllerReference.AgentStamina.ReduceStamina(10);
         }
-    }
 
-    public virtual void TransitionBackFromAnimation()
-    {
-        controllerReference.AgentAnimations.OnFinishedAttacking -= TransitionBackFromAnimation;
-        controllerReference.ItemSlot.DamageCollider.OnCollisionSuccessful -= PreformAttack;
-    }
-
-    public void DetermindNextState(BaseState nextState, BaseState returnState)
-    {
-        if (_isComboTriggered == true && controllerReference.AgentStamina.Stamina > 0)
+        public virtual void PreformAttack(Collider hitObject)
         {
-            controllerReference.TransitionToState(nextState);
+            var hittable = hitObject.GetComponent<IHittable>();
+            if (hittable != null && hitObject.gameObject != controllerReference.gameObject)
+            {
+                var spawnAttackHitEffect = new SpawnGameObject(WeaponItem.AttackHitEffect);
+                spawnAttackHitEffect.CreateTemporaryObject(controllerReference.ItemSlotTransform);
+                hittable.GetHit(WeaponItem);
+            }
         }
-        else
-        {
-            controllerReference.TransitionToState(returnState);
-        }
-    }
 
-    public override void HandlePrimaryInput()
-    {
-        if(_isComboTriggered == false)
+        public virtual void TransitionBackFromAnimation()
         {
-            _isComboTriggered = true;
+            controllerReference.AgentAnimations.OnFinishedAttacking -= TransitionBackFromAnimation;
+            controllerReference.ItemSlot.DamageCollider.OnCollisionSuccessful -= PreformAttack;
+        }
+
+        public void DetermindNextState(BaseState nextState, BaseState returnState)
+        {
+            if (_isComboTriggered == true && controllerReference.AgentStamina.Stamina > 0)
+            {
+                stateMachine.TransitionToState(nextState);
+            }
+            else
+            {
+                stateMachine.TransitionToState(returnState);
+            }
+        }
+
+        public override void HandlePrimaryInput()
+        {
+            if (_isComboTriggered == false)
+            {
+                _isComboTriggered = true;
+            }
         }
     }
 }

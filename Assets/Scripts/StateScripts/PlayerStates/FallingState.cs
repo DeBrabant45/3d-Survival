@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallingState : JumpState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    public override void EnterState(AgentController controller, WeaponItemSO weapon)
+    public class FallingState : JumpState
     {
-        base.EnterState(controller, weapon);
-        controllerReference.AgentAnimations.SetTriggerForAnimation("fall");
-        controllerReference.Movement.SetCompletedJumpFalse();
-    }
+        public override void EnterState(PlayerStateMachine state, AgentController controller, WeaponItemSO weapon)
+        {
+            base.EnterState(state, controller, weapon);
+            controllerReference.AgentAnimations.SetTriggerForAnimation("fall");
+            controllerReference.Movement.SetCompletedJumpFalse();
+        }
 
-    public override void Update()
-    {
-        base.Update();
+        public override void Update()
+        {
+            base.Update();
+        }
     }
 }

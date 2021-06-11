@@ -3,53 +3,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlacementState : MovementState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    private PlacementHelper _placementHelper;
-    public override void EnterState(AgentController controller, WeaponItemSO weapon)
+    public class PlacementState : MovementState
     {
-        base.EnterState(controller, weapon);
-        CreateStructureToPlace();
-    }
-
-    private void CreateStructureToPlace()
-    {
-        _placementHelper = ItemSpawnManager.Instance.CreateStructure(controllerReference.InventorySystem.SelectedStructureData);
-        _placementHelper.PrepareForMovement();
-        Debug.Log("Creating a structure to place");
-    }
-
-    public override void HandlePrimaryInput()
-    {
-        if(_placementHelper.CorrectLocation)
+        private PlacementHelper _placementHelper;
+        public override void EnterState(PlayerStateMachine state, AgentController controller, WeaponItemSO weapon)
         {
-            var structureComponent = _placementHelper.PrepareForPlacement();
-            structureComponent.SetData(controllerReference.InventorySystem.SelectedStructureData);
-            _placementHelper.enabled = false;
-            controllerReference.InventorySystem.RemoveSelectedStructureFromInventory();
-            controllerReference.BuildingPlacementStorage.SaveStructureReference(structureComponent);
-            HandleSecondaryClickInput();
+            base.EnterState(state, controller, weapon);
+            CreateStructureToPlace();
         }
-    }
 
-    public override void HandleSecondaryClickInput()
-    {
-        Debug.Log("Existing Placement State");
-        if(_placementHelper.isActiveAndEnabled)
+        private void CreateStructureToPlace()
         {
-            DestroyPlacedObject();
+            _placementHelper = ItemSpawnManager.Instance.CreateStructure(controllerReference.InventorySystem.SelectedStructureData);
+            _placementHelper.PrepareForMovement();
+            Debug.Log("Creating a structure to place");
         }
-        controllerReference.TransitionToState(controllerReference.idleState);
-    }
 
-    private void DestroyPlacedObject()
-    {
-        Debug.Log("Destroying placed object");
-        _placementHelper.DestroyStructure();
-    }
+        public override void HandlePrimaryInput()
+        {
+            if (_placementHelper.CorrectLocation)
+            {
+                var structureComponent = _placementHelper.PrepareForPlacement();
+                structureComponent.SetData(controllerReference.InventorySystem.SelectedStructureData);
+                _placementHelper.enabled = false;
+                controllerReference.InventorySystem.RemoveSelectedStructureFromInventory();
+                controllerReference.BuildingPlacementStorage.SaveStructureReference(structureComponent);
+                HandleSecondaryClickInput();
+            }
+        }
 
-    public override void HandleMenuInput()
-    {
-        controllerReference.TransitionToState(controllerReference.menuState);
+        public override void HandleSecondaryClickInput()
+        {
+            Debug.Log("Existing Placement State");
+            if (_placementHelper.isActiveAndEnabled)
+            {
+                DestroyPlacedObject();
+            }
+            stateMachine.TransitionToState(stateMachine.IdleState);
+        }
+
+        private void DestroyPlacedObject()
+        {
+            Debug.Log("Destroying placed object");
+            _placementHelper.DestroyStructure();
+        }
+
+        public override void HandleMenuInput()
+        {
+            stateMachine.TransitionToState(stateMachine.MenuState);
+        }
     }
 }

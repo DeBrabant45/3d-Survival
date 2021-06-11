@@ -2,62 +2,65 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MovementState : BaseState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    protected float _defaultFallingDelay = 0.2f;
-    protected float _fallingDelay = 0;
-
-    public override void EnterState(AgentController controller, WeaponItemSO weapon)
+    public abstract class MovementState : BaseState
     {
-        base.EnterState(controller, weapon);
-        _fallingDelay = _defaultFallingDelay;
-    }
+        protected float _defaultFallingDelay = 0.2f;
+        protected float _fallingDelay = 0;
 
-    public override void HandleCameraDirection(Vector3 input)
-    {
-        base.HandleCameraDirection(input);
-        controllerReference.Movement.HandleMovementDirection(input);
-    }
-
-    public override void HandleMovement(Vector2 input)
-    {
-        base.HandleMovement(input);
-        controllerReference.Movement.HandleMovement(input);
-    }
-
-    public override void HandleJumpInput()
-    {
-        controllerReference.TransitionToState(controllerReference.jumpState);
-    }
-
-    public override void Update()
-    {
-        base.Update();
-        PreformDetection();
-        HandleMovement(controllerReference.InputFromPlayer.MovementInputVector);
-        HandleCameraDirection(controllerReference.InputFromPlayer.MovementDirectionVector);
-        HandleFallingDown();
-    }
-
-    protected void HandleFallingDown()
-    {
-        if (controllerReference.Movement.CharacterIsGrounded() == false)
+        public override void EnterState(PlayerStateMachine state, AgentController controller, WeaponItemSO weapon)
         {
-            if (_fallingDelay > 0)
-            {
-                _fallingDelay -= Time.deltaTime;
-                return;
-            }
-            controllerReference.TransitionToState(controllerReference.fallingState);
-        }
-        else
-        {
+            base.EnterState(state, controller, weapon);
             _fallingDelay = _defaultFallingDelay;
         }
-    }
 
-    private void PreformDetection()
-    {
-        controllerReference.DetectionSystem.PreformDetection(controllerReference.InputFromPlayer.MovementDirectionVector);
+        public override void HandleCameraDirection(Vector3 input)
+        {
+            base.HandleCameraDirection(input);
+            controllerReference.Movement.HandleMovementDirection(input);
+        }
+
+        public override void HandleMovement(Vector2 input)
+        {
+            base.HandleMovement(input);
+            controllerReference.Movement.HandleMovement(input);
+        }
+
+        public override void HandleJumpInput()
+        {
+            stateMachine.TransitionToState(stateMachine.JumpState);
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            PreformDetection();
+            HandleMovement(controllerReference.InputFromPlayer.MovementInputVector);
+            HandleCameraDirection(controllerReference.InputFromPlayer.MovementDirectionVector);
+            HandleFallingDown();
+        }
+
+        protected void HandleFallingDown()
+        {
+            if (controllerReference.Movement.CharacterIsGrounded() == false)
+            {
+                if (_fallingDelay > 0)
+                {
+                    _fallingDelay -= Time.deltaTime;
+                    return;
+                }
+                stateMachine.TransitionToState(stateMachine.FallingState);
+            }
+            else
+            {
+                _fallingDelay = _defaultFallingDelay;
+            }
+        }
+
+        private void PreformDetection()
+        {
+            controllerReference.DetectionSystem.PreformDetection(controllerReference.InputFromPlayer.MovementDirectionVector);
+        }
     }
 }

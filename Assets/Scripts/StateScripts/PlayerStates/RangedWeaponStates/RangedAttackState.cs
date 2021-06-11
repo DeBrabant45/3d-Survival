@@ -2,88 +2,91 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedAttackState : BaseState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    private IAmmo _rangedItemAmmo;
-    public override void EnterState(AgentController controller, WeaponItemSO weapon)
+    public class RangedAttackState : BaseState
     {
-        base.EnterState(controller, weapon);
-        _rangedItemAmmo = controllerReference.ItemSlotTransform.GetComponentInChildren<IAmmo>();
-        if(_rangedItemAmmo != null)
+        private IAmmo _rangedItemAmmo;
+        public override void EnterState(PlayerStateMachine state, AgentController controller, WeaponItemSO weapon)
         {
-            if(_rangedItemAmmo.IsAmmoEmpty() == false)
+            base.EnterState(state, controller, weapon);
+            _rangedItemAmmo = controllerReference.ItemSlotTransform.GetComponentInChildren<IAmmo>();
+            if (_rangedItemAmmo != null)
             {
-                controllerReference.Movement.StopMovement();
-                controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBack;
-                controllerReference.AgentAnimations.SetTriggerForAnimation(WeaponItem.AttackTriggerAnimation);
-                controllerReference.DetectionSystem.OnRangeAttackSuccessful += PreformShoot;
-                RemoveAmmoWhenShooting();
+                if (_rangedItemAmmo.IsAmmoEmpty() == false)
+                {
+                    controllerReference.Movement.StopMovement();
+                    controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBack;
+                    controllerReference.AgentAnimations.SetTriggerForAnimation(WeaponItem.AttackTriggerAnimation);
+                    controllerReference.DetectionSystem.OnRangeAttackSuccessful += PreformShoot;
+                    RemoveAmmoWhenShooting();
+                }
+                else
+                {
+                    stateMachine.TransitionToState(stateMachine.ReloadRangedWeaponState);
+                }
             }
             else
             {
-                controllerReference.TransitionToState(controllerReference.reloadRangedWeaponState);
+                stateMachine.TransitionToState(stateMachine.PreviousState);
             }
         }
-        else
+
+        public override void HandleSecondaryUpInput()
         {
-            controllerReference.TransitionToState(controllerReference.PreviousState);
+            controllerReference.AgentAimController.IsHandsConstraintActive = false;
+            controllerReference.AgentAnimations.SetBoolForAnimation(((RangedWeaponItemSO)WeaponItem).WeaponAimAnimation, false);
         }
-    }
 
-    public override void HandleSecondaryUpInput()
-    {
-        controllerReference.AgentAimController.IsHandsConstraintActive = false;
-        controllerReference.AgentAnimations.SetBoolForAnimation(((RangedWeaponItemSO)WeaponItem).WeaponAimAnimation, false);
-    }
-
-    private void RemoveAmmoWhenShooting()
-    {
-        _rangedItemAmmo.RemoveFromCurrentAmmoCount();
-    }
-
-    private void TransitionBack()
-    {
-        controllerReference.AgentAnimations.OnFinishedAttacking -= TransitionBack;
-        controllerReference.DetectionSystem.OnRangeAttackSuccessful -= PreformShoot;
-        if (controllerReference.AgentAimController.IsHandsConstraintActive == true)
+        private void RemoveAmmoWhenShooting()
         {
-            controllerReference.TransitionToState(controllerReference.rangedWeaponAimState);
+            _rangedItemAmmo.RemoveFromCurrentAmmoCount();
         }
-        else
+
+        private void TransitionBack()
         {
-            controllerReference.TransitionToState(controllerReference.rangedWeaponAttackStanceState);
+            controllerReference.AgentAnimations.OnFinishedAttacking -= TransitionBack;
+            controllerReference.DetectionSystem.OnRangeAttackSuccessful -= PreformShoot;
+            if (controllerReference.AgentAimController.IsHandsConstraintActive == true)
+            {
+                stateMachine.TransitionToState(stateMachine.RangedWeaponAimState);
+            }
+            else
+            {
+                stateMachine.TransitionToState(stateMachine.RangedWeaponAttackStanceState);
+            }
         }
-    }
 
-    public void PreformShoot(Collider hitObject, Vector3 hitPosition, RaycastHit hit)
-    {
-        var target = hitObject.transform.GetComponent<IHittable>();
-        AddDamageToTarget(target);
-        AddWeaponImpactForce(hit);
-        CreateWeaponImpactEffect(hit);
-    }
-
-    private void AddDamageToTarget(IHittable target)
-    {
-        if (target != null)
+        public void PreformShoot(Collider hitObject, Vector3 hitPosition, RaycastHit hit)
         {
-            target.GetHit(WeaponItem);
+            var target = hitObject.transform.GetComponent<IHittable>();
+            AddDamageToTarget(target);
+            AddWeaponImpactForce(hit);
+            CreateWeaponImpactEffect(hit);
         }
-    }
 
-    private void AddWeaponImpactForce(RaycastHit hit)
-    {
-        if (hit.rigidbody != null)
+        private void AddDamageToTarget(IHittable target)
         {
-            hit.rigidbody.AddForce(-hit.normal * WeaponItem.WeaponImpactForce);
+            if (target != null)
+            {
+                target.GetHit(WeaponItem);
+            }
         }
-    }
 
-    private void CreateWeaponImpactEffect(RaycastHit hit)
-    {
-        var spawnAttackHitEffect = new SpawnGameObject(WeaponItem.AttackHitEffect);
-        spawnAttackHitEffect.CreateTemporaryObject(hit.point, Quaternion.LookRotation(hit.normal), 2f);
-        //GameObject impactEffect = GameObject.Instantiate(WeaponItem.AttackHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
-        //GameObject.Destroy(impactEffect, 2f);
+        private void AddWeaponImpactForce(RaycastHit hit)
+        {
+            if (hit.rigidbody != null)
+            {
+                hit.rigidbody.AddForce(-hit.normal * WeaponItem.WeaponImpactForce);
+            }
+        }
+
+        private void CreateWeaponImpactEffect(RaycastHit hit)
+        {
+            var spawnAttackHitEffect = new SpawnGameObject(WeaponItem.AttackHitEffect);
+            spawnAttackHitEffect.CreateTemporaryObject(hit.point, Quaternion.LookRotation(hit.normal), 2f);
+            //GameObject impactEffect = GameObject.Instantiate(WeaponItem.AttackHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            //GameObject.Destroy(impactEffect, 2f);
+        }
     }
 }

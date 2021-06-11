@@ -2,27 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipItemState : MovementState
+namespace Assets.Scripts.StateScripts.PlayerStates
 {
-    public override void EnterState(AgentController controller, WeaponItemSO weapon)
+    public class EquipItemState : MovementState
     {
-        base.EnterState(controller, weapon);
-        controllerReference.AgentAnimations.SetTriggerForAnimation("equipItem");
-        controllerReference.AgentAnimations.OnAnimationFunctionTrigger += EquipItem;
-    }
-
-    public void EquipItem()
-    {
-        ItemSpawnManager.Instance.SwapBackItemToPlayersHand();
-        controllerReference.AgentAnimations.OnAnimationFunctionTrigger -= EquipItem;
-        if (controllerReference.EquippedItem.WeaponTypeSO == WeaponType.Melee)
+        public override void EnterState(PlayerStateMachine state, AgentController controller, WeaponItemSO weapon)
         {
-            controllerReference.Movement.StopMovement();
-            controllerReference.TransitionToState(controllerReference.meleeWeaponAttackStanceState);
+            base.EnterState(state, controller, weapon);
+            controllerReference.AgentAnimations.SetTriggerForAnimation("equipItem");
+            controllerReference.AgentAnimations.OnAnimationFunctionTrigger += EquipItem;
         }
-        else
+
+        public void EquipItem()
         {
-            controllerReference.TransitionToState(controllerReference.rangedWeaponAttackStanceState);
+            ItemSpawnManager.Instance.SwapBackItemToPlayersHand();
+            controllerReference.AgentAnimations.OnAnimationFunctionTrigger -= EquipItem;
+            if (controllerReference.EquippedItem.WeaponTypeSO == WeaponType.Melee)
+            {
+                controllerReference.Movement.StopMovement();
+                stateMachine.TransitionToState(stateMachine.MeleeWeaponAttackStanceState);
+            }
+            else
+            {
+                stateMachine.TransitionToState(stateMachine.RangedWeaponAttackStanceState);
+            }
         }
     }
 }
