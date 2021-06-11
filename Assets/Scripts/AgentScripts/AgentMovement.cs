@@ -100,10 +100,7 @@ public class AgentMovement : MonoBehaviour
                 agentAnimations.SetAnimationInputY(0);
             }
         }
-        else
-        {
-           moveDirection.y -= _gravity;
-        }
+        moveDirection.y -= _gravity;
         AgentIsJumping();
         characterController.Move(moveDirection * _movementSpeed * Time.deltaTime);
     }
