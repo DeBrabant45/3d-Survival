@@ -11,7 +11,7 @@ public class SkeletonDefeaterTwo : Quest
     private int _requiredAmount = 2;
     private DefeatGoal _defeatGoal;
 
-    void Start()
+    private void Awake()
     {
         Title = _questName;
         Description = _questDescription;

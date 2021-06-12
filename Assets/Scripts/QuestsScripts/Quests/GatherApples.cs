@@ -11,7 +11,7 @@ public class GatherApples : Quest
     private int _requiredAmount = 5;
     private GatherGoal _gatherGoal;
 
-    void Start()
+    private void Awake()
     {
         Title = _questName;
         Description = _questDescription;

@@ -12,7 +12,7 @@ public class UIDialogue : MonoBehaviour
     [SerializeField] private Text _nameText;
     [SerializeField] private DialogueSystem _dialogueSystem;
 
-    void Awake()
+    private void Awake()
     {
         _dialoguePanel.SetActive(false);
         _continueBtn.onClick.AddListener(HandleContiune);

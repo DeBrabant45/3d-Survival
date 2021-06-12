@@ -29,7 +29,6 @@ public class NPCQuestGiver : NPC
         }
         else if (IsQuestAssigned && IsGivenQuestCompleted == false)
         {
-            Debug.Log(_quest);
             CheckCurrentQuest();
         }
         else
@@ -43,11 +42,13 @@ public class NPCQuestGiver : NPC
         IsQuestAssigned = true;
         _quest = (Quest)_activeQuests.AddComponent(Type.GetType(_questType.ToString()));
         _quest.QuestGiverName = _characterName;
+        QuestEvents.Instance.AddedQuest(_quest);
     }
 
     private void CompletedQuest()
     {
         _quest.GiveReward();
+        QuestEvents.Instance.CompletedQuest(_quest);
         IsGivenQuestCompleted = true;
         IsQuestAssigned = false;
         Destroy((Quest)_activeQuests.GetComponent(Type.GetType(_questType.ToString())));
@@ -59,8 +60,8 @@ public class NPCQuestGiver : NPC
     {
         if (_quest.IsCompleted)
         {
-            CompletedQuest();
             _dialogueSystem.AddNewDialogue(_questCompletedDialogue, _characterName);
+            CompletedQuest();
         }
         else
         {
