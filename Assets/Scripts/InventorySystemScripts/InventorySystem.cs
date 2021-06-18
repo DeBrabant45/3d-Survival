@@ -40,7 +40,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
         _uIInventory.AssignDropButtonHandler(DropHandler);
         _uIInventory.AssignUseButtonHandler(UseInventoryItemHandler);
         AddEventHandlersToHotbarUIElements();
-        _onInventoryStateChanged += RangedWeaponEvents.current.InventoryHasChanged;
+        _onInventoryStateChanged += RangedWeaponEvents.Instance.InventoryHasChanged;
     }
 
     public void RemoveSelectedStructureFromInventory()
@@ -148,7 +148,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
                     //Removes equipped item if user clicks use on already equipped item 
                     ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
-                    RangedWeaponEvents.current.RangedWeaponUnequipped();
+                    RangedWeaponEvents.Instance.RangedWeaponUnequipped();
                     _onEquippedItemChanged?.Invoke();
                     return;
                 }
@@ -157,7 +157,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
                     //Removes old equipped item if user equips another item
                     ToggleEquippedSelectedItemUI();
                     _inventoryData.UnequipItem();
-                    RangedWeaponEvents.current.RangedWeaponUnequipped();
+                    RangedWeaponEvents.Instance.RangedWeaponUnequipped();
                     _onEquippedItemChanged?.Invoke();
                 }
             }
@@ -189,7 +189,7 @@ public class InventorySystem : MonoBehaviour, ISaveable
     {
         if (itemData.GetType() == typeof(RangedWeaponItemSO))
         {
-            RangedWeaponEvents.current.RangedWeaponEquipped((RangedWeaponItemSO)itemData);
+            RangedWeaponEvents.Instance.RangedWeaponEquipped((RangedWeaponItemSO)itemData);
         }
     }
 

@@ -14,6 +14,7 @@ public class EnemyNPC : MonoBehaviour, IEnemy
     [SerializeField] private bool _isWalkPointSet;
     [SerializeField] private float _walkPointRange;
     [SerializeField] float _sightRange;
+    [SerializeField] float _hearingRange;
     [SerializeField] float _attackRange;
     [SerializeField] bool _isPlayerInSightRange;
     [SerializeField] bool _isPlayerAttackRange;
@@ -27,8 +28,12 @@ public class EnemyNPC : MonoBehaviour, IEnemy
     private HurtEmissions _hurtEmissions;
     private AgentColliders _agentColliders;
     private AgentHealth _agentHealth;
+
     private float _lastAttackTime = 0;
     private float _lastTimeMoved = 0f;
+
+    [SerializeField] private bool _isOnAlert = false;
+    private Vector3 _alertedPosition;
 
     public int EnemyID { get => _emenyID; }
 
@@ -44,12 +49,27 @@ public class EnemyNPC : MonoBehaviour, IEnemy
         _agentHealth.OnHealthAmountEmpty += Death;
     }
 
+    private void Start()
+    {
+        RangedWeaponEvents.Instance.OnRangedWeaponIsFiring += CheckAgentIsAlerted;
+    }
+
+    private void CheckAgentIsAlerted(Vector3 position)
+    {
+        float dist = Vector3.Distance(transform.position, position);
+        if (_hearingRange >= dist)
+        {
+            _alertedPosition = position;
+            _isOnAlert = true;
+        }
+    }
+
     private void Update()
     {
         _isPlayerInSightRange = Physics.CheckSphere(transform.position, _sightRange, _isPlayer);
         _isPlayerAttackRange = Physics.CheckSphere(transform.position, _attackRange, _isPlayer);
 
-        if (_isPlayerInSightRange == false && _isPlayerAttackRange == false)
+        if (_isPlayerInSightRange == false && _isPlayerAttackRange == false && _isOnAlert == false)
         {
             Patroling();
         }
@@ -61,7 +81,21 @@ public class EnemyNPC : MonoBehaviour, IEnemy
         {
             AttackPlayer();
         }
+        if(_isOnAlert && !_isPlayerInSightRange && !_isPlayerAttackRange)
+        {
+            Investigate();
+        }
         _animator.SetFloat("move", _agent.velocity.magnitude);
+    }
+
+    private void Investigate()
+    {
+        _agent.SetDestination(_alertedPosition);
+        if (_agent.remainingDistance <= _agent.stoppingDistance)
+        {
+            Debug.Log("I ran");
+            _isOnAlert = false;
+        }
     }
 
     private void Patroling()
@@ -100,6 +134,7 @@ public class EnemyNPC : MonoBehaviour, IEnemy
 
     private void ChasePlayer()
     {
+        Debug.Log("I see the player");
         _agent.SetDestination(_player.position);
     }
 

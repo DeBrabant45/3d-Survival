@@ -15,10 +15,10 @@ public class UIAmmo : MonoBehaviour
     private void Start()
     {
         _ammoPanel.SetActive(false);
-        RangedWeaponEvents.current.onRangedWeaponEquipped += ActivateAmmoPanel;
-        RangedWeaponEvents.current.onRangedWeaponUnequipped += InActivateAmmoPanel;
-        RangedWeaponEvents.current.onRangedWeaponAmmoAmmountChange += SetAmmoInGun;
-        RangedWeaponEvents.current.onInventoryHasChanged += SetStorageAmmoCount;
+        RangedWeaponEvents.Instance.OnRangedWeaponEquipped += ActivateAmmoPanel;
+        RangedWeaponEvents.Instance.OnRangedWeaponUnequipped += InActivateAmmoPanel;
+        RangedWeaponEvents.Instance.OnRangedWeaponAmmoAmmountChange += SetAmmoInGun;
+        RangedWeaponEvents.Instance.OnInventoryHasChanged += SetStorageAmmoCount;
     }
 
     public void ActivateAmmoPanel(RangedWeaponItemSO equippedRangedItem)

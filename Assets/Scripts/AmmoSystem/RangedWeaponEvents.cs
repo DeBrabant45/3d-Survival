@@ -6,34 +6,40 @@ using UnityEngine.Events;
 
 public class RangedWeaponEvents : MonoBehaviour
 {
-    public static RangedWeaponEvents current;
-    public event Action<RangedWeaponItemSO> onRangedWeaponEquipped;
-    public event Action onRangedWeaponUnequipped;
-    public event Action onInventoryHasChanged;
-    public event Action<int> onRangedWeaponAmmoAmmountChange;
+    public static RangedWeaponEvents Instance;
+    public event Action<RangedWeaponItemSO> OnRangedWeaponEquipped;
+    public event Action OnRangedWeaponUnequipped;
+    public event Action OnInventoryHasChanged;
+    public event Action<int> OnRangedWeaponAmmoAmmountChange;
+    public event Action<Vector3> OnRangedWeaponIsFiring;
 
     private void Awake()
     {
-        current = this;
-    } 
+        Instance = this;
+    }
+    
+    public void RangedWeaponIsFiring(Vector3 position)
+    {
+        OnRangedWeaponIsFiring?.Invoke(position);
+    }
 
     public void RangedWeaponAmmoAmountChange(int amount)
     {
-        onRangedWeaponAmmoAmmountChange?.Invoke(amount);
+        OnRangedWeaponAmmoAmmountChange?.Invoke(amount);
     }    
 
     public void RangedWeaponEquipped(RangedWeaponItemSO rangedWeapon)
     {
-        onRangedWeaponEquipped?.Invoke(rangedWeapon);
+        OnRangedWeaponEquipped?.Invoke(rangedWeapon);
     }
 
     public void RangedWeaponUnequipped()
     {
-        onRangedWeaponUnequipped?.Invoke();
+        OnRangedWeaponUnequipped?.Invoke();
     }
 
     public void InventoryHasChanged()
     {
-        onInventoryHasChanged?.Invoke();
+        OnInventoryHasChanged?.Invoke();
     }
 }

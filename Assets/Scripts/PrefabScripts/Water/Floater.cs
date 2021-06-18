@@ -27,12 +27,12 @@ namespace Assets.Scripts.PrefabScripts
 
         public void FixedUpdate()
         {
-            if(water != null)
+            if (water != null)
             {
-                if(transform.position.y < waterHeight + 0.2)
+                if (transform.position.y < waterHeight + 0.2)
                 {
                     floaterWorking = true;
-                    if(water == null)
+                    if (water == null)
                     {
                         return;
                     }
@@ -42,7 +42,7 @@ namespace Assets.Scripts.PrefabScripts
                     Vector3 worldPos = water.transform.TransformPoint(localPos);
                     waveHeight = worldPos.y;
 
-                    if(transform.position.y < waveHeight)
+                    if (transform.position.y < waveHeight)
                     {
                         float displacementMultiplier = Mathf.Clamp01((waveHeight - transform.position.y) / depthBeforeSubMerged) * displacementAmount / floaterCount;
                         rigidbody.AddForceAtPosition(new Vector3(0f, Mathf.Abs(Physics.gravity.y) * displacementMultiplier, 0f), transform.position, ForceMode.Acceleration);
@@ -50,7 +50,7 @@ namespace Assets.Scripts.PrefabScripts
                         rigidbody.AddTorque(displacementMultiplier * -rigidbody.angularVelocity * waterAngularDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
                     }
                 }
-            } 
+            }
             else
             {
                 floaterWorking = false;

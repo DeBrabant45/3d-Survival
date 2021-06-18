@@ -19,6 +19,7 @@ namespace Assets.Scripts.StateScripts.PlayerStates
                     controllerReference.AgentAnimations.OnFinishedAttacking += TransitionBack;
                     controllerReference.AgentAnimations.SetTriggerForAnimation(WeaponItem.AttackTriggerAnimation);
                     controllerReference.DetectionSystem.OnRangeAttackSuccessful += PreformShoot;
+                    RangedWeaponEvents.Instance.RangedWeaponIsFiring(controller.transform.position);
                     RemoveAmmoWhenShooting();
                 }
                 else
