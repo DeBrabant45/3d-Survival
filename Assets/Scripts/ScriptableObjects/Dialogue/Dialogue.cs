@@ -2,35 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.ScriptableObjects.Dialogue
 {
     [CreateAssetMenu(fileName = "New Dialogue", menuName = "Dialogue", order = 0)]
-    public class Dialogue : ScriptableObject
+    public class Dialogue : ScriptableObject, ISerializationCallbackReceiver
     {
         [SerializeField] private List<DialogueNode> _nodes = new List<DialogueNode>();
         private Dictionary<string, DialogueNode> _nodeLookUp = new Dictionary<string, DialogueNode>();
-
-#if UNITY_EDITOR
-        private void Awake()
-        {
-            if(_nodes.Count == 0)
-            {
-                var rootNode = new DialogueNode();
-                rootNode.UniqueID = Guid.NewGuid().ToString();
-                _nodes.Add(rootNode);
-            }
-            OnValidate();
-        }
-#endif
 
         private void OnValidate()
         {
             _nodeLookUp.Clear();
             foreach (var node in GetAllNodes())
             {
-                _nodeLookUp[node.UniqueID] = node;
+                _nodeLookUp[node.name] = node;
             }
         }
 
@@ -60,9 +48,13 @@ namespace Assets.Scripts.ScriptableObjects.Dialogue
 
         public void CreateNode(DialogueNode parent)
         {
-            var newNode = new DialogueNode();
-            newNode.UniqueID = Guid.NewGuid().ToString();
-            parent.ChildernUniqueID.Add(newNode.UniqueID);
+            var newNode = CreateInstance<DialogueNode>();
+            newNode.name = Guid.NewGuid().ToString();
+            Undo.RegisterCreatedObjectUndo(newNode, "Create Dialogue Node");
+            if (parent != null)
+            {
+                parent.ChildernUniqueID.Add(newNode.name);
+            }
             _nodes.Add(newNode);
             OnValidate();
         }
@@ -72,14 +64,37 @@ namespace Assets.Scripts.ScriptableObjects.Dialogue
             _nodes.Remove(nodeToDelete);
             OnValidate();
             RemoveLeftOverChildNodes(nodeToDelete);
+            Undo.DestroyObjectImmediate(nodeToDelete);
         }
 
         private void RemoveLeftOverChildNodes(DialogueNode nodeToDelete)
         {
             foreach (var node in GetAllNodes())
             {
-                node.ChildernUniqueID.Remove(nodeToDelete.UniqueID);
+                node.ChildernUniqueID.Remove(nodeToDelete.name);
             }
+        }
+
+        public void OnBeforeSerialize()
+        {
+            if (_nodes.Count == 0)
+            {
+                CreateNode(null);
+            }
+            if (AssetDatabase.GetAssetPath(this) != "")
+            {
+                foreach (DialogueNode node in GetAllNodes())
+                {
+                    if (AssetDatabase.GetAssetPath(node) == "")
+                    {
+                        AssetDatabase.AddObjectToAsset(node, this);
+                    }
+                }
+            }
+        }
+
+        public void OnAfterDeserialize()
+        {
         }
     }
 }

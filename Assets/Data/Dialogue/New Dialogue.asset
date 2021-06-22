@@ -7,30 +7,74 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1176ef3d1acdec24fa7a0d32712e6e1f, type: 3}
   m_Name: New Dialogue
   m_EditorClassIdentifier: 
   _nodes:
-  - UniqueID: 2317ed80-16f8-447a-8abb-6bee85653125
-    Text: Hello there
-    ChildernUniqueID:
-    - 7386a3ac-e443-48ed-95f5-6660858378c0
-    RectPosition:
-      serializedVersion: 2
-      x: 36
-      y: 42
-      width: 200
-      height: 200
-  - UniqueID: 7386a3ac-e443-48ed-95f5-6660858378c0
-    Text: 
-    ChildernUniqueID:
-    - 5efc0c88-61b1-4025-8e69-c67b617fba4b
-    - 78432da0-2c2d-4e98-a50b-2dd276f416eb
-    RectPosition:
-      serializedVersion: 2
-      x: 354
-      y: 72
-      width: 200
-      height: 200
+  - {fileID: 213749535768143947}
+  - {fileID: 8036555602661876513}
+  - {fileID: 7829219630011807806}
+--- !u!114 &213749535768143947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: dc3d541e-dcc9-41f3-a7ff-5b32249dbad8
+  m_EditorClassIdentifier: 
+  Text: Parent
+  ChildernUniqueID:
+  - 90c597db-7b02-4473-9277-065a66f8adbd
+  RectPosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 200
+    height: 200
+--- !u!114 &7829219630011807806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 5a4ca527-f1f7-4413-9349-693db2f410e7
+  m_EditorClassIdentifier: 
+  Text: Childs child
+  ChildernUniqueID: []
+  RectPosition:
+    serializedVersion: 2
+    x: 175
+    y: 184
+    width: 200
+    height: 200
+--- !u!114 &8036555602661876513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 90c597db-7b02-4473-9277-065a66f8adbd
+  m_EditorClassIdentifier: 
+  Text: Child
+  ChildernUniqueID:
+  - 5a4ca527-f1f7-4413-9349-693db2f410e7
+  RectPosition:
+    serializedVersion: 2
+    x: 290
+    y: 57
+    width: 200
+    height: 200
