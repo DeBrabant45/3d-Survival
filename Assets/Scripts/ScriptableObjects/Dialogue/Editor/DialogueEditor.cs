@@ -15,6 +15,7 @@ namespace Assets.Scripts.ScriptableObjects.Dialogue.Editor
         private const float _backgroundSize = 50;
 
         [NonSerialized] private GUIStyle _nodeStyle = null;
+        [NonSerialized] private GUIStyle _playerNodeStyle = null;
         [NonSerialized] private DialogueNode _draggingNode = null;
         [NonSerialized] private Vector2 _draggingOffSet;
         [NonSerialized] private DialogueNode _createNode = null;
@@ -44,16 +45,16 @@ namespace Assets.Scripts.ScriptableObjects.Dialogue.Editor
         private void OnEnable()
         {
             Selection.selectionChanged += OnSelectionChanged;
-            SetStyleForNode();
+            SetStyleForNode(_nodeStyle = new GUIStyle(), "node0");
+            SetStyleForNode(_playerNodeStyle = new GUIStyle(), "node1");
         }
 
-        private void SetStyleForNode()
+        private void SetStyleForNode(GUIStyle nodeStyle, string background)
         {
-            _nodeStyle = new GUIStyle();
-            _nodeStyle.normal.background = EditorGUIUtility.Load("node0") as Texture2D;
-            _nodeStyle.normal.textColor = Color.white;
-            _nodeStyle.padding = new RectOffset(20, 20, 20, 20);
-            _nodeStyle.border = new RectOffset(12, 12, 12, 12);
+            nodeStyle.normal.background = EditorGUIUtility.Load(background) as Texture2D;
+            nodeStyle.normal.textColor = Color.white;
+            nodeStyle.padding = new RectOffset(20, 20, 20, 20);
+            nodeStyle.border = new RectOffset(12, 12, 12, 12);
         }
 
         private void OnSelectionChanged()
@@ -85,13 +86,11 @@ namespace Assets.Scripts.ScriptableObjects.Dialogue.Editor
                 EditorGUILayout.EndScrollView();
                 if(_createNode != null)
                 {
-                    Undo.RecordObject(_selectedDialogue, "Added Dialogue Node");
                     _selectedDialogue.CreateNode(_createNode);
                     _createNode = null;
                 }
                 if(_deleteNode != null)
                 {
-                    Undo.RecordObject(_selectedDialogue, "Deleted Dialogue Node");
                     _selectedDialogue.DeleteNode(_deleteNode);
                     _deleteNode = null;
                 }
@@ -126,8 +125,7 @@ namespace Assets.Scripts.ScriptableObjects.Dialogue.Editor
             }
             else if (Event.current.type == EventType.MouseDrag && _draggingNode != null)
             {
-                Undo.RecordObject(_selectedDialogue, "Update Dialogue Rect Position");
-                _draggingNode.RectPosition.position = Event.current.mousePosition + _draggingOffSet;
+                _draggingNode.SetPosition(Event.current.mousePosition + _draggingOffSet);
                 GUI.changed = true;
             }
             else if (Event.current.type == EventType.MouseDrag && _isDraggingCanvas)
@@ -160,14 +158,13 @@ namespace Assets.Scripts.ScriptableObjects.Dialogue.Editor
 
         private void DrawNode(DialogueNode node)
         {
-            GUILayout.BeginArea(node.RectPosition, _nodeStyle);
-            EditorGUI.BeginChangeCheck();
-            var newText = EditorGUILayout.TextField(node.Text);
-            if (EditorGUI.EndChangeCheck())
+            GUIStyle style = _nodeStyle;
+            if(node.IsPlayerSpeaking)
             {
-                Undo.RecordObject(_selectedDialogue, "Update Dialogue Text");
-                node.Text = newText;
+                style = _playerNodeStyle;
             }
+            GUILayout.BeginArea(node.RectPosition, style);
+            node.SetText(EditorGUILayout.TextField(node.Text));
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("+"))
             {
@@ -198,12 +195,11 @@ namespace Assets.Scripts.ScriptableObjects.Dialogue.Editor
                     _linkParentNode = null;
                 }
             }
-            else if(_linkParentNode.ChildernUniqueID.Contains(node.name))
+            else if(_linkParentNode.Children.Contains(node.name))
             {
                 if (GUILayout.Button("unlink"))
                 {
-                    Undo.RecordObject(_selectedDialogue, "Remove Dialogue Link");
-                    _linkParentNode.ChildernUniqueID.Remove(node.name);
+                    _linkParentNode.RemoveChild(node.name);
                     _linkParentNode = null;
                 }
             }
@@ -211,8 +207,7 @@ namespace Assets.Scripts.ScriptableObjects.Dialogue.Editor
             {
                 if (GUILayout.Button("child"))
                 {
-                    Undo.RecordObject(_selectedDialogue, "Add Dialogue Link");
-                    _linkParentNode.ChildernUniqueID.Add(node.name);
+                    _linkParentNode.AddChild(node.name);
                     _linkParentNode = null;
                 }
             }
