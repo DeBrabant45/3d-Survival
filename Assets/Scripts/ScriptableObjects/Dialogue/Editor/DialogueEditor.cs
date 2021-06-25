@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
-namespace Assets.Scripts.ScriptableObjects.Dialogue.Editor
+namespace AD.Dialogue.Editor
 {
     public class DialogueEditor : EditorWindow
     {

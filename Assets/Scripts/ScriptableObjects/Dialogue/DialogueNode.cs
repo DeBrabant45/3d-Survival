@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts.ScriptableObjects.Dialogue
+namespace AD.Dialogue
 {
     public class DialogueNode : ScriptableObject
     {
