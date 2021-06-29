@@ -32,6 +32,28 @@ namespace AD.Dialogue
             return _nodes[0];
         }
 
+        public IEnumerable<DialogueNode> GetPlayerOnlyChildren(DialogueNode currentNode)
+        {
+            foreach (var childNode in GetAllChildern(currentNode))
+            {
+                if(childNode.IsPlayerSpeaking)
+                {
+                    yield return childNode;
+                }
+            }
+        }
+
+        public IEnumerable<DialogueNode> GetAIOnlyChildren(DialogueNode currentNode)
+        {
+            foreach (var childNode in GetAllChildern(currentNode))
+            {
+                if (childNode.IsPlayerSpeaking == false)
+                {
+                    yield return childNode;
+                }
+            }
+        }
+
         public IEnumerable<DialogueNode> GetAllChildern(DialogueNode parentNode)
         {
             if(parentNode.Children != null)

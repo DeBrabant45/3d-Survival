@@ -40,7 +40,20 @@ namespace Inventory
             } 
         }
 
-        public string EquippedItemID { get => _equippedItemStorage.GetItemData(_equippedItemStorageIndex).ID; }
+        public string EquippedItemID 
+        {
+            get
+            {
+                if (_equippedItemStorageIndex != -1)
+                {
+                    return _equippedItemStorage.GetItemData(_equippedItemStorageIndex).ID;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
     public InventorySystemData(int playerStorageSize, int hotbarStorageSize)
         {

@@ -18,9 +18,11 @@ MonoBehaviour:
   _rect:
     serializedVersion: 2
     x: 986
-    y: 88
+    y: 87
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: Test Rigger Action
 --- !u!114 &-1028399216525989477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,6 +45,8 @@ MonoBehaviour:
     y: 285
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,7 +57,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1176ef3d1acdec24fa7a0d32712e6e1f, type: 3}
-  m_Name: New Dialogue
+  m_Name: New In Town
   m_EditorClassIdentifier: 
   _nodes:
   - {fileID: 1982765669496922794}
@@ -91,6 +95,8 @@ MonoBehaviour:
     y: 376
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &1214983695274818642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +120,8 @@ MonoBehaviour:
     y: 157
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &1897362213543960226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +144,8 @@ MonoBehaviour:
     y: 157
     width: 200
     height: 100
+  _onEnterAction: TestSelection
+  _onExitAction: 
 --- !u!114 &1982765669496922794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +169,8 @@ MonoBehaviour:
     y: 13
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &4754852312764220544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,6 +193,8 @@ MonoBehaviour:
     y: 204
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &5212813048172779847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +217,8 @@ MonoBehaviour:
     y: 324
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &6097075555837870065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +241,8 @@ MonoBehaviour:
     y: 88
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &6573093113734119484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +264,8 @@ MonoBehaviour:
     y: 286
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 
 --- !u!114 &8101485792279781009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,3 +288,5 @@ MonoBehaviour:
     y: 432
     width: 200
     height: 100
+  _onEnterAction: 
+  _onExitAction: 

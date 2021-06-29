@@ -12,11 +12,15 @@ namespace AD.Dialogue
         [SerializeField] private string _text;
         [SerializeField] private List<string> _children = new List<string>();
         [SerializeField] private Rect _rect = new Rect(0, 0, 200, 200);
+        [SerializeField] private string _onEnterAction;
+        [SerializeField] private string _onExitAction;
 
         public string Text { get => _text; }
         public List<string> Children { get => _children; }
         public Rect RectPosition { get => _rect; }
         public bool IsPlayerSpeaking { get => _isPlayerSpeaking; }
+        public string OnEnterAction { get => _onEnterAction; }
+        public string OnExitAction { get => _onExitAction; }
 
 #if UNITY_EDITOR
         public void SetPosition(Vector2 newPosition)

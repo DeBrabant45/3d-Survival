@@ -8,9 +8,16 @@ public class UIPlayerSleep : MonoBehaviour
 {
     [SerializeField] GameObject _sleepPanel;
     [SerializeField] Button[] _buttons;
+    [SerializeField] private Button _saveBtn;
+    [SerializeField] private Button _exitBtn;
+    [SerializeField] private Button _sleepBtn;
+    [SerializeField] PlayerSleepManager _playerSleepManager;
 
     public void Start()
     {
+        _saveBtn.onClick.AddListener(_playerSleepManager.SaveBed);
+        _sleepBtn.onClick.AddListener(_playerSleepManager.PlayerSleep);
+        _exitBtn.onClick.AddListener(_playerSleepManager.ExitUI);
         Hide();
     }
 

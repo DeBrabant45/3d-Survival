@@ -26,6 +26,7 @@ public class PlayerSleepManager : MonoBehaviour
 
     public void SaveBed()
     {
+        Debug.Log("We ran");
         _playerController.SaveSpawnPoint();
     }
 
