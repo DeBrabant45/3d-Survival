@@ -14,7 +14,7 @@ namespace Assets.Scripts.UIScripts.UI_Quest
             QuestEvents.Instance.OnAddedQuest += DisplayAddedUI;
         }
 
-        private void DisplayAddedUI(Quest quest)
+        private void DisplayAddedUI(Quests quest)
         {
             Debug.Log(quest.Title);
             var panelGameObject = Instantiate(_addedQuestPrefab, _addedQuestPanel);

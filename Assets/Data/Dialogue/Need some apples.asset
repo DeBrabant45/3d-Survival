@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5767448876665257317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 74fd49d1-2f44-4fbb-ad35-431b44e30c65
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: Can't say that I have
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 172
+    y: 244
+    width: 200
+    height: 200
+  _onEnterAction: 
+  _onExitAction: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1176ef3d1acdec24fa7a0d32712e6e1f, type: 3}
+  m_Name: Need some apples
+  m_EditorClassIdentifier: 
+  _nodes:
+  - {fileID: 8683397168744133147}
+  - {fileID: 3442732478575956471}
+  - {fileID: -5767448876665257317}
+  - {fileID: 4557811233998998512}
+  _newNodeOffset: {x: 250, y: 0}
+--- !u!114 &3442732478575956471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 7d732e56-0874-4e21-bc0d-000beab66371
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: Yeah!
+  _children:
+  - 9f570144-758e-476f-acab-13f0f0afbdad
+  _rect:
+    serializedVersion: 2
+    x: 254
+    y: 26
+    width: 200
+    height: 200
+  _onEnterAction: 
+  _onExitAction: 
+--- !u!114 &4557811233998998512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 9f570144-758e-476f-acab-13f0f0afbdad
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Can you gather some for me?
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 467
+    y: 66
+    width: 200
+    height: 200
+  _onEnterAction: 
+  _onExitAction: GiveQuest
+--- !u!114 &8683397168744133147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 9e74ffa0-15ef-4812-8011-e571d649a18b
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Hey have you seen any apples?
+  _children:
+  - 7d732e56-0874-4e21-bc0d-000beab66371
+  - 74fd49d1-2f44-4fbb-ad35-431b44e30c65
+  _rect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 200
+    height: 200
+  _onEnterAction: 
+  _onExitAction: 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GatherApples : Quest
+public class GatherApples : Quests
 {
     private string _questName = "Gather Apples";
     private string _questDescription = "Collect 5 apples";

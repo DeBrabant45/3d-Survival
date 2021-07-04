@@ -188,8 +188,11 @@ GameObject:
   - component: {fileID: 1338433794}
   - component: {fileID: 1338433793}
   - component: {fileID: 3941884356647520882}
-  - component: {fileID: 2951181325548112017}
   - component: {fileID: 1338433795}
+  - component: {fileID: 453874021}
+  - component: {fileID: 453874022}
+  - component: {fileID: 453874023}
+  - component: {fileID: 453874024}
   m_Layer: 11
   m_Name: NPC_Skeleton_01
   m_TagString: Untagged
@@ -320,39 +323,6 @@ MonoBehaviour:
   - m_Rig: {fileID: 8935594619248825542}
     m_Active: 1
   m_Effectors: []
---- !u!114 &2951181325548112017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4010267125782197680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25e40fdc93ef46e45a6a2d98ccd2593d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _npcID: 1
-  _characterName: Harvey 'Iron Chest' Morrow
-  _introduceDialogue:
-  - Hey there!
-  - Looks like you've had it pretty rough.
-  - Don't worry he isn't going anywhere sadly we lost our captin a long time ago.
-  - Greed got the best of thim now he's lost.
-  _returingDialogue: []
-  _dialogueSystem: {fileID: 0}
-  _questDialogue:
-  - If your going to survive out here you need to gather some apples.
-  - Find five apples and come back to me.
-  _questCompletedDialogue:
-  - Good job! You might actually survive the night.
-  _questIncompleteDialogue:
-  - Come back to me once you've got enough apples.
-  _questCompletedReturnDialogue:
-  - Find my brother he might have some better survival tips.
-  _questType: 3
-  _activeQuests: {fileID: 0}
-  _completedQuests: {fileID: 0}
 --- !u!114 &1338433795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,6 +341,73 @@ MonoBehaviour:
     m_Bits: 512
   _rig: {fileID: 8935594619248825542}
   _aimDuration: 0.3
+--- !u!114 &453874021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4010267125782197680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4a9792e92a5faf48a4fc518086ff82a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogue: {fileID: 11400000, guid: 34adb71f85aee8c4e87f6963cb2297fd, type: 2}
+  _aIName: Ben Swiggins
+--- !u!114 &453874022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4010267125782197680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c797bbd95a0ca064e9413e8807d6a090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &453874023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4010267125782197680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db68830843e1fd4897f6c6ead94eae3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _action: GiveQuest
+  _onTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 453874024}
+        m_TargetAssemblyTypeName: AD.Quests.QuestGiver, Assembly-CSharp
+        m_MethodName: GiveQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &453874024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4010267125782197680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20a707bb1f27a37458be60bd1ff138b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _quest: {fileID: 11400000, guid: 761f93e72d4095e43bb2292b8550b632, type: 2}
 --- !u!1 &4010267125782217264
 GameObject:
   m_ObjectHideFlags: 0

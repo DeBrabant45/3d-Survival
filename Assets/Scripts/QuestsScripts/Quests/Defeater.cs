@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Defeater : Quest
+public class Defeater : Quests
 {
     [SerializeField] private string _questName;
     [SerializeField] private string _questDescription;

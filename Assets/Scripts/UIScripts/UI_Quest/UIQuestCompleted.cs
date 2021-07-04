@@ -15,7 +15,7 @@ namespace Assets.Scripts.UIScripts.UI_Quest
             QuestEvents.Instance.OnCompletedQuest += DisplayCompletedUI;
         }
 
-        private void DisplayCompletedUI(Quest quest)
+        private void DisplayCompletedUI(Quests quest)
         {
             var panelGameObject = Instantiate(_completedQuestPrefab, _completedQuestPanel);
             foreach (Transform child in panelGameObject.transform)

@@ -6,7 +6,7 @@ public class GatherGoal : Goal
 {
     private string _targetID;
 
-    public GatherGoal(Quest quest, string targetID, string description, bool completed, int currentAmount, int requiredAmount)
+    public GatherGoal(Quests quest, string targetID, string description, bool completed, int currentAmount, int requiredAmount)
     {
         this.Quest = quest;
         this._targetID = targetID;

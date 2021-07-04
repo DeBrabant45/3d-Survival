@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonDefeaterTwo : Quest
+public class SkeletonDefeaterTwo : Quests
 {
     private string _questName = "Skeleton fighter two";
     private string _questDescription = "Defeat two Skeletons";

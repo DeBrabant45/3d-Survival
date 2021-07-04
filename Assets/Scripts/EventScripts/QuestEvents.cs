@@ -6,13 +6,13 @@ using UnityEngine;
 public class QuestEvents : MonoBehaviour
 {
     private Action<IEnemy> _onEnemyDefeated;
-    private Action<Quest> _onCompletedQuest;
-    private Action<Quest> _onAddedQuest;
+    private Action<Quests> _onCompletedQuest;
+    private Action<Quests> _onAddedQuest;
     public static QuestEvents Instance;
 
     public Action<IEnemy> OnEnemyDefeated { get => _onEnemyDefeated; set => _onEnemyDefeated = value; }
-    public Action<Quest> OnCompletedQuest { get => _onCompletedQuest; set => _onCompletedQuest = value; }
-    public Action<Quest> OnAddedQuest { get => _onAddedQuest; set => _onAddedQuest = value; }
+    public Action<Quests> OnCompletedQuest { get => _onCompletedQuest; set => _onCompletedQuest = value; }
+    public Action<Quests> OnAddedQuest { get => _onAddedQuest; set => _onAddedQuest = value; }
 
     private void Awake()
     {
@@ -31,12 +31,12 @@ public class QuestEvents : MonoBehaviour
         _onEnemyDefeated?.Invoke(enemy);
     }
 
-    public void CompletedQuest(Quest quest)
+    public void CompletedQuest(Quests quest)
     {
         _onCompletedQuest?.Invoke(quest);
     }
 
-    public void AddedQuest(Quest quest)
+    public void AddedQuest(Quests quest)
     {
         _onAddedQuest?.Invoke(quest);
     }

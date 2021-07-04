@@ -15,7 +15,7 @@ public class NPCQuestGiver : NPC
     [Header("Quest Scene GameObjects")]
     [SerializeField] private GameObject _activeQuests;
     [SerializeField] private GameObject _completedQuests;
-    private Quest _quest;
+    private Quests _quest;
 
     public bool IsQuestAssigned { get; set; }
     public bool IsGivenQuestCompleted { get; set; }
@@ -40,7 +40,7 @@ public class NPCQuestGiver : NPC
     private void AssignQuest()
     {
         IsQuestAssigned = true;
-        _quest = (Quest)_activeQuests.AddComponent(Type.GetType(_questType.ToString()));
+        _quest = (Quests)_activeQuests.AddComponent(Type.GetType(_questType.ToString()));
         _quest.QuestGiverName = _characterName;
         QuestEvents.Instance.AddedQuest(_quest);
     }
@@ -51,8 +51,8 @@ public class NPCQuestGiver : NPC
         QuestEvents.Instance.CompletedQuest(_quest);
         IsGivenQuestCompleted = true;
         IsQuestAssigned = false;
-        Destroy((Quest)_activeQuests.GetComponent(Type.GetType(_questType.ToString())));
-        _quest = (Quest)_completedQuests.AddComponent(Type.GetType(_questType.ToString()));
+        Destroy((Quests)_activeQuests.GetComponent(Type.GetType(_questType.ToString())));
+        _quest = (Quests)_completedQuests.AddComponent(Type.GetType(_questType.ToString()));
         _quest.QuestGiverName = _characterName;
     }
 

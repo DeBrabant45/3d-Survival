@@ -6,7 +6,7 @@ public class DefeatGoal : Goal
 {
     private int _targetID;
 
-    public DefeatGoal(Quest quest, int targetID, string description, bool completed, int currentAmount, int requiredAmount)
+    public DefeatGoal(Quests quest, int targetID, string description, bool completed, int currentAmount, int requiredAmount)
     {
         this.Quest = quest;
         this._targetID = targetID;

@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using AD.Quests;
 
 public class UIQuestLog : MonoBehaviour
 {
-    [SerializeField] private GameObject _activeQuests;
-    [SerializeField] private GameObject _completedQuests;
+    //[SerializeField] private GameObject _activeQuests;
+    //[SerializeField] private GameObject _completedQuests;
     [SerializeField] private GameObject _questLogPanel;
-    [SerializeField] private GameObject _completedQuestCheckMark;
+    [SerializeField] private GameObject _questObjectPrefab;
 
     [SerializeField] private Transform _questPickerPanel;
 
@@ -18,27 +19,23 @@ public class UIQuestLog : MonoBehaviour
     [SerializeField] private Button _completedQuestsBtn;
     [SerializeField] private Button _questPickerBtnPrefab;
 
-    [SerializeField] private Text _questTitle;
-    [SerializeField] private Text _questGiverName;
-    [SerializeField] private Text _questDescription;
-    [SerializeField] private Text _completedQuestTxt;
+    [SerializeField] private UIQuestInformation _uIQuestInformationPanel;
+    [SerializeField] private QuestList _questList;
 
     void Start()
     {
         _questLogPanel.SetActive(false);
-        _completedQuestCheckMark.SetActive(false);
-        _activeQuestBtn.onClick.AddListener(() => SetQuestInfoPanel(_activeQuests));
-        _completedQuestsBtn.onClick.AddListener(() => SetQuestInfoPanel(_completedQuests));
+        _activeQuestBtn.onClick.AddListener(() => SetQuestInfoPanel(_questList));
+        //_completedQuestsBtn.onClick.AddListener(() => SetQuestInfoPanel(_completedQuests));
     }
     
-    private void SetQuestInfoPanel(GameObject questPanel)
+    private void SetQuestInfoPanel(QuestList questList)
     {
-        DestroyPanelChildObjects();
-        var quests = questPanel.GetComponents<Quest>();
-        if(quests.Length > 0)
+        DestroyPanelChildObjects(_questPickerPanel);
+        if (_questList.GetStatuses().Count() > 0)
         {
-            SetQuest(quests[0]);
-            CreateButtons(quests);
+            SetQuest(_questList.GetStatusesRoot());
+            CreateButtons(_questList.GetStatuses());
         }
         else
         {
@@ -46,55 +43,39 @@ public class UIQuestLog : MonoBehaviour
         }
     }
 
-    private void CreateButtons(Quest[] quests)
+    private void CreateButtons(IEnumerable<QuestStatus> quests)
     {
         foreach (var quest in quests)
         {
             var btn = _questPickerBtnPrefab;
-            btn.GetComponentInChildren<Text>().text = quest.Title;
+            btn.GetComponentInChildren<Text>().text = quest.GetQuest().name;
             var newBtn = Instantiate(btn, _questPickerPanel);
             newBtn.onClick.AddListener(() => SetQuest(quest));
         }
     }
 
-    private void SetQuest(Quest quest)
+    private void SetQuest(QuestStatus quest)
     {
-        if (quest != null)
-        {
-            _questTitle.text = quest.Title;
-            _questGiverName.text = quest.QuestGiverName;
-            _questDescription.text = quest.Description;
-        }
-        else
-        {
-            _questTitle.text = "";
-            _questGiverName.text = "";
-            _questDescription.text = "";
-            _completedQuestTxt.text = "";
-        }
-        SetCompletedQuestInfo(quest);
+        _uIQuestInformationPanel.Setup(quest);
     }
 
-    private void SetCompletedQuestInfo(Quest quest)
-    {
-        if(quest != null && quest.IsCompleted)
-        {
-            _questDescription.color = Color.grey;
-            _completedQuestCheckMark.SetActive(true);
-            _completedQuestTxt.text = quest.OnceCompletedInfo;
-        }
-        else
-        {
-            _questDescription.color = Color.black;
-            _completedQuestCheckMark.SetActive(false);
-        }
-    }
+    //private void SetCompletedQuestInfo(Quests quest)
+    //{
+    //    if(quest != null && quest.IsCompleted)
+    //    {
+    //        _questDescription.color = Color.grey;
+    //    }
+    //    else
+    //    {
+    //        _questDescription.color = Color.black;
+    //    }
+    //}
 
-    private void DestroyPanelChildObjects()
+    private void DestroyPanelChildObjects(Transform panel)
     {
-        foreach (Transform questBtn in _questPickerPanel)
+        foreach (Transform gameobject in panel)
         {
-            Destroy(questBtn.gameObject);
+            Destroy(gameobject.gameObject);
         }
     }
 
@@ -123,12 +104,12 @@ public class UIQuestLog : MonoBehaviour
         _questLogPanel.SetActive(true);
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
-        SetQuestInfoPanel(_activeQuests);
+        SetQuestInfoPanel(_questList);
     }
 
     private void DeativateQuestPanel()
     {
-        DestroyPanelChildObjects();
+        DestroyPanelChildObjects(_questPickerPanel);
         _questLogPanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
