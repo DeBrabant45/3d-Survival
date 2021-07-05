@@ -15,9 +15,20 @@ namespace AD.Quests
             this._quest = quest;
         }
 
+        public QuestStatus(SavedQuestStatusData questStatus)
+        {
+            _quest = Quest.GetByName(questStatus.QuestName);
+            _completedQuestObjectives = questStatus.CompletedObjectives;
+        }
+
         public Quest GetQuest()
         {
             return _quest;
+        }
+
+        public List<string> GetCompletedQuestObjectives()
+        {
+            return _completedQuestObjectives;
         }
 
         public int GetCompletedCount()
@@ -36,6 +47,17 @@ namespace AD.Quests
             {
                 _completedQuestObjectives.Add(objective);
             }
+        }
+
+        public SavedQuestStatusData SaveData()
+        {
+            var questStatusData = new SavedQuestStatusData
+            {
+                QuestName = _quest.name,
+                CompletedObjectives = _completedQuestObjectives
+
+            };
+            return questStatusData;
         }
     }
 }

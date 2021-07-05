@@ -92,7 +92,10 @@ namespace AD.Dialogue
             DialogueNode[] children = _currentDialogue.GetAIOnlyChildren(_currentNode).ToArray();
             int randomIndex = UnityEngine.Random.Range(0, children.Length);
             TriggerExitAction();
-            _currentNode = children[randomIndex];
+            if(children.Length > 0)
+            {
+                _currentNode = children[randomIndex];
+            }
             TriggerEnterAction();
             OnConversationUpdated?.Invoke();
         }

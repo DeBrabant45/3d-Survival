@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace AD.Quests
 {
-    public class QuestList : MonoBehaviour
+    public class QuestList : MonoBehaviour, ISaveable
     {
         private List<QuestStatus> _statuses = new List<QuestStatus>();
 
@@ -55,6 +56,31 @@ namespace AD.Quests
         public IEnumerable<QuestStatus> GetStatuses()
         {
             return _statuses;
+        }
+
+        public string GetJsonDataToSave()
+        {
+            List<SavedQuestStatusData> savedQuestStatuses = new List<SavedQuestStatusData>();
+            foreach (QuestStatus status in _statuses)
+            {
+                savedQuestStatuses.Add(status.SaveData());
+            }
+            string data = JsonConvert.SerializeObject(savedQuestStatuses);
+            return data;
+        }
+
+        public void LoadJsonData(string jsonData)
+        {
+            List<SavedQuestStatusData> savedQuestStatuses = JsonConvert.DeserializeObject<List<SavedQuestStatusData>>(jsonData);
+            if (savedQuestStatuses == null)
+            {
+                return;
+            }
+            _statuses.Clear();
+            foreach (SavedQuestStatusData savedQuestStatus in savedQuestStatuses)
+            {
+                _statuses.Add(new QuestStatus(savedQuestStatus));
+            }
         }
     }
 }
