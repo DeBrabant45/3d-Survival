@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1cfc7e133cba874ea693f8da02d4ac7, type: 3}
+  m_Name: Gather 1 Axe
+  m_EditorClassIdentifier: 
+  _iD: 0edc328bbb314d059e5b914ee187fafe
+  _description: Gather 1 Axe
+  _itemToCollect: {fileID: 11400000, guid: 3e9509146b0379848a7f48f45396b9ce, type: 2}
+  _amountNeeded: 1
+  _inventorySystem: {fileID: 0}

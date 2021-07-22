@@ -1,0 +1,461 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9126286578540147122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: f6c636d9-15f9-4a76-95f3-b9029498f014
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: Your welcome!
+  _children:
+  - 821ff0e7-68c8-4fa4-bc76-c752b8e77e3c
+  _rect:
+    serializedVersion: 2
+    x: 557
+    y: 671
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &-8225493985376918382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: c5386c3b-086c-4bb7-8ecd-a73df793732f
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Thank you!
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 728
+    y: 1
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: GiveQuest
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &-4253236642622532683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 9df30f53-14e8-408d-9272-dbaa6da075f1
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: Yes
+  _children:
+  - c5386c3b-086c-4bb7-8ecd-a73df793732f
+  _rect:
+    serializedVersion: 2
+    x: 479
+    y: 1
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &-4218404744584575266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 5f34a19e-7c91-41e4-84bf-4f19dcb1c3f7
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Well keep looking!
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 811
+    y: 271
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &-3084947858974904453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: a14579b7-e910-4f24-93f8-fe99a1265316
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: Here you go!
+  _children:
+  - 2dbf43c1-1991-47bc-aa9e-b9c67e54d200
+  _rect:
+    serializedVersion: 2
+    x: 559
+    y: 377
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and:
+    - or:
+      - predicate: 2
+        parameters:
+        - 21780ff88a3d4166bc265904c53e402c
+        negate: 0
+--- !u!114 &-2168330233947084546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 2dbf43c1-1991-47bc-aa9e-b9c67e54d200
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Omg thank you!
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 812
+    y: 377
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 11400000, guid: 1845623c88bab6a4e8c20965f94fc2d9, type: 2}
+  _condition:
+    and: []
+--- !u!114 &-1404548777985468591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 821ff0e7-68c8-4fa4-bc76-c752b8e77e3c
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Your the best!
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 824
+    y: 612
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &-1281456116075364592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: a24b1a9b-a69e-4011-a776-8e198297468f
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Hey how's it going?
+  _children:
+  - 6bde3418-0189-4930-9968-982df3d8d77a
+  - 16c67269-1130-4f07-a94c-ae74e9e5565e
+  - 5d7955dc-f721-4e30-81b9-26486d6c6b9c
+  _rect:
+    serializedVersion: 2
+    x: 2
+    y: 79
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1176ef3d1acdec24fa7a0d32712e6e1f, type: 3}
+  m_Name: Gather some Apples
+  m_EditorClassIdentifier: 
+  _nodes:
+  - {fileID: -1281456116075364592}
+  - {fileID: 8361956531606554132}
+  - {fileID: 4839507878792421290}
+  - {fileID: -4253236642622532683}
+  - {fileID: 4952731796915141061}
+  - {fileID: 2896782415009483257}
+  - {fileID: 6160415323907726988}
+  - {fileID: -8225493985376918382}
+  - {fileID: -4218404744584575266}
+  - {fileID: 98007193219433945}
+  - {fileID: 2116573351102441941}
+  - {fileID: -9126286578540147122}
+  - {fileID: -1404548777985468591}
+  - {fileID: -3084947858974904453}
+  - {fileID: -2168330233947084546}
+  _newNodeOffset: {x: 250, y: 0}
+--- !u!114 &98007193219433945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 16c67269-1130-4f07-a94c-ae74e9e5565e
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Thanks again for getting those apples
+  _children:
+  - 16162b59-6c53-41df-a2a6-ecdce92b87ea
+  - f6c636d9-15f9-4a76-95f3-b9029498f014
+  _rect:
+    serializedVersion: 2
+    x: 240
+    y: 544
+    width: 200
+    height: 100
+  _onEnterAction: UpdateQuestForTim
+  _onExitAction: 
+  _dialogueObjective: {fileID: 11400000, guid: fae8a897724f2414cacf027ef418488a, type: 2}
+  _condition:
+    and:
+    - or:
+      - predicate: 3
+        parameters:
+        - Gather Apples
+        negate: 0
+--- !u!114 &2116573351102441941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 16162b59-6c53-41df-a2a6-ecdce92b87ea
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: Anytime!
+  _children:
+  - 821ff0e7-68c8-4fa4-bc76-c752b8e77e3c
+  _rect:
+    serializedVersion: 2
+    x: 567
+    y: 548
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &2896782415009483257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 71582916-e874-4587-8448-6142319d63d9
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: Not yet
+  _children:
+  - 5f34a19e-7c91-41e4-84bf-4f19dcb1c3f7
+  _rect:
+    serializedVersion: 2
+    x: 566
+    y: 264
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &4839507878792421290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 6bde3418-0189-4930-9968-982df3d8d77a
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Any Luck with those apples?
+  _children:
+  - 71582916-e874-4587-8448-6142319d63d9
+  - a14579b7-e910-4f24-93f8-fe99a1265316
+  _rect:
+    serializedVersion: 2
+    x: 314
+    y: 309
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and:
+    - or:
+      - predicate: 0
+        parameters:
+        - Gather Apples
+        negate: 0
+    - or:
+      - predicate: 3
+        parameters:
+        - Gather Apples
+        negate: 1
+--- !u!114 &4952731796915141061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 453a0681-3c73-4cf1-ad73-d7b6c9ecd5c7
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: No
+  _children:
+  - 986cf749-a2ee-44cd-9301-c48cf43bf391
+  _rect:
+    serializedVersion: 2
+    x: 474
+    y: 99
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &6160415323907726988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 986cf749-a2ee-44cd-9301-c48cf43bf391
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Thanks for nothing!
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 722
+    y: 99
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &8361956531606554132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 5d7955dc-f721-4e30-81b9-26486d6c6b9c
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Can you gather five apples for me?
+  _children:
+  - 9df30f53-14e8-408d-9272-dbaa6da075f1
+  - 453a0681-3c73-4cf1-ad73-d7b6c9ecd5c7
+  _rect:
+    serializedVersion: 2
+    x: 241
+    y: 51
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and:
+    - or:
+      - predicate: 6
+        parameters:
+        - Gather Apples
+        negate: 1

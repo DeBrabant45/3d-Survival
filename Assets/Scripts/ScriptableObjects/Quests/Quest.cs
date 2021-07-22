@@ -5,17 +5,20 @@ using UnityEngine;
 
 namespace AD.Quests
 {
-    [CreateAssetMenu(fileName = "Quest", menuName = "Project/Quest", order = 0)]
+    [CreateAssetMenu(fileName = "Quest", menuName = "Project/Quests/Quest", order = 0)]
     public class Quest : ScriptableObject
     {
-        [SerializeField] List<string> _objectives = new List<string>();
+        [SerializeField] private List<Objective> _objectives = new List<Objective>();
+        [SerializeField] private List<Reward> _rewards = new List<Reward>();
+
+        public List<Reward> Rewards { get => _rewards; }
 
         public string GetTitle()
         {
             return name;
         }
 
-        public IEnumerable<string> GetObjectives()
+        public IEnumerable<Objective> GetObjectives()
         {
             return _objectives;
         }
@@ -25,16 +28,23 @@ namespace AD.Quests
             return _objectives.Count;
         }
 
-        public bool HasObjective(string objective)
+        public bool HasObjective(string objectiveID)
         {
-            return _objectives.Contains(objective);
+            foreach (var objective in _objectives)
+            {
+                if (objective.ID == objectiveID)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public static Quest GetByName(string questName)
         {
-            foreach(Quest quest in Resources.LoadAll<Quest>(""))
+            foreach (Quest quest in Resources.LoadAll<Quest>(""))
             {
-                if(quest.name == questName)
+                if (quest.name == questName)
                 {
                     return quest;
                 }

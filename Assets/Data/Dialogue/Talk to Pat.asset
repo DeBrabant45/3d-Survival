@@ -21,7 +21,7 @@ MonoBehaviour:
     y: 63
     width: 200
     height: 200
-  _onEnterAction: TestObjective
+  _onEnterAction: UpdateQuest
   _onExitAction: 
 --- !u!114 &-8933836275788451142
 MonoBehaviour:

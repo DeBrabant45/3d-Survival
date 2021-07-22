@@ -93,7 +93,6 @@ public class EnemyNPC : MonoBehaviour, IEnemy
         _agent.SetDestination(_alertedPosition);
         if (_agent.remainingDistance <= _agent.stoppingDistance)
         {
-            Debug.Log("I ran");
             _isOnAlert = false;
         }
     }

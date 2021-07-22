@@ -3,8 +3,10 @@ using Inventory;
 using System;
 using SVS.InventorySystem;
 using UnityEngine.EventSystems;
+using AD.General;
+using System.Collections.Generic;
 
-public class InventorySystem : MonoBehaviour, ISaveable
+public class InventorySystem : MonoBehaviour, ISaveable, IPredicateEvaluator
 {
     [SerializeField] private int _playerStorageSize = 20;
     [SerializeField] InteractionManager _interactionManager;
@@ -500,5 +502,15 @@ public class InventorySystem : MonoBehaviour, ISaveable
     {
         SavedItemSystemData dataToLoad = JsonUtility.FromJson<SavedItemSystemData>(jsonData);
         _inventoryData.LoadData(dataToLoad);
+    }
+
+    public bool? Evaluate(Predicate predicate, string[] parameters)
+    {
+        switch (predicate)
+        {
+            case Predicate.HasInventoryItem:
+                return CheckResourceAvailability(parameters[0], 1);
+        }
+        return null;
     }
 }

@@ -1894,6 +1894,7 @@ MonoBehaviour:
   _questTitleText: {fileID: 5396858370829149047}
   _questGiverNameText: {fileID: 5396858370494109774}
   _questProgressionText: {fileID: 2096152450652256237}
+  _questRewardText: {fileID: 0}
   _questObjectiveHeader: {fileID: 7704656374823265065}
   _uIQuestObjective: {fileID: 2494136636734215473}
 --- !u!1 &5396858370040331035

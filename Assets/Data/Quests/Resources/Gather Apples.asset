@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Gather Apples
   m_EditorClassIdentifier: 
   _objectives:
-  - Gather Five Apples
-  - Talk to Pat
-  - Return to Ben
+  - {fileID: 11400000, guid: 03ec83c72b588c24494041a3efec0465, type: 2}
+  - {fileID: 11400000, guid: 6ebb7a639a0514a4eb46e31b587a0634, type: 2}
+  - {fileID: 11400000, guid: 1845623c88bab6a4e8c20965f94fc2d9, type: 2}
+  _rewards:
+  - Number: 2
+    Item: {fileID: 11400000, guid: 01ca2e3da875e7a4ab5aa0ccd58b2316, type: 2}
+  - Number: 1
+    Item: {fileID: 11400000, guid: 3e9509146b0379848a7f48f45396b9ce, type: 2}

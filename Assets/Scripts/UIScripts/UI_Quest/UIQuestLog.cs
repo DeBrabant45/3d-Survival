@@ -8,8 +8,6 @@ using AD.Quests;
 
 public class UIQuestLog : MonoBehaviour
 {
-    //[SerializeField] private GameObject _activeQuests;
-    //[SerializeField] private GameObject _completedQuests;
     [SerializeField] private GameObject _questLogPanel;
     [SerializeField] private GameObject _questObjectPrefab;
 
@@ -25,17 +23,31 @@ public class UIQuestLog : MonoBehaviour
     void Start()
     {
         _questLogPanel.SetActive(false);
-        _activeQuestBtn.onClick.AddListener(() => SetQuestInfoPanel(_questList));
-        //_completedQuestsBtn.onClick.AddListener(() => SetQuestInfoPanel(_completedQuests));
+        _activeQuestBtn.onClick.AddListener(() => SetQuestInfoPanel());
+        _completedQuestsBtn.onClick.AddListener(() => SetCompletedQuestInfoPanel());
     }
     
-    private void SetQuestInfoPanel(QuestList questList)
+    private void SetQuestInfoPanel()
     {
         DestroyPanelChildObjects(_questPickerPanel);
         if (_questList.GetStatuses().Count() > 0)
         {
             SetQuest(_questList.GetStatusesRoot());
             CreateButtons(_questList.GetStatuses());
+        }
+        else
+        {
+            SetQuest(null);
+        }
+    }
+
+    private void SetCompletedQuestInfoPanel()
+    {
+        DestroyPanelChildObjects(_questPickerPanel);
+        if (_questList.GetCompletedStatuses().Count() > 0)
+        {
+            SetQuest(_questList.GetCompletedStatusesRoot());
+            CreateButtons(_questList.GetCompletedStatuses());
         }
         else
         {
@@ -58,18 +70,6 @@ public class UIQuestLog : MonoBehaviour
     {
         _uIQuestInformationPanel.Setup(quest);
     }
-
-    //private void SetCompletedQuestInfo(Quests quest)
-    //{
-    //    if(quest != null && quest.IsCompleted)
-    //    {
-    //        _questDescription.color = Color.grey;
-    //    }
-    //    else
-    //    {
-    //        _questDescription.color = Color.black;
-    //    }
-    //}
 
     private void DestroyPanelChildObjects(Transform panel)
     {
@@ -104,7 +104,7 @@ public class UIQuestLog : MonoBehaviour
         _questLogPanel.SetActive(true);
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
-        SetQuestInfoPanel(_questList);
+        SetQuestInfoPanel();
     }
 
     private void DeativateQuestPanel()

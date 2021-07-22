@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using AD.General;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +11,10 @@ public class UIMainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(_gameManager == null)
+        {
+            _gameManager = FindObjectOfType<GameManager>();
+        }
         _newGameBtn.onClick.AddListener(_gameManager.StartNextScene);
         _resumeBtn.onClick.AddListener(_gameManager.LoadSavedGame);
         _resumeBtn.interactable = false;

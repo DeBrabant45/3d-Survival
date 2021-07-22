@@ -1,0 +1,183 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8370364225105714914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 6cf0436a-6368-4767-bd9f-e92963b7169c
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Cool thanks
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 784
+    y: 176
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: QuestFromTim
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &-8163095038776128505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: b7c7d4c8-ff54-44fa-894a-e5b34d7a91f1
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Hey!
+  _children:
+  - c4d84608-4360-4a1d-8365-08611cce4c04
+  _rect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &-3729474098205003268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 26fdc996-cae0-4728-b9b7-b0331872acc9
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: Sure!
+  _children:
+  - 6cf0436a-6368-4767-bd9f-e92963b7169c
+  _rect:
+    serializedVersion: 2
+    x: 495
+    y: 171
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1176ef3d1acdec24fa7a0d32712e6e1f, type: 3}
+  m_Name: Talk with Tim
+  m_EditorClassIdentifier: 
+  _nodes:
+  - {fileID: -8163095038776128505}
+  - {fileID: 2030381586551678405}
+  - {fileID: 5282723290429016249}
+  - {fileID: 5994480362037558849}
+  - {fileID: -3729474098205003268}
+  - {fileID: -8370364225105714914}
+  _newNodeOffset: {x: 250, y: 0}
+--- !u!114 &2030381586551678405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: c4d84608-4360-4a1d-8365-08611cce4c04
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: I have a Quest for you
+  _children:
+  - 6ca2246f-3277-4205-b6fc-17d9d2da15e5
+  - 26fdc996-cae0-4728-b9b7-b0331872acc9
+  _rect:
+    serializedVersion: 2
+    x: 236
+    y: 2
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &5282723290429016249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 6ca2246f-3277-4205-b6fc-17d9d2da15e5
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 1
+  _text: No thanks!
+  _children:
+  - 52e7d955-13ec-445a-a8cf-4ab1307089e8
+  _rect:
+    serializedVersion: 2
+    x: 531
+    y: 33
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []
+--- !u!114 &5994480362037558849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c654f3bb08735c14b8c60f59b0365eb4, type: 3}
+  m_Name: 52e7d955-13ec-445a-a8cf-4ab1307089e8
+  m_EditorClassIdentifier: 
+  _isPlayerSpeaking: 0
+  _text: Prick!
+  _children: []
+  _rect:
+    serializedVersion: 2
+    x: 790
+    y: 32
+    width: 200
+    height: 100
+  _onEnterAction: 
+  _onExitAction: 
+  _dialogueObjective: {fileID: 0}
+  _condition:
+    and: []

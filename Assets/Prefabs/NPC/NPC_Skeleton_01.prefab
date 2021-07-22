@@ -190,8 +190,6 @@ GameObject:
   - component: {fileID: 3941884356647520882}
   - component: {fileID: 1338433795}
   - component: {fileID: 453874021}
-  - component: {fileID: 453874022}
-  - component: {fileID: 453874023}
   - component: {fileID: 453874024}
   m_Layer: 11
   m_Name: NPC_Skeleton_01
@@ -353,48 +351,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a9792e92a5faf48a4fc518086ff82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogue: {fileID: 11400000, guid: 34adb71f85aee8c4e87f6963cb2297fd, type: 2}
+  _dialogue: {fileID: 0}
   _aIName: Ben Swiggins
---- !u!114 &453874022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4010267125782197680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c797bbd95a0ca064e9413e8807d6a090, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &453874023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4010267125782197680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0db68830843e1fd4897f6c6ead94eae3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _action: GiveQuest
-  _onTrigger:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 453874024}
-        m_TargetAssemblyTypeName: AD.Quests.QuestGiver, Assembly-CSharp
-        m_MethodName: GiveQuest
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &453874024
 MonoBehaviour:
   m_ObjectHideFlags: 0

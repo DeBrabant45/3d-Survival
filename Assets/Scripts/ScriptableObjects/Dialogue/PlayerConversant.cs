@@ -1,3 +1,4 @@
+using AD.General;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,12 +10,27 @@ namespace AD.Dialogue
     public class PlayerConversant : MonoBehaviour
     {
         [SerializeField] private string _playerName;
+        [SerializeField] private List<GameObject> _predicateGameObjects;
+
         private Dialogue _currentDialogue;
         private DialogueNode _currentNode = null;
         private AIConversant _currentConversant = null;
         private bool _isChoosing = false;
+        private List<IPredicateEvaluator> _predicateEvaluator = new List<IPredicateEvaluator>();
 
         public event Action OnConversationUpdated;
+
+        void Start()
+        {
+            foreach (var item in _predicateGameObjects)
+            {
+                var predicate = item.GetComponent<IPredicateEvaluator>();
+                if (predicate != null)
+                {
+                    _predicateEvaluator.Add(predicate);
+                }
+            }
+        }
 
         public void StartDialogue(AIConversant newConversant, Dialogue newDialogue)
         {
@@ -29,6 +45,7 @@ namespace AD.Dialogue
         {
             _currentDialogue = null;
             TriggerExitAction();
+            TriggerDialogueObjective();
             _currentNode = null;
             _isChoosing = false;
             _currentConversant = null;
@@ -59,7 +76,7 @@ namespace AD.Dialogue
 
         public IEnumerable<DialogueNode> GetChoices()
         {
-            return _currentDialogue.GetPlayerOnlyChildren(_currentNode);
+            return FilterOnCondition(_currentDialogue.GetPlayerOnlyChildren(_currentNode));
         }
 
         public string GetText()
@@ -81,18 +98,20 @@ namespace AD.Dialogue
 
         public void Next()
         {
-            var numberPlayerResponses = _currentDialogue.GetPlayerOnlyChildren(_currentNode).Count();
+            var numberPlayerResponses = FilterOnCondition(_currentDialogue.GetPlayerOnlyChildren(_currentNode)).Count();
             if (numberPlayerResponses > 0)
             {
                 _isChoosing = true;
                 TriggerExitAction();
+                TriggerDialogueObjective();
                 OnConversationUpdated?.Invoke();
                 return;
             }
-            DialogueNode[] children = _currentDialogue.GetAIOnlyChildren(_currentNode).ToArray();
+            DialogueNode[] children = FilterOnCondition(_currentDialogue.GetAIOnlyChildren(_currentNode)).ToArray();
             int randomIndex = UnityEngine.Random.Range(0, children.Length);
             TriggerExitAction();
-            if(children.Length > 0)
+            TriggerDialogueObjective();
+            if (children.Length > 0)
             {
                 _currentNode = children[randomIndex];
             }
@@ -102,7 +121,23 @@ namespace AD.Dialogue
 
         public bool HasNext()
         {
-            return _currentDialogue.GetAllChildern(_currentNode).Count() > 0;
+            return FilterOnCondition(_currentDialogue.GetAllChildern(_currentNode)).Count() > 0;
+        }
+
+        private IEnumerable<DialogueNode> FilterOnCondition(IEnumerable<DialogueNode> inputNode)
+        {
+            foreach (var node in inputNode)
+            {
+                if (node.CheckCondition(GetEvaluators()))
+                {
+                    yield return node;
+                }
+            }
+        }
+
+        private IEnumerable<IPredicateEvaluator> GetEvaluators()
+        {
+            return _predicateEvaluator;
         }
 
         private void TriggerEnterAction()
@@ -121,11 +156,19 @@ namespace AD.Dialogue
             }
         }
 
+        private void TriggerDialogueObjective()
+        {
+            if(_currentNode != null && _currentNode.DialogueObjective != null)
+            {
+                QuestEvents.Instance.CompleteDialogueObjective(_currentNode.DialogueObjective);
+            }
+        }
+
         private void TriggerAction(string action)
         {
-            foreach (var trigger in _currentConversant.GetComponents<DialogueTrigger>())
+            foreach (var trigger in _currentConversant.GetComponent<DialogueTriggerList>().DialogueTriggers)
             {
-                trigger.Trigger(action);
+                trigger.TriggerEvent(action);
             }
         }
     }

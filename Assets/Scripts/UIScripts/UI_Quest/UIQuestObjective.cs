@@ -17,7 +17,7 @@ public class UIQuestObjective : MonoBehaviour
             foreach (var objective in status.GetQuest().GetObjectives())
             {
                 GameObject prefab = null;
-                if (status.IsObjectiveComplete(objective))
+                if (status.IsObjectiveComplete(objective.ID))
                 {
                     prefab = _questObjectiveCompeletedPrefab;
                 }
@@ -29,7 +29,7 @@ public class UIQuestObjective : MonoBehaviour
                 Text objectiveText = objectivePrefab.GetComponentInChildren<Text>();
                 if (objectiveText != null)
                 {
-                    objectiveText.text = objective;
+                    objectiveText.text = objective.Description;
                 }
             }
         }

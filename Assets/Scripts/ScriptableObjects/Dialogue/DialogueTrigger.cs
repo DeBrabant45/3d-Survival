@@ -1,17 +1,19 @@
-﻿using System.Collections;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace AD.Dialogue
 {
-    public class DialogueTrigger : MonoBehaviour
+    [Serializable]
+    public class DialogueTrigger 
     {
         [SerializeField] private string _action;
         [SerializeField] private UnityEvent _onTrigger;
 
-        public void Trigger(string actionToTrigger)
+        //refactor 
+        public void TriggerEvent(string actionToTrigger)
         {
-            if(actionToTrigger == _action)
+            if (actionToTrigger == _action)
             {
                 _onTrigger?.Invoke();
             }
